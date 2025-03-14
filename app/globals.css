@@ -1,0 +1,94 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Barlow";
+  src: url("/Barlow-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow-bold";
+  src: url("/Barlow-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NotoSansTC";
+  src: url("/NotoSansTC-Regular.ttf") format("truetype");
+}
+
+@theme {
+  --font-title: "Barlow-bold", sans-serif;
+  --font-regular: "Barlow", sans-serif;
+  --font-NotoSansTC: "NotoSansTC", sans-serif;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 40rem;
+  --breakpoint-laptop: 64rem;
+  --breakpoint-desktop: 80rem;
+
+  --color-primary: #ffad42;
+  --color-secondary: #008785;
+  --color-third: #0dc7ab;
+  --color-black: #252f38;
+  --color-white: #ffffff;
+  --color-warning: #ff6231;
+
+  --text-96R: 96px;
+  --text-96R--line-height: 136px;
+  --text-96R--letter-spacing: 4%;
+  --text-96R--font-weight: 400;
+
+  --text-48M: 48px;
+  --text-48M--line-height: 56px;
+  --text-48M--letter-spacing: 4%;
+  --text-48M--font-weight: 500;
+
+  --text-36M: 36px;
+  --text-36M--letter-spacing: 4%;
+  --text-36M--font-weight: 500;
+
+  --text-36R: 36px;
+  --text-36R--letter-spacing: 4%;
+  --text-36R--font-weight: 400;
+
+  --text-32M: 32px;
+  --text-32M--line-height: 42px;
+  --text-32M--letter-spacing: 4%;
+  --text-32M--font-weight: 500;
+
+  --text-20M: 20px;
+  --text-20M--letter-spacing: 4%;
+  --text-20M--font-weight: 500;
+
+  --text-20R: 20px;
+  --text-20R--letter-spacing: 4%;
+  --text-20R--font-weight: 400;
+
+  --text-16M: 16px;
+  --text-16M--line-height: 26px;
+  --text-16M--letter-spacing: 4%;
+  --text-16M--font-weight: 500;
+
+  --text-16R: 16px;
+  --text-16R--line-height: 26px;
+  --text-16R--letter-spacing: 4%;
+  --text-16R--font-weight: 400;
+
+  --text-15R: 15px;
+  --text-15R--line-height: 28px;
+  --text-15R--letter-spacing: 4%;
+  --text-15R--font-weight: 400;
+
+  --text-14R: 14px;
+  --text-14R--letter-spacing: 4%;
+  --text-14R--font-weight: 400;
+}
+
+:root {
+  --font-sans: var(--font-NotoSansTC);
+}
+
+body {
+  font-family: var(--font-sans);
+}
