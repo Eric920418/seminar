@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/Button";
 
 export const VideoVision = () => {
@@ -7,29 +6,9 @@ export const VideoVision = () => {
       <div className="w-[1312px] mx-auto flex items-center space-x-[64px]">
         <div className="w-[608px] flex flex-col items-start">
           <div className="text-16M text-primary ">video</div>
-          <div className="relative">
-            <div className="text-black text-48M  relative z-10">​會後影片​</div>
-            <div className="z-0 transform translate-y-[-20px]">
-              <Image
-                src="/標題/Rectangle 249.svg"
-                alt="Rectangle"
-                width={200}
-                height={28}
-              />
-            </div>
-            <div className="text-black text-20R  mt-[64px] max-w-[527px]">
-              促進學術與實務交流，提供跨領域學習平台，支持師資培育發展，並協助大學與各教育階段融合創新教學實務
-            </div>
-            <div className="mt-[64px] ">
-              <Button
-                text="更多​會議直播回放"
-                textSize="text-20M"
-                textColor="text-white"
-                bgColor="bg-third"
-                padding="p-[24px_32px_24px_32px]"
-                src="/button/arrow_right_2.svg"
-              ></Button>
-            </div>
+          <div className="relative w-fit">
+            <div className="text-black text-48M  relative z-10">會後影片</div>
+            <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
         </div>
         <div>

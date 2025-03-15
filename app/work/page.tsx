@@ -27,16 +27,16 @@ export default function Page() {
         }}
       >
         <div className="text-center">
-          <div className="text-third text-16M ">Keynote Speech​</div>
-          <div className="text-black text-48M ">主​題演講</div>
+          <div className="text-third text-16M ">Workshop​​​</div>
+          <div className="text-black text-48M ">工作坊​​</div>
         </div>
       </div>
 
-      <div className="flex h-[496px]">
+      <div className="flex h-[696px]">
         <div
           className="flex justify-end items-center flex-1 pe-[128px]"
           style={{
-            backgroundImage: "url('/banner/Frame 775.png')",
+            backgroundImage: "url('/banner/Frame 777.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -44,17 +44,22 @@ export default function Page() {
         >
           <div className="text-start w-[334px]">
             <div className="text-white text-32M ">
-              教材教法創新與師資培育交流論壇
+              素養導向﻿教學方法創新應用嘉年華
             </div>
           </div>
         </div>
         <div className="bg-[#B080CA1A] flex-1 ps-[128px] flex items-center">
           <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
-            預定邀請國內外對教材教法素有專精之學者數名，除了探討不同國家
-            之師資培育制度特色、重要政策以及當前整體師資培育所面臨的挑戰
-            等面向，同時探討應用於各領域之 PBL、現象本位、AI 教育及跨領域
-            教學學習等創新教學方法，進而瞭解當前國際趨勢下的師資培育變革
-            趨勢，以及教材教法創新與實踐，促進學術交流與師資培育合作。
+            整合現場教學專家教師、國內知名創新教育或具備實務經驗之講師、
+            師培大學相關科系，以及各大領域教學研究中心等師資培育課程教學
+            投入者，針對未來教師教學所需之跨領域素養導向課程發展、教學設
+            計與學習評量等知能(例如概念為本教學、現象本位教學、DFC 教學、
+            AI-pedagogy、數位平臺應用與多元評量、探究與實作......)，分別提
+            供不同角度提出創新教學理念與實作之分享嘉年華，期能更強化教材
+            教法研究與教學之影響與效益。另外，也預計邀請師資培育教學實踐
+            相關優良計畫之授課教師及師資生，分享其教學理念設計以及師資生
+            學習參與，或安排場次邀請師資生發表參與師資培育課程或教育實踐
+            研究之經驗反思。
           </div>
         </div>
       </div>

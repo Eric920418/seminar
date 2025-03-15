@@ -21,12 +21,11 @@ export const NewVision = () => {
     <div className="w-full  pt-[128px] pb-[160px]">
       <div className="w-[1312px] mx-auto flex-col justify-start">
         <div className="text-16M text-primary">NEW</div>
-        <Image
-          src="/標題/Frame 767.svg"
-          alt="Example"
-          width={200}
-          height={66}
-        />
+        <div className="relative w-fit">
+          <div className="text-black text-48M  relative z-10">最新消息</div>
+          <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
+        </div>
+
         <div className="mt-[64px]  bg-[#FFFFFF] p-[32px] rounded-[40px]">
           {card.map((item, index) => (
             <div key={index} className="p-[32px] flex items-center">

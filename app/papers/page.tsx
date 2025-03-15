@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/Image";
 
 import { Results } from "@/components/Papers/Results";
 import { Topics } from "@/components/Papers/Topics";
 import { Oral } from "@/components/Papers/Oral";
+import { Poster } from "@/components/Papers/Poster";
 
 function FadeIn({ children }) {
   const [visible, setVisible] = useState(false);
@@ -30,7 +30,7 @@ export default function page() {
     { title: "論文摘要審查結果公告", component: <Results /> },
     { title: "徵文主題與論文格式", component: <Topics /> },
     { title: "口頭發表場次", component: <Oral /> },
-    { title: "海報發表場次" },
+    { title: "海報發表場次", component: <Poster /> },
   ];
 
   const [focus, setFocus] = useState(nav.map((_, i) => i === 0));

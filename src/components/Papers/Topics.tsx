@@ -1,23 +1,16 @@
 import { QRCodeCanvas } from "qrcode.react";
-import Image from "next/Image";
 import Link from "next/link";
 export const Topics = () => {
   return (
     <div className="flex flex-col w-full max-w-[976px]">
       <div className="text-16M text-primary">Topics & Paper Format</div>
-      <div className="relative">
+      <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">
           徵文主題與論文格式
         </div>
-        <div className="z-0 transform translate-y-[-20px]">
-          <Image
-            src="/標題/Rectangle 249.svg"
-            alt="Rectangle"
-            width={200}
-            height={10}
-          />
-        </div>
+        <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
+
       <div className="mt-[64px]">
         <div className="text-secondary text-20M ">學術論文發表</div>
         <div className="mt-[24px] text-[#252F38B2] text-16R ">

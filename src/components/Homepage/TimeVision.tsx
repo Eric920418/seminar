@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/Button";
 
 export const TimeVision = () => {
@@ -6,12 +5,11 @@ export const TimeVision = () => {
     <div className="w-full  pt-[128px] pb-[160px]">
       <div className="w-full max-w-[1314px] mx-auto ">
         <div className="text-16M text-primary">NEW</div>
-        <Image
-          src="/標題/Frame 777.svg"
-          alt="Example"
-          width={200}
-          height={66}
-        />
+        <div className="relative w-fit">
+          <div className="text-black text-48M  relative z-10">重要時刻</div>
+          <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
+        </div>
+
         <div className="mt-[64px] flex flex-wrap  justify-start gap-[32px]">
           <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
             <div className="w-[48px] h-[48px] rounded-[40px] bg-primary flex justify-center items-center">

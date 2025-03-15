@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export const OrganizersVision = () => {
   const card = [
     { title: "主辦單位", content: "中華民國（台灣）教育部" },
@@ -16,18 +14,9 @@ export const OrganizersVision = () => {
       <div className="w-[1312px] mx-auto flex items-center space-x-[64px]">
         <div className="w-[608px] flex flex-col items-start">
           <div className="text-16M text-primary ">Organizers</div>
-          <div className="relative">
-            <div className="text-black text-48M  relative z-10">
-              ​會議​​組成
-            </div>
-            <div className="z-0 transform translate-y-[-20px]">
-              <Image
-                src="/標題/Rectangle 249.svg"
-                alt="Rectangle"
-                width={200}
-                height={28}
-              />
-            </div>
+          <div className="relative w-fit">
+            <div className="text-black text-48M  relative z-10">會議​​組成</div>
+            <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
         </div>
         <div className="bg-[#FFFFFF] rounded-[40px] p-[32px] flex flex-col gap-[8px]">

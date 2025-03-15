@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { PeopleCard } from "@/components/Speech/PeopleCard";
 import Image from "next/image";
-export const Card = () => {
+export const SpeechCard = ({ summary }) => {
   const people = [{ name: "ee" }, { name: "ee" }, { name: "ee" }];
   const [showDetail, setShowDetail] = useState(false);
   const contentRef = useRef(null);
@@ -14,7 +14,7 @@ export const Card = () => {
     }
   }, [showDetail]);
   return (
-    <div className="mt-[64px] w-fit h-fit mx-auto p-[48px] bg-white rounded-[40px] transition-all duration-500 ease-in-out">
+    <div className="max-w-[1200px] mt-[64px] w-fit h-fit mx-auto p-[48px] bg-white rounded-[40px] transition-all duration-500 ease-in-out">
       <div className="flex space-x-[64px]">
         <div className="bg-[#FFFBEE] p-[24px] rounded-[24px] flex flex-col items-center max-h-[272px]">
           <div className="text-black text-32M font-NotoSansTC">11:45</div>
@@ -97,6 +97,25 @@ export const Card = () => {
         className="flex flex-col  overflow-hidden transition-all duration-500 ease-in-out"
         style={{ maxHeight: showDetail ? `${height}px` : "0px" }}
       >
+        <div>
+          {summary && (
+            <>
+              <div className="border my-[48px] border-[#252F381A]"></div>
+              <div className="p-[32px]">
+                <div className="text-secondary text-20M">摘要​​</div>
+                <div className="mt-[32px] text-black text-16R">
+                  近年來，翻轉教學與大型線上公開課程（MOOCs）等多元模式的興起，使大專課堂面貌漸有轉變。然而，就外語教學而言，教師常受教學進度與檢定考試限制，只能依循進度教授字彙、文法、句型，難以真正翻轉。學習者亦因備考壓力而忽略思考外語學習意義。
+                  本研究以應用日語系高年級翻譯課程為對象，嘗試運用翻轉教學改變傳統翻譯課堂。首先，要求學生走出教室，從嘉義市街頭餐廳招牌或菜單中蒐集錯誤日文譯文作為翻譯素材；再結合研究者執行的農委會農糧署「農民實踐示範計畫」，協助嘉義老街冰品店完成芒果冰菜單之日譯稿。
+                  <br />
+                  教學設計上，採用合作式翻譯教學與小組合作評量，彌補傳統翻譯教學的不足。同時，透過同儕討論、問題解決及自主學習，培養學生團隊精神並完成翻譯任務。由於成果能立即運用於真實情境，學生在每次翻譯時均更謹慎，也得以更深入體驗翻譯實務的需求與價值。
+                </div>
+                <div className="mt-[32px] text-[#252F3880] text-16R">
+                  關鍵字：​教學實踐、中日翻譯、課程設計
+                </div>
+              </div>
+            </>
+          )}
+        </div>
         <div ref={contentRef}>
           {people.map((_, i) => (
             <PeopleCard key={i} />

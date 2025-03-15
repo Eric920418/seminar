@@ -1,4 +1,3 @@
-import Image from "next/Image";
 import Link from "next/link";
 export const Online = () => {
   return (
@@ -6,17 +5,11 @@ export const Online = () => {
       <div className="text-16M text-primary ">
         Online Registration and Rules
       </div>
-      <div className="relative">
+      <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">線上報名與規則</div>
-        <div className="z-0 transform translate-y-[-20px]">
-          <Image
-            src="/標題/Rectangle 249.svg"
-            alt="Rectangle"
-            width={200}
-            height={28}
-          />
-        </div>
+        <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
+
       <div className="mt-[64px] text-16R text-[#252F38B2]  ">
         感謝您對本研討會的支持與關注！如果您有意參加，請先填寫以下的 Google
         線上報名表單，當報名截止時可查看一般與會者

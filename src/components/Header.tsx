@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 export const Header = () => {
+  const router = useRouter();
   const nav = [
     {
       title: "最新消息",
+      path: "/",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -17,6 +19,7 @@ export const Header = () => {
     },
     {
       title: "ICTE​會議​資訊",
+      path: "/meeting",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -29,6 +32,7 @@ export const Header = () => {
     },
     {
       title: "主​題演講",
+      path: "/speech",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -41,6 +45,7 @@ export const Header = () => {
     },
     {
       title: "圓桌論壇",
+      path: "/forum",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -53,6 +58,7 @@ export const Header = () => {
     },
     {
       title: "工作坊",
+      path: "/work",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -65,6 +71,7 @@ export const Header = () => {
     },
     {
       title: "教學教具展​​​",
+      path: "/exhibition",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -77,6 +84,7 @@ export const Header = () => {
     },
     {
       title: "ICTE論文",
+      path: "/papers",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -89,6 +97,7 @@ export const Header = () => {
     },
     {
       title: "影片專區",
+      path: "/video",
       inSelect: [
         { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
@@ -130,8 +139,19 @@ export const Header = () => {
     );
   };
 
+  const closeAllMenus = () => {
+    setOpenStates(nav.map(() => false));
+    setSmOpenStates(nav.map((item) => item.inSelect.map(() => false)));
+  };
+
+  const handleNavigation = (path) => {
+    if (path) {
+      router.push(path);
+    }
+  };
+
   return (
-    <div className="p-[32px] flex fixed top-0 w-full justify-between">
+    <div className="p-[32px] flex fixed top-0 w-full justify-between z-[100]">
       <div className="bg-[#FFFFFF80] w-[269px] h-[90px] rounded-[40px] "></div>
       <div className="bg-[#FFFFFF80] w-fit h-[90px] rounded-[40px] flex items-center space-x-[64px] px-[64px] ">
         {nav.map((navItem, navIndex) => (
@@ -139,7 +159,8 @@ export const Header = () => {
             <div className="relative">
               <div
                 className="text-16M text-black  text-nowrap cursor-pointer"
-                onClick={() => toggleMenu(navIndex)}
+                onClick={() => handleNavigation(navItem.path)}
+                onMouseEnter={() => toggleMenu(navIndex)}
               >
                 {navItem.title}
               </div>

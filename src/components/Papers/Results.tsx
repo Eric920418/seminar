@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
+
 import { Tab } from "@/components/Tab";
 
 export const Results = () => {
@@ -71,19 +71,13 @@ export const Results = () => {
   return (
     <div className="flex flex-col w-full max-w-[976px]">
       <div className="text-16M text-primary">Abstract Review Results</div>
-      <div className="relative">
+      <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">
           論文摘要審查結果公告
         </div>
-        <div className="z-0 transform translate-y-[-20px]">
-          <Image
-            src="/標題/Rectangle 249.svg"
-            alt="Rectangle"
-            width={200}
-            height={10}
-          />
-        </div>
+        <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
+
       <div className="mt-[64px] me-auto">
         <Tab
           titles={["口頭​論文", "海報論文​"]}

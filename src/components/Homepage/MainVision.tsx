@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/Button"; // 使用 alias
 
 export const MainVision = () => {

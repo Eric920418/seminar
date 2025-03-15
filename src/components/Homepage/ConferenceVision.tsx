@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/Button";
 
 export const ConferenceVision = () => {
@@ -7,21 +6,11 @@ export const ConferenceVision = () => {
       <div className="w-[1312px] mx-auto flex items-center space-x-[64px]">
         <div className="w-[608px] flex flex-col items-start">
           <div className="text-16M text-primary ">conference manual</div>
-          <div className="relative">
+          <div className="relative w-fit">
             <div className="text-black text-48M  relative z-10">
               會議​​手冊下載
             </div>
-            <div className="z-0 transform translate-y-[-20px]">
-              <Image
-                src="/標題/Rectangle 249.svg"
-                alt="Rectangle"
-                width={200}
-                height={28}
-              />
-            </div>
-            <div className="text-black text-20R  mt-[64px]">
-              彩色完整版會議手冊版可以點此下載PDF。
-            </div>
+            <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
         </div>
         <div className="bg-[#F0F3F8] rounded-[40px] py-[64px]">
