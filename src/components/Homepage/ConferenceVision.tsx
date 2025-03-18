@@ -3,8 +3,8 @@ import { Button } from "@/components/Button";
 export const ConferenceVision = () => {
   return (
     <div className="w-full  pt-[128px] pb-[160px]">
-      <div className="w-[1312px] mx-auto flex items-center space-x-[64px]">
-        <div className="w-[608px] flex flex-col items-start">
+      <div className="w-full justify-center flex-row laptop:flex items-center space-x-[64px]">
+        <div className="desktop:w-[608px] flex flex-col items-start">
           <div className="text-16M text-primary ">conference manual</div>
           <div className="relative w-fit">
             <div className="text-black text-48M  relative z-10">
@@ -14,7 +14,7 @@ export const ConferenceVision = () => {
           </div>
         </div>
         <div className="bg-[#F0F3F8] rounded-[40px] py-[64px]">
-          <div className="w-[258px] h-[365px] bg-black mx-[191px]"></div>
+          <div className=" desktop:w-[258px] h-[365px] bg-black  desktop:mx-[191px]"></div>
           <div className="mt-[32px] mx-auto w-fit">
             <Button
               text="手冊下載"

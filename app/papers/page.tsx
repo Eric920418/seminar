@@ -25,7 +25,7 @@ function FadeIn({ children }) {
   );
 }
 
-export default function page() {
+export default function Page() {
   const nav = [
     { title: "論文摘要審查結果公告", component: <Results /> },
     { title: "徵文主題與論文格式", component: <Topics /> },

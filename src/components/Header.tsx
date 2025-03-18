@@ -1,6 +1,8 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+
 export const Header = () => {
   const router = useRouter();
   const nav = [
@@ -110,16 +112,19 @@ export const Header = () => {
     },
   ];
 
-  // openStates 為各選單開關狀態，預設全部關閉
+  // 電腦版狀態
   const [openStates, setOpenStates] = useState(nav.map(() => false));
-  // smOpenStates 為各子選單開關狀態，預設全部關閉
   const [smOpenStates, setSmOpenStates] = useState(
     nav.map((item) => item.inSelect.map(() => false))
   );
+  const closeTimer = useRef(null);
 
   const toggleMenu = (navIndex) => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+    }
     setOpenStates((prev) =>
-      prev.map((state, i) => (i === navIndex ? !state : false))
+      prev.map((state, i) => (i === navIndex ? true : false))
     );
   };
 
@@ -133,7 +138,7 @@ export const Header = () => {
     setSmOpenStates((prev) =>
       prev.map((item, i) =>
         i === navIndex
-          ? item.map((state, j) => (j === inSelectIndex ? !state : false))
+          ? item.map((state, j) => (j === inSelectIndex ? true : false))
           : item
       )
     );
@@ -150,61 +155,208 @@ export const Header = () => {
     }
   };
 
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => {
+      closeAllMenus();
+    }, 200);
+  };
+
+  const handleMouseEnter = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+    }
+  };
+
+  // 手機版狀態與函式
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSubMenu, setMobileSubMenu] = useState(nav.map(() => false));
+  const [mobileSmSubMenu, setMobileSmSubMenu] = useState(
+    nav.map((item) => item.inSelect.map(() => false))
+  );
+
+  const toggleMobileSubMenu = (navIndex) => {
+    setMobileSubMenu((prev) =>
+      prev.map((state, i) => (i === navIndex ? !state : state))
+    );
+  };
+
+  const toggleMobileSmSubMenu = (navIndex, inSelectIndex) => {
+    if (
+      !nav[navIndex].inSelect[inSelectIndex].smSelect ||
+      nav[navIndex].inSelect[inSelectIndex].smSelect.length === 0
+    ) {
+      return;
+    }
+    setMobileSmSubMenu((prev) =>
+      prev.map((item, i) =>
+        i === navIndex
+          ? item.map((state, j) => (j === inSelectIndex ? !state : state))
+          : item
+      )
+    );
+  };
+
   return (
-    <div className="p-[32px] flex fixed top-0 w-full justify-between z-[100]">
-      <div className="bg-[#FFFFFF80] w-[269px] h-[90px] rounded-[40px] "></div>
-      <div className="bg-[#FFFFFF80] w-fit h-[90px] rounded-[40px] flex items-center space-x-[64px] px-[64px] ">
-        {nav.map((navItem, navIndex) => (
-          <div key={navIndex}>
-            <div className="relative">
-              <div
-                className="text-16M text-black  text-nowrap cursor-pointer"
-                onClick={() => handleNavigation(navItem.path)}
-                onMouseEnter={() => toggleMenu(navIndex)}
-              >
-                {navItem.title}
-              </div>
-              <div
-                className={`absolute left-1/2 transform -translate-x-1/2 top-16 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
-                  openStates[navIndex]
-                    ? "opacity-100 scale-100"
-                    : "opacity-0 scale-95 pointer-events-none"
-                }`}
-              >
-                {navItem.inSelect.map((item, inSelectIndex) => (
-                  <div key={inSelectIndex} className="relative">
+    <>
+      {/* 電腦版 Header */}
+      <div className="hidden laptop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
+        <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px]"></div>
+
+        <div className="bg-[#FFFFFF80] rounded-[40px] flex items-center space-x-[64px] px-[64px]">
+          {nav.map((navItem, navIndex) => (
+            <div
+              key={navIndex}
+              className="h-full w-full flex items-center relative"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="relative">
+                <div
+                  className="text-16M text-black text-nowrap cursor-pointer"
+                  onClick={() => handleNavigation(navItem.path)}
+                  onMouseEnter={() => toggleMenu(navIndex)}
+                >
+                  {navItem.title}
+                </div>
+                <div
+                  className={`absolute left-1/2 transform -translate-x-1/2 top-16 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
+                    openStates[navIndex]
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95 pointer-events-none"
+                  }`}
+                >
+                  {navItem.inSelect.map((item, inSelectIndex) => (
                     <div
-                      className="text-16M text-black text-nowrap  text-center cursor-pointer"
-                      onClick={() => toggleSmMenu(navIndex, inSelectIndex)}
+                      key={inSelectIndex}
+                      className="relative"
+                      onMouseEnter={() => {
+                        toggleMenu(navIndex);
+                        toggleSmMenu(navIndex, inSelectIndex);
+                      }}
                     >
-                      {item.title}
-                    </div>
-                    {item.smSelect && item.smSelect.length > 0 && (
-                      <div
-                        className={`absolute transform -translate-x-1/2 -translate-y-12 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
-                          smOpenStates[navIndex] &&
-                          smOpenStates[navIndex][inSelectIndex]
-                            ? "opacity-100 scale-100"
-                            : "opacity-0 scale-95 pointer-events-none"
-                        } ${navIndex === 7 ? "right-22" : "left-50"}`}
-                      >
-                        {item.smSelect.map((subItem, subIndex) => (
-                          <div
-                            key={subIndex}
-                            className="text-16M text-black text-nowrap  text-center"
-                          >
-                            {subItem.title}
-                          </div>
-                        ))}
+                      <div className="text-16M text-black text-nowrap text-center cursor-pointer">
+                        {item.title}
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {item.smSelect && item.smSelect.length > 0 && (
+                        <div
+                          className={`absolute transform -translate-x-1/2 -translate-y-12 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
+                            smOpenStates[navIndex] &&
+                            smOpenStates[navIndex][inSelectIndex]
+                              ? "opacity-100 scale-100"
+                              : "opacity-0 scale-95 pointer-events-none"
+                          } ${navIndex === 7 ? "right-22" : "left-50"}`}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          {item.smSelect.map((subItem, subIndex) => (
+                            <div
+                              key={subIndex}
+                              className="text-16M text-black text-nowrap text-center"
+                            >
+                              {subItem.title}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* 手機版 Header */}
+      <div className="laptop:hidden fixed top-0 left-0 w-full z-[30] bg-yellow-50 shadow-md">
+        <div className="flex items-center justify-between p-4">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-2xl"
+          >
+            {mobileMenuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+        {mobileMenuOpen && (
+          <div className="border-t border-gray-200">
+            {nav.map((navItem, navIndex) => (
+              <div key={navIndex} className="border-b border-gray-200">
+                <div className="flex justify-between items-center p-4">
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleNavigation(navItem.path);
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    {navItem.title}
+                  </span>
+                  {navItem.inSelect && navItem.inSelect.length > 0 && (
+                    <button onClick={() => toggleMobileSubMenu(navIndex)}>
+                      {mobileSubMenu[navIndex] ? "-" : "+"}
+                    </button>
+                  )}
+                </div>
+                {mobileSubMenu[navIndex] && (
+                  <div className="pl-4">
+                    {navItem.inSelect.map((item, inSelectIndex) => (
+                      <div
+                        key={inSelectIndex}
+                        className="border-b border-gray-100"
+                      >
+                        <div className="flex justify-between items-center p-4">
+                          <span
+                            className="cursor-pointer"
+                            onClick={() => {
+                              // 可在此加入路由或其他行為
+                            }}
+                          >
+                            {item.title}
+                          </span>
+                          {item.smSelect && item.smSelect.length > 0 && (
+                            <button
+                              onClick={() =>
+                                toggleMobileSmSubMenu(navIndex, inSelectIndex)
+                              }
+                            >
+                              {mobileSmSubMenu[navIndex] &&
+                              mobileSmSubMenu[navIndex][inSelectIndex]
+                                ? "-"
+                                : "+"}
+                            </button>
+                          )}
+                        </div>
+                        {item.smSelect &&
+                          item.smSelect.length > 0 &&
+                          mobileSmSubMenu[navIndex] &&
+                          mobileSmSubMenu[navIndex][inSelectIndex] && (
+                            <div className="pl-4">
+                              {item.smSelect.map((subItem, subIndex) => (
+                                <div
+                                  key={subIndex}
+                                  className="p-4 border-b border-gray-50"
+                                >
+                                  <span
+                                    className="cursor-pointer"
+                                    onClick={() => {
+                                      // 可在此加入路由或其他行為
+                                    }}
+                                  >
+                                    {subItem.title}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };

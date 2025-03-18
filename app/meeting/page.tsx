@@ -28,7 +28,7 @@ function FadeIn({ children }) {
   );
 }
 
-export default function page() {
+export default function Page() {
   const nav = [
     { title: "會議議程", component: <Agenda /> },
     { title: "重要時程", component: <ImportantDates /> },

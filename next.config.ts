@@ -1,11 +1,10 @@
-import type { NextConfig } from "next";
+const withVideos = require("next-videos");
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   webpack: (config, { isServer }) => {
     config.resolve.alias.canvas = false;
-
     return config;
   },
 };
 
-export default nextConfig;
+module.exports = withVideos(nextConfig);

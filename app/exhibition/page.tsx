@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, type ReactNode } from "react";
 
 import { Project } from "@/components/Exhibition/Project";
 import { Excellence } from "@/components/Exhibition/Excellence";
-function FadeIn({ children }) {
+function FadeIn({ children }: { children: ReactNode }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function FadeIn({ children }) {
   );
 }
 
-export default function page() {
+export default function Page() {
   const nav = [
     { title: "作品展示​​", component: <Project /> },
     { title: "卓越的學習與教學​短講​流程", component: <Excellence /> },

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-import { PDFViewer } from "@/components/PDFViewer";
+import { PDFViewer } from "@/components/Papers/PDFViewer";
 
 export const Poster = () => {
   const card = [

@@ -22,7 +22,7 @@ export const Tab = ({
         {titles.map((title, index) => (
           <button
             key={index}
-            className={`flex-1 text-center pb-[8px] px-[32px] text-16M ${
+            className={`flex-1 text-center pb-[8px] px-[32px] text-16M  text-nowrap ${
               activeTab === index
                 ? `${
                     index === 0

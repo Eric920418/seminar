@@ -57,10 +57,10 @@ export const Footer = () => {
     },
   ];
   return (
-    <div className="bg-[#6EC7B9] p-[128px]">
+    <div className="bg-[#6EC7B9] p-[32px] laptop:p-[64px] desktop:p-[128px]">
       <div className="flex justify-between ">
-        <div className="bg-[#FFFFFF80] w-[205px] h-[64px] rounded-[40px] "></div>
-        <div className="flex space-x-[56px]">
+        <div className="bg-[#FFFFFF80] desktop:w-[205px] h-[64px] rounded-[40px] "></div>
+        <div className="flex space-x-[56px] overflow-x-scroll">
           {nav.map((item, index) => (
             <div key={index}>
               <div className="text-white text-20M  text-nowrap">
@@ -77,7 +77,7 @@ export const Footer = () => {
           ))}
         </div>
       </div>
-      <div className="mt-[128px] flex justify-between py-[10px]">
+      <div className="mt-[128px] flex justify-between desktop:py-[10px] overflow-auto">
         <div className="text-white text-14R ">
           Copyright © 2025 第12屆師資培育國際學術研討會 保留一切權利。
         </div>

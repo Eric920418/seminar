@@ -11,14 +11,34 @@
   "dependencies": {
     "@apollo/client": "^3.13.1",
     "@apollo/link-error": "2.0.0-beta.3",
+    "@ckeditor/ckeditor5-build-classic": "^44.3.0",
+    "@ckeditor/ckeditor5-react": "^9.5.0",
+    "@graphql-tools/load-files": "^7.0.1",
+    "@graphql-tools/merge": "^9.0.24",
+    "@graphql-tools/schema": "^10.0.23",
+    "@prisma/client": "^6.5.0",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
     "@tailwindcss/cli": "^4.0.9",
+    "ckeditor5": "^44.3.0",
+    "ckeditor5-premium-features": "^44.3.0",
+    "framer-motion": "^12.5.0",
     "graphql": "^16.10.0",
+    "graphql-http": "^1.22.4",
+    "graphql-tag": "^2.12.6",
+    "graphql-yoga": "^5.13.1",
+    "lucide-react": "^0.482.0",
     "next": "15.2.0",
+    "next-transpile-modules": "^10.0.1",
+    "next-videos": "1.4.1",
+    "prisma": "^6.5.0",
     "qrcode.react": "^4.2.0",
+    "ra-data-fakerest": "^5.6.3",
+    "ra-data-graphql": "^5.6.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-modal": "^3.16.3",
+    "yogo": "^0.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.0",
@@ -40,8 +60,16 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
+      "@prisma/client",
       "canvas",
+      "protobufjs",
       "sharp"
+    ],
+    "ignoredBuiltDependencies": [
+      "@prisma/engines",
+      "esbuild",
+      "fsevents",
+      "prisma"
     ]
   }
 }

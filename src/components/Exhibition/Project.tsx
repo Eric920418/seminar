@@ -32,7 +32,6 @@ export const Project = () => {
   ];
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
 
   const [containerFade, setContainerFade] = useState(true);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -42,13 +41,10 @@ export const Project = () => {
       clearTimeout(timeoutRef.current);
     }
 
-    setAnimatingIndex(index);
-
     setContainerFade(false);
 
     timeoutRef.current = setTimeout(() => {
       setSelectedIndex(index);
-      setAnimatingIndex(null);
 
       setContainerFade(true);
     }, 500);
@@ -99,7 +95,6 @@ export const Project = () => {
       {selectedIndex === null && (
         <div className="mt-[64px] grid grid-cols-4 gap-[32px]">
           {card.map((item, index) => {
-            const isAnimating = animatingIndex === index;
             return (
               <div
                 key={index}
@@ -140,12 +135,13 @@ export const Project = () => {
               />
             </div>
             <div className="w-[800px] h-[450px] rounded-[40px]">
-              <img
+              <Image
                 src="/banner/img5.jpeg"
                 alt="img5"
                 className="rounded-[40px]"
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                fill
+                width={800}
+                height={450}
               />
             </div>
             <div className="w-[56px] h-[56px] rounded-[100px] border border-[#252F381A] flex justify-center items-center">

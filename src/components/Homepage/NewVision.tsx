@@ -15,18 +15,24 @@ export const NewVision = () => {
       content:
         "與會名單已公佈，<a href='/success-list'>詳見2025成功錄取名單。</a>",
     },
+    {
+      year: "2025",
+      date: "02.28",
+      content:
+        "論文主會議論文之審稿結果已於 3 月 10 日發布。<br />感謝整個程序委員會團隊、程式共同主席、助理主席以及所有審稿人的辛勤付出。",
+    },
   ];
 
   return (
     <div className="w-full  pt-[128px] pb-[160px]">
-      <div className="w-[1312px] mx-auto flex-col justify-start">
+      <div className="w-full max-w-[1314px] mx-auto  flex flex-col ">
         <div className="text-16M text-primary">NEW</div>
         <div className="relative w-fit">
           <div className="text-black text-48M  relative z-10">最新消息</div>
           <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
         </div>
 
-        <div className="mt-[64px]  bg-[#FFFFFF] p-[32px] rounded-[40px]">
+        <div className="max-w-[1314px] mt-[64px]  bg-[#FFFFFF] p-[32px] rounded-[40px] ">
           {card.map((item, index) => (
             <div key={index} className="p-[32px] flex items-center">
               <div>

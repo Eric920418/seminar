@@ -1,0 +1,30 @@
+# 自定義 JSON scalar，需在伺服器端實作解析邏輯
+scalar JSON
+
+type HomePage {
+  id: ID!
+  section1: JSON
+  section2: JSON
+  section3: JSON
+  section4: JSON
+  section5: JSON
+  section6: JSON
+}
+
+type Query {
+  homePage: [HomePage!]!
+}
+
+# 這裡提供一個 Input 物件以便更新時可一次更新多個欄位
+input UpdateHomePageInput {
+  section1: JSON
+  section2: JSON
+  section3: JSON
+  section4: JSON
+  section5: JSON
+  section6: JSON
+}
+
+type Mutation {
+  updateHomePage(input: UpdateHomePageInput!): HomePage
+}

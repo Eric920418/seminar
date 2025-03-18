@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import { Worker, Viewer } from "@react-pdf-viewer/core";
+import { Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 

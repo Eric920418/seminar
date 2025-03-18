@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import { PeopleCard } from "@/components/Speech/PeopleCard";
-import { PDFViewer } from "@/components/PDFViewer";
+import { PDFViewer } from "@/components/Papers/PDFViewer";
 
 export const Oral = () => {
   const card = [

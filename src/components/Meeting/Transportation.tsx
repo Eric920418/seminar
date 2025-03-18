@@ -44,13 +44,13 @@ export const Transportation = () => {
       </div>
       <div className="mt-[64px]">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.514602372264!2d121.54103287637495!3d25.025035239983518!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442acfc5c3b7c31%3A0x16d7713efcf64c84!2z5ZyL56uL5Y-w5YyX5Y2X5Lqs5aSn5a245aSa5bC85aSa5Y-w5Y2X5Lqs5aSn!5e0!3m2!1szh-TW!2stw!4v1700000000000"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.2771475927175!2d121.54220407537628!3d25.024666977822424!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a908a8232611%3A0xeebfb2d71a5025c7!2z5ZyL56uL6Ie65YyX5pWZ6IKy5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1742190715283!5m2!1szh-TW!2stw"
           width="976"
           height="450"
-          style={{ border: 0 }}
           allowFullScreen
           loading="lazy"
-        />
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
     </div>
   );
