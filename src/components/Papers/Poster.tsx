@@ -3,53 +3,29 @@ import { useState, useRef, useEffect } from "react";
 
 import { PDFViewer } from "@/components/Papers/PDFViewer";
 
+const query = `
+  query paperPage {
+    paperPage {
+      section4
+    }
+  }
+`;
+
 export const Poster = () => {
-  const card = [
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "林品慈",
-      content: "從NPO展開場域協作的新可能—以屏東校訂課程輔導團為例",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-    {
-      title: "白玉蓮",
-      content: "卡那卡那富族語影音檔教學實施在幼生家庭之初探",
-    },
-  ];
+  const [card, setCard] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setCard(data.paperPage[0].section4.card);
+    }
+    fetchData();
+  }, []);
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
@@ -166,7 +142,7 @@ export const Poster = () => {
 
       {selectedIndex !== null && (
         <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD] w-[976px]">
-          <PDFViewer />
+          <PDFViewer src={card[selectedIndex].id} />
         </div>
       )}
     </div>

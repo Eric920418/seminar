@@ -6,35 +6,42 @@ export const ImageUploader = ({ onImageUpload }) => {
   const [previewImage, setPreviewImage] = useState(null);
 
   // 當檔案選擇改變時
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // 產生圖片預覽（僅供前端顯示）
+    // 產生圖片預覽
     const previewURL = URL.createObjectURL(file);
     setPreviewImage(previewURL);
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const arrayBuffer = event.target.result;
-      const uint8Array = new Uint8Array(arrayBuffer);
+    // 建立 FormData 並附加檔案
+    const formData = new FormData();
+    formData.append("image", file);
 
-      // 構造 JSON 格式（但 data 為 Uint8Array，不是 Base64）
-      const jsonData = {
-        image: Array.from(uint8Array),
-      };
+    try {
+      // 呼叫 API 上傳檔案
+      const res = await fetch("/api/uploadImage", {
+        method: "POST",
+        body: formData,
+      });
 
-      if (onImageUpload) {
-        onImageUpload(jsonData);
+      if (!res.ok) {
+        console.error("上傳失敗");
+        return;
       }
-    };
-    reader.readAsArrayBuffer(file);
+
+      const data = await res.json();
+
+      onImageUpload(data);
+    } catch (error) {
+      console.error("上傳錯誤:", error);
+    }
   };
 
   return (
     <div>
       <div className="mt-[64px]">
-        {previewImage && (
+        {/* {previewImage && (
           <div className="mt-[16px]">
             <img
               src={previewImage}
@@ -42,7 +49,7 @@ export const ImageUploader = ({ onImageUpload }) => {
               style={{ maxWidth: "600px" }}
             />
           </div>
-        )}
+        )} */}
         <input
           className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 mt-[1rem]"
           type="file"

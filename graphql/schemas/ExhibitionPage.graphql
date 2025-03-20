@@ -1,0 +1,20 @@
+scalar JSON
+
+type ExhibitionPage {
+  id: ID!
+  section1: JSON
+  section2: JSON
+}
+
+type Query {
+  exhibitionPage: [ExhibitionPage!]!
+}
+
+input UpdateExhibitionPageInput {
+  section1: JSON
+  section2: JSON
+}
+
+type Mutation {
+  updateExhibitionPage(input: UpdateExhibitionPageInput!): ExhibitionPage
+}

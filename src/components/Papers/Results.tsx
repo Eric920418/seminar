@@ -1,11 +1,20 @@
 "use client";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { Tab } from "@/components/Tab";
+
+const query = `
+  query paperPage {
+    paperPage {
+      section1
+    }
+  }
+`;
 
 export const Results = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
+  const [card, setCard] = useState([]);
+  const [card2, setCard2] = useState([]);
 
   const handleTabChange = (index) => {
     setFadeIn(false);
@@ -14,59 +23,19 @@ export const Results = () => {
     return () => clearTimeout(timeout);
   };
 
-  const card = [
-    {
-      title: "謝宜晏、﻿李姿涵​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-    {
-      title: "謝宜晏、﻿李姿涵​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-    {
-      title: "謝宜晏、﻿李姿涵​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-    {
-      title: "謝宜晏、﻿李姿涵​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-  ];
-
-  const card2 = [
-    {
-      title: "吳書如​​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-    {
-      title: "吳書如​​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-    {
-      title: "吳書如​​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-    {
-      title: "吳書如​​",
-      content: "從認知到行動：提升台灣花蓮縣偏鄉地區居民永續生活品質之研究",
-      EnContent:
-        "From Perception to Action: A Study on Enhancing Sustainable Quality of Life among Rural Residents in Hualien County, Taiwan.",
-    },
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setCard(data.paperPage[0].section1.tab[0].card);
+      setCard2(data.paperPage[0].section1.tab[1].card);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="flex flex-col w-full max-w-[976px]">

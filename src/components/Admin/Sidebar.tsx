@@ -76,7 +76,7 @@ export const Sidebar = () => {
               活動
             </Link>
             <Link
-              href="/admin/teacher"
+              href="/admin/host"
               className="block px-4 py-2 hover:bg-gray-700"
             >
               講師

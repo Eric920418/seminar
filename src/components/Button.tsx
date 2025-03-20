@@ -8,10 +8,12 @@ export const Button = ({
   bgColor,
   padding,
   src,
+  onClick,
 }) => {
   return (
     <div
-      className={`w-fit ${bgColor} flex items-center gap-2 ${padding}  rounded-[100px]`}
+      className={`w-fit ${bgColor} flex items-center gap-2 ${padding}  rounded-[100px] cursor-pointer`}
+      onClick={onClick}
     >
       <span className={`${textColor} ${textSize} w-[150px]  text-nowrap`}>
         {text}

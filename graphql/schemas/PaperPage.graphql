@@ -1,0 +1,24 @@
+scalar JSON
+
+type PaperPage {
+  id: ID!
+  section1: JSON
+  section2: JSON
+  section3: JSON
+  section4: JSON
+}
+
+type Query {
+  paperPage: [PaperPage!]!
+}
+
+input UpdatePaperPageInput {
+  section1: JSON
+  section2: JSON
+  section3: JSON
+  section4: JSON
+}
+
+type Mutation {
+  updatePaperPage(input: UpdatePaperPageInput!): PaperPage
+}

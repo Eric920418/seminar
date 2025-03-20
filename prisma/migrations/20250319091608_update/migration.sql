@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "host" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "section1" JSONB NOT NULL,
+
+    CONSTRAINT "host_pkey" PRIMARY KEY ("id")
+);

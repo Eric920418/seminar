@@ -106,7 +106,6 @@ export const HomePage = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      console.log();
 
       if (data?.homePage[0]) {
         setEditorContents({
@@ -851,7 +850,6 @@ export const HomePage = () => {
             className="grid grid-cols-4 overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height5}px` }}
           >
-            <div className="my-3">{editorVideoURL}</div>
             <div className="my-3">
               <input
                 type="text"

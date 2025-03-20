@@ -10,23 +10,20 @@ export const Header = () => {
       title: "最新消息",
       path: "/",
       inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
         { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿", smSelect: [{ title: "最新消息" }] },
-        { title: "會議平面圖" },
+        { title: "手冊完整版" },
+        { title: "會後影片" },
+        { title: "會議組成", smSelect: [{ title: "最新消息" }] },
       ],
     },
     {
       title: "ICTE​會議​資訊",
       path: "/meeting",
       inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
+        { title: "會議議程" },
+        { title: "重要時刻" },
+        { title: "發表規則" },
+        { title: "線上報名規則" },
         { title: "交通" },
         { title: "住宿" },
         { title: "會議平面圖" },
@@ -35,80 +32,41 @@ export const Header = () => {
     {
       title: "主​題演講",
       path: "/speech",
-      inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
-      ],
+      inSelect: [],
     },
     {
       title: "圓桌論壇",
       path: "/forum",
-      inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
-      ],
+      inSelect: [],
     },
     {
       title: "工作坊",
       path: "/work",
-      inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
-      ],
+      inSelect: [],
     },
     {
       title: "教學教具展​​​",
       path: "/exhibition",
       inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
+        { title: "作品展示", smSelect: [{ title: "最新消息" }] },
+        { title: "卓越的學習與教學​短講​流程" },
       ],
     },
     {
       title: "ICTE論文",
       path: "/papers",
       inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
+        { title: "論文摘要審查結果公告" },
+        { title: "徵文主題與論文格式" },
+        { title: "海報發表場次" },
+        { title: "口頭發表場次" },
+        { title: "論文發表規則" },
       ],
     },
     {
       title: "影片專區",
       path: "/video",
-      inSelect: [
-        { title: "最新消息", smSelect: [{ title: "最新消息" }] },
-        { title: "重要時程" },
-        { title: "會議直播" },
-        { title: "線上報名與規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
-      ],
+      inSelect: [],
     },
   ];
 
@@ -218,49 +176,51 @@ export const Header = () => {
                 >
                   {navItem.title}
                 </div>
-                <div
-                  className={`absolute left-1/2 transform -translate-x-1/2 top-16 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
-                    openStates[navIndex]
-                      ? "opacity-100 scale-100"
-                      : "opacity-0 scale-95 pointer-events-none"
-                  }`}
-                >
-                  {navItem.inSelect.map((item, inSelectIndex) => (
-                    <div
-                      key={inSelectIndex}
-                      className="relative"
-                      onMouseEnter={() => {
-                        toggleMenu(navIndex);
-                        toggleSmMenu(navIndex, inSelectIndex);
-                      }}
-                    >
-                      <div className="text-16M text-black text-nowrap text-center cursor-pointer">
-                        {item.title}
-                      </div>
-                      {item.smSelect && item.smSelect.length > 0 && (
-                        <div
-                          className={`absolute transform -translate-x-1/2 -translate-y-12 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
-                            smOpenStates[navIndex] &&
-                            smOpenStates[navIndex][inSelectIndex]
-                              ? "opacity-100 scale-100"
-                              : "opacity-0 scale-95 pointer-events-none"
-                          } ${navIndex === 7 ? "right-22" : "left-50"}`}
-                          onMouseEnter={handleMouseEnter}
-                          onMouseLeave={handleMouseLeave}
-                        >
-                          {item.smSelect.map((subItem, subIndex) => (
-                            <div
-                              key={subIndex}
-                              className="text-16M text-black text-nowrap text-center"
-                            >
-                              {subItem.title}
-                            </div>
-                          ))}
+                {navItem.inSelect && navItem.inSelect.length > 0 && (
+                  <div
+                    className={`absolute left-1/2 transform -translate-x-1/2 top-16 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
+                      openStates[navIndex]
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-95 pointer-events-none"
+                    }`}
+                  >
+                    {navItem.inSelect.map((item, inSelectIndex) => (
+                      <div
+                        key={inSelectIndex}
+                        className="relative"
+                        onMouseEnter={() => {
+                          toggleMenu(navIndex);
+                          toggleSmMenu(navIndex, inSelectIndex);
+                        }}
+                      >
+                        <div className="text-16M text-black text-nowrap text-center cursor-pointer">
+                          {item.title}
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                        {item.smSelect && item.smSelect.length > 0 && (
+                          <div
+                            className={`absolute transform -translate-x-1/2 -translate-y-12 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
+                              smOpenStates[navIndex] &&
+                              smOpenStates[navIndex][inSelectIndex]
+                                ? "opacity-100 scale-100"
+                                : "opacity-0 scale-95 pointer-events-none"
+                            } ${navIndex === 7 ? "right-22" : "left-50"}`}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                          >
+                            {item.smSelect.map((subItem, subIndex) => (
+                              <div
+                                key={subIndex}
+                                className="text-16M text-black text-nowrap text-center"
+                              >
+                                {subItem.title}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

@@ -1,27 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export const NewVision = () => {
-  const card = [
-    {
-      year: "2025",
-      date: "03.10",
-      content:
-        "論文主會議論文之審稿結果已於 3 月 10 日發布。<br />感謝整個程序委員會團隊、程式共同主席、助理主席以及所有審稿人的辛勤付出。",
-    },
-    {
-      year: "2025",
-      date: "03.10",
-      content:
-        "與會名單已公佈，<a href='/success-list'>詳見2025成功錄取名單。</a>",
-    },
-    {
-      year: "2025",
-      date: "02.28",
-      content:
-        "論文主會議論文之審稿結果已於 3 月 10 日發布。<br />感謝整個程序委員會團隊、程式共同主席、助理主席以及所有審稿人的辛勤付出。",
-    },
-  ];
+const query = `
+  query homePage {
+    homePage {
+      section2
+    }
+  }
+`;
+
+export const NewVision = async () => {
+  const res = await fetch("http://localhost:3000/api/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  });
+  const { data } = await res.json();
 
   return (
     <div className="w-full  pt-[128px] pb-[160px]">
@@ -33,7 +27,7 @@ export const NewVision = () => {
         </div>
 
         <div className="max-w-[1314px] mt-[64px]  bg-[#FFFFFF] p-[32px] rounded-[40px] ">
-          {card.map((item, index) => (
+          {data.homePage[0].section2.cards.map((item, index) => (
             <div key={index} className="p-[32px] flex items-center">
               <div>
                 <div className="text-[#252F3880] text-14R">{item.year}</div>
@@ -42,26 +36,7 @@ export const NewVision = () => {
                 </div>
               </div>
               <div className="ms-[64px] text-black text-20R">
-                {item.content.includes("<a") ? (
-                  (() => {
-                    const parts = item.content.split(
-                      /<a href=["'](.*?)["']>(.*?)<\/a>/
-                    );
-                    return (
-                      <>
-                        {parts[0]}
-                        <Link
-                          href={parts[1]}
-                          className="text-blue-500 underline"
-                        >
-                          {parts[2]}
-                        </Link>
-                      </>
-                    );
-                  })()
-                ) : (
-                  <span dangerouslySetInnerHTML={{ __html: item.content }} />
-                )}
+                <span dangerouslySetInnerHTML={{ __html: item.content }} />
               </div>
             </div>
           ))}

@@ -10,6 +10,8 @@ import { Video } from "@/components/Edit/Video";
 import { Exhibition } from "@/components/Edit/Exhibition";
 import { Meeting } from "@/components/Edit/Meeting";
 import { Forum } from "@/components/Edit/Forum";
+import { Host } from "@/components/Edit/Host";
+import { Event } from "@/components/Edit/Event";
 export default function Page() {
   const params = useParams();
   const { slug } = params;
@@ -23,6 +25,8 @@ export default function Page() {
     { slug: "exhibition", component: <Exhibition /> },
     { slug: "meeting", component: <Meeting /> },
     { slug: "forum", component: <Forum /> },
+    { slug: "host", component: <Host /> },
+    { slug: "event", component: <Event /> },
   ];
 
   return (

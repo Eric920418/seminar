@@ -30,3 +30,45 @@ model HomePage {
   /// 區塊六：主辦單位、承辦單位與協辦單位等資料
   section6    Json      
 }
+
+model VideoPage{
+  id Int @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  section1    Json      
+}
+
+model PaperPage{
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+  section2 Json
+  section3 Json
+  section4 Json
+}
+
+model ExhibitionPage {
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+  section2 Json
+}
+
+model Host {
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1    Json  
+}
+
+model Event {
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+}
+
+
+

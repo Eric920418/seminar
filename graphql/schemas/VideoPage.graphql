@@ -1,0 +1,18 @@
+scalar JSON
+
+type VideoPage {
+  id: ID!
+  section1: JSON
+}
+
+type Query {
+  videoPage: [VideoPage!]!
+}
+
+input UpdateVideoPageInput {
+  section1: JSON
+}
+
+type Mutation {
+  updateVideoPage(input: UpdateVideoPageInput!): VideoPage
+}

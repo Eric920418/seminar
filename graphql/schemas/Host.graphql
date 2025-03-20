@@ -1,0 +1,18 @@
+scalar JSON
+
+type Host {
+  id: ID!
+  section1: JSON
+}
+
+type Query {
+  host: [Host!]!
+}
+
+input UpdateHostInput {
+  section1: JSON
+}
+
+type Mutation {
+  updateHost(input: UpdateHostInput!): Host
+}

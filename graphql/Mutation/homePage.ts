@@ -10,7 +10,6 @@ const homePageMutation = {
         where: { id: 4 },
         data: updateData,
       });
-      console.log("更新後的資料:", updatedPage);
       return updatedPage;
     } catch (error) {
       throw new Error(`更新失敗: ${error.message}`);

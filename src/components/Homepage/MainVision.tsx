@@ -1,6 +1,20 @@
-import { Button } from "@/components/Button"; // 使用 alias
+import { MainVisionButton } from "@/components/Button/MainVisionButton";
 
-export const MainVision = () => {
+const query = `
+  query homePage {
+    homePage {
+      section1
+    }
+  }
+`;
+
+export const MainVision = async () => {
+  const res = await fetch("http://localhost:3000/api/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  });
+  const { data } = await res.json();
   return (
     <div
       className="h-screen w-screen"
@@ -14,43 +28,38 @@ export const MainVision = () => {
       <div className=" h-full flex justify-center flex-col mx-[6%]">
         <div className="flex">
           <div className="text-[#009982] text-[80px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8">
-            2025
+            {data.homePage[0].section1.title.left}
           </div>
           <div className="text-[#FFFFFF] text-[80px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title">
-            ICTE
+            {data.homePage[0].section1.title.right}
           </div>
         </div>
-        <div className="text-black text-[24px] laptop:text-[36px] desktop:text-[48px] leading-[144%]  mt-[-14px]">
-          第十三屆師資培育國過學術研討會： <br />
-          面對不確定未來的師資培育韌性
-        </div>
+        <div
+          className="text-black text-[24px] laptop:text-[36px] desktop:text-[48px] leading-[144%]  mt-[-14px]"
+          dangerouslySetInnerHTML={{
+            __html: data.homePage[0].section1.content.replace(/\n/g, "<br>"),
+          }}
+        ></div>
         <div className="desktop:mt-[18px] mt-[12px] flex items-center">
           <div className="text-black text-[36px] laptop:text-[48px]  desktop:text-[64px]  font-[700] leading-[142%] font-title">
-            10.17
+            {data.homePage[0].section1.subTitle[0]}
           </div>
           <div className="text-black text-[10px] laptop:text-[16px] desktop:text-[24px]  leading-[142%] font-title mt-[31px] ms-[3px]">
-            FRI
+            {data.homePage[0].section1.subTitle[1]}
           </div>
           <div className="border-1 w-[96px] flex items-center justify-center  mx-[12px]"></div>
           <div className="text-black text-[36px] laptop:text-[48px]  desktop:text-[64px] font-[700] leading-[142%] font-title">
-            18
+            {data.homePage[0].section1.subTitle[2]}
           </div>
           <div className="text-black text-[10px] laptop:text-[16px] desktop:text-[24px] leading-[142%] font-title mt-[31px] ms-[6px]">
-            SAT
+            {data.homePage[0].section1.subTitle[3]}
           </div>
         </div>
         <div className="text-black text-[12px]  laptop:text-[18px] desktop:text-[24px]  font-[500] leading-none  ">
-          國立台北教育大學 至善樓國際會議廳
+          {data.homePage[0].section1.location}
         </div>
         <div className="mt-[72px]">
-          <Button
-            text="會議議程"
-            textSize="text-20M"
-            textColor="text-white"
-            bgColor="bg-black"
-            padding="p-[24px_32px_24px_32px]"
-            src="/button/arrow_right_2.svg"
-          ></Button>
+          <MainVisionButton url="/meeting" />
         </div>
       </div>
     </div>

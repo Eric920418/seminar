@@ -17,55 +17,49 @@ export const SpeechCard = ({ summary }) => {
     <div className="max-w-[1200px] mt-[64px] w-fit h-fit mx-auto p-[48px] bg-white rounded-[40px] transition-all duration-500 ease-in-out">
       <div className="flex space-x-[64px]">
         <div className="bg-[#FFFBEE] p-[24px] rounded-[24px] flex flex-col items-center max-h-[272px]">
-          <div className="text-black text-32M font-NotoSansTC">11:45</div>
+          <div className="text-black text-32M ">11:45</div>
           <div className="w-[1px] h-[39px] bg-[#252F3880] my-[16px]"></div>
-          <div className="text-black text-32M font-NotoSansTC">12:45</div>
+          <div className="text-black text-32M ">12:45</div>
           <div className="bg-[#FFEFB0] p-[8px_24px_8px_24px] rounded-[16px] mt-[24px]">
-            <div className="text-black text-20M font-NotoSansTC">星期五​</div>
+            <div className="text-black text-20M text-nowrap">星期五​</div>
           </div>
         </div>
-        <div className="max-w-[881px] w-fit">
-          <div className="text-secondary text-32M font-NotoSansTC">
-            Keynote Speech I​
-          </div>
-          <div className="mt-[16px] text-black text-32M font-NotoSansTC">
+        <div className="max-w-[900px] w-fit">
+          <div className="text-secondary text-32M ">Keynote Speech I​</div>
+          <div className="mt-[16px] text-black text-32M ">
             探討多元性別概念，擴展編審視野與深化知能～2024年審定本教科用書第4次專題研習
+          </div>
+          <div className="mt-[8px] text-black text-16M">
+            Key Drivers in Elementary and Secondary Teacher Education:
+            Enhancement, Distinctiveness, and USR.
           </div>
           <div className="border my-[32px] border-[#252F381A]"></div>
           <div className="flex space-x-[64px]">
             <div>
-              <div className="text-[#252F3880] text-14R font-NotoSansTC">
-                時間
-              </div>
-              <div className="mt-[8px] text-secondary text-16M font-NotoSansTC">
+              <div className="text-[#252F3880] text-14R ">時間</div>
+              <div className="mt-[8px] text-secondary text-16M text-nowrap">
                 11:45 - 12:45
               </div>
             </div>
             <div className="w-[2px] h-[54px] bg-[#252F381A]"></div>
             <div>
-              <div className="text-[#252F3880] text-14R font-NotoSansTC">
-                地點
-              </div>
-              <div className="mt-[8px] text-black text-16M font-NotoSansTC">
+              <div className="text-[#252F3880] text-14R ">地點</div>
+              <div className="mt-[8px] text-black text-16M text-nowrap">
                 主題廣場
               </div>
             </div>
             <div className="w-[2px] h-[54px] bg-[#252F381A]"></div>
             <div>
-              <div className="text-[#252F3880] text-14R font-NotoSansTC">
-                主持人
-              </div>
-              <div className="mt-[8px] text-black text-16M font-NotoSansTC">
+              <div className="text-[#252F3880] text-14R ">主持人</div>
+              <div className="mt-[8px] text-black text-16M ">
                 李慧嬌 副教授 國立新竹教育大學 教育評量與課程設計系
               </div>
             </div>
           </div>
           <div className="border my-[32px] border-[#252F381A]"></div>
           <div>
-            <div className="text-[#252F3880] text-14R font-NotoSansTC">
-              與談人
-            </div>
-            <div className="mt-[8px] text-black text-16M font-NotoSansTC">
+            <div className="text-[#252F3880] text-14R ">與談人</div>
+            <div className="mt-[8px] text-black text-16M ">
               王大昌 助理研究員 國立中央大學 教師專業發展研究中心
             </div>
           </div>
@@ -76,9 +70,7 @@ export const SpeechCard = ({ summary }) => {
           className="w-fit bg-[#252F3808] p-[8px_24px_8px_24px] flex items-center space-x-[8px] rounded-[40px] ms-auto cursor-pointer"
           onClick={() => setShowDetail(!showDetail)}
         >
-          <div className="text-[#252F3880] text-16M font-NotoSansTC">
-            詳細內容
-          </div>
+          <div className="text-[#252F3880] text-16M ">詳細內容</div>
           <div>
             <Image
               src={

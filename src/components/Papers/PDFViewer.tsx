@@ -11,7 +11,7 @@ const DynamicViewer = dynamic(
   { ssr: false }
 );
 
-export const PDFViewer = () => {
+export const PDFViewer = ({ src }) => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   return (
@@ -20,7 +20,7 @@ export const PDFViewer = () => {
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js" />
 
       <DynamicViewer
-        fileUrl="/Laravel.pdf"
+        fileUrl={`/uploads/${src}.pdf`}
         plugins={[defaultLayoutPluginInstance]}
       />
     </div>
