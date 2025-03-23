@@ -12,7 +12,7 @@ const eventMutation = {
       });
       return updated;
     } catch (error) {
-      throw new Error(`更新失敗: ${error.message}`);
+      throw new Error(`更新失敗: ${(error as any).message}`);
     }
   },
 };

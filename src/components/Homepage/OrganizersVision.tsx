@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const query = `
   query homePage {
     homePage {
@@ -6,13 +10,24 @@ const query = `
   }
 `;
 
-export const OrganizersVision = async () => {
-  const res = await fetch("http://localhost:3000/api/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
-  });
-  const { data } = await res.json();
+export const OrganizersVision = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const result = await res.json();
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) return <div>Loading...</div>;
 
   return (
     <div className="w-full pt-[128px] pb-[160px]">
@@ -20,7 +35,7 @@ export const OrganizersVision = async () => {
         <div className="desktop:w-[608px] flex flex-col items-start">
           <div className="text-16M text-primary">Organizers</div>
           <div className="relative w-fit">
-            <div className="text-black text-48M relative z-10">會議​​組成</div>
+            <div className="text-black text-48M relative z-10">會議組成</div>
             <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
         </div>

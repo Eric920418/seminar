@@ -1,7 +1,13 @@
-"use client";
+import React from "react";
 import { Button } from "@/components/Button";
 
-export const ConferenceVisionButton = ({ url }) => {
+interface ConferenceVisionButtonProps {
+  url: string;
+}
+
+export const ConferenceVisionButton: React.FC<ConferenceVisionButtonProps> = ({
+  url,
+}) => {
   const handOnClick = () => {
     window.open(url, "_blank");
   };

@@ -11,7 +11,7 @@ const query = `
 `;
 
 export const Project = () => {
-  const [card, setCard] = useState<any[]>([]);
+  const [card, setCard] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   // 新增 selectedImageIndex 來紀錄目前選中卡片中的圖片索引
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);

@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { TimeVisionButton } from "@/components/Button/TimeVisionButton";
-import { Button } from "@/components/Button";
-import Image from "next/image";
 
 const query = `
   query meetingPage {

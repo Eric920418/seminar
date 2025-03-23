@@ -258,10 +258,10 @@ export const HomePage = () => {
     }));
   };
 
-  const handleImageUpload = (data: any) => {
+  const handleImageUpload = (data) => {
     setUploadImage(data.fileUrl.fileUrl);
   };
-  const handleImageUpload2 = (data: any) => {
+  const handleImageUpload2 = (data) => {
     setUploadImage2(data.fileUrl.fileUrl);
   };
 

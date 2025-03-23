@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const query = `
   query homePage {
     homePage {
@@ -6,22 +10,32 @@ const query = `
   }
 `;
 
-export const VideoVision = async () => {
-  const res = await fetch("http://localhost:3000/api/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
-  });
-  const { data } = await res.json();
-  const videoUrl = data.homePage[0].section5.videoUrl;
+export const VideoVision = () => {
+  const [videoUrl, setVideoUrl] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setVideoUrl(data.homePage[0].section5.videoUrl);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!videoUrl) return <div>Loading...</div>;
 
   return (
-    <div className="w-full  pt-[128px] pb-[160px]">
+    <div className="w-full pt-[128px] pb-[160px]">
       <div className="w-full justify-center flex-row laptop:flex items-center space-x-[64px]">
         <div className="desktop:w-[608px] flex flex-col items-start">
-          <div className="text-16M text-primary ">video</div>
+          <div className="text-16M text-primary">video</div>
           <div className="relative w-fit">
-            <div className="text-black text-48M  relative z-10">會後影片</div>
+            <div className="text-black text-48M relative z-10">會後影片</div>
             <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
         </div>
@@ -38,9 +52,9 @@ export const VideoVision = async () => {
               allowFullScreen
             ></iframe>
           </div>
-          <div className="mt-[16px] ">
+          <div className="mt-[16px]">
             <div className="w-fit ms-auto px-[24px]">
-              <div className="text-secondary text-20M  ">2025</div>
+              <div className="text-secondary text-20M">2025</div>
             </div>
           </div>
         </div>

@@ -64,7 +64,11 @@ import "ckeditor5/ckeditor5.css";
 
 const LICENSE_KEY = "GPL";
 
-export default function CustomEditor({ onContentChange }) {
+interface CustomEditorProps {
+  onContentChange: (value: string) => void;
+}
+
+export default function CustomEditor({ onContentChange }: CustomEditorProps) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -193,7 +197,7 @@ export default function CustomEditor({ onContentChange }) {
             title: "Heading 2",
             class: "ck-heading_heading2",
           },
-        ],
+        ] as any,
       },
       image: {
         toolbar: [
@@ -227,7 +231,7 @@ export default function CustomEditor({ onContentChange }) {
     };
   }, [isReady]);
 
-  const handleEditorChange = (event, editor) => {
+  const handleEditorChange = (event: any, editor: any) => {
     const data = editor.getData();
     if (onContentChange) {
       onContentChange(data); // 傳遞給父組件
@@ -246,34 +250,3 @@ export default function CustomEditor({ onContentChange }) {
     </div>
   );
 }
-
-//  extraPlugins: [MyCustomUploadAdapterPlugin],
-
-// function MyCustomUploadAdapter(loader) {
-//   return {
-//     upload() {
-//       return loader.file.then(
-//         (file) =>
-//           new Promise((resolve, reject) => {
-//             const reader = new FileReader();
-//             reader.readAsDataURL(file);
-//             reader.onload = () => {
-//               resolve({ default: reader.result });
-//             };
-//             reader.onerror = (error) => {
-//               reject(error);
-//             };
-//           })
-//       );
-//     },
-//     abort() {
-//       // 可根據需求實作中斷上傳動作
-//     },
-//   };
-// }
-
-// function MyCustomUploadAdapterPlugin(editor) {
-//   editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-//     return MyCustomUploadAdapter(loader);
-//   };
-// }

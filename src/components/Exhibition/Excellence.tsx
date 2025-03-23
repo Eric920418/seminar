@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Tab } from "@/components/Tab";
 import { SpeechCard } from "@/components/Speech/SpeechCard";
 
@@ -20,11 +20,10 @@ const query2 = `
 `;
 
 export const Excellence = () => {
-  const [useData, setUseData] = useState<any>([]);
-  const [event, setEvent] = useState<any>([]);
+  const [useData, setUseData] = useState([]);
+  const [event, setEvent] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
-  const hasFetchedRef = useRef(false);
   useEffect(() => {
     async function fetchData() {
       const res = await fetch("http://localhost:3000/api/graphql", {

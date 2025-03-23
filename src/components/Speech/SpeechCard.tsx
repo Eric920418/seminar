@@ -12,7 +12,6 @@ const query2 = `
 `;
 
 export const SpeechCard = ({ data }) => {
-  if (!data) return null;
   const [showDetail, setShowDetail] = useState(false);
   const contentRef = useRef(null);
   const [height, setHeight] = useState(0);
@@ -24,6 +23,7 @@ export const SpeechCard = ({ data }) => {
   }, [showDetail]);
 
   useEffect(() => {
+    if (!data) return;
     async function fetchData() {
       try {
         const res = await fetch("http://localhost:3000/api/graphql", {
@@ -46,6 +46,8 @@ export const SpeechCard = ({ data }) => {
     }
     fetchData();
   }, [data]);
+
+  if (!data) return null;
 
   return (
     <div className="max-w-[1200px] mt-[64px] w-fit h-fit mx-auto p-[48px] bg-white rounded-[40px] transition-all duration-500 ease-in-out">

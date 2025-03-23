@@ -1,4 +1,8 @@
-export const VideoPlayer = ({ src, small }) => {
+type VideoPlayerProps = {
+  src: string;
+  small?: boolean; // 改成可選屬性
+};
+export const VideoPlayer = ({ src, small }: VideoPlayerProps) => {
   if (!src) return null;
   return (
     <div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Card = ({ index, title }) => {
+export const Card = ({ index, title }: { index: number; title: string }) => {
   return (
     <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
       <div className="w-[48px] h-[48px] rounded-[40px] bg-primary flex justify-center items-center">

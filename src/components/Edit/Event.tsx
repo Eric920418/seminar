@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { gql } from "graphql-tag";
 import Image from "next/image";
 
@@ -26,41 +26,74 @@ const query2 = `
   }
 `;
 
+interface CardProps {
+  card: any; // 建議使用更具體的型別來取代 any
+  index: number;
+  onToggle: (index: number) => void;
+  onCardChange: (index: number, field: string, value: any) => void; // 同上，請替換成正確的型別
+}
+
+interface CardType {
+  id: string;
+  date: string;
+  title: string;
+  title2: string;
+  content: string;
+  time: string;
+  time2: string;
+  week: string;
+  location: string;
+  host: string;
+  person: string;
+  abstract: string;
+  keywords: string;
+  people: string[];
+  isOpen: boolean;
+}
+
 // 單一卡片元件
-const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
-  const contentRef = useRef(null);
+const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
+  type CardType = {
+    id: string;
+    date: string;
+    name: string;
+  };
+  const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
-  const [selectHost, setSelectHost] = useState([]);
+  const [selectHost, setSelectHost] = useState<{ name: string }[]>([]);
+
   useEffect(() => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
   }, [card.isOpen]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("http://localhost:3000/api/graphql", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            query: query2,
-          }),
-        });
-        const { data } = await res.json();
-        let hosts = [...selectHost];
-        data.host[0].section1.editorCards.forEach((card: any) => {
-          hosts.push({
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: query2,
+        }),
+      });
+      const { data } = await res.json();
+      setSelectHost((prevHosts) => {
+        const newHosts = data.host[0].section1.editorCards.map(
+          (card: CardType) => ({
             name: card.name,
-          });
-        });
-        setSelectHost(hosts);
-      } catch (error) {
-        console.error("Fetch error: ", error);
-      }
+          })
+        );
+        return [...prevHosts, ...newHosts];
+      });
+    } catch (error) {
+      console.error("Fetch error: ", error);
     }
-    fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div className="bg-gray-200 p-6 rounded-xl flex-1">
@@ -282,7 +315,7 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
 // 主元件
 export const Event = () => {
   // 將每張卡片初始資料包含 isOpen 屬性
-  const [editorCards, setEditorCards] = useState([]);
+  const [editorCards, setEditorCards] = useState<CardType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -300,14 +333,14 @@ export const Event = () => {
   }, []);
 
   // 處理卡片內容欄位更新
-  const handleCardChange = (index, field, value) => {
+  const handleCardChange = (index: number, field: string, value: string) => {
     const newCards = [...editorCards];
     newCards[index] = { ...newCards[index], [field]: value };
     setEditorCards(newCards);
   };
 
   // 處理卡片展開／收合開關
-  const handleToggle = (index) => {
+  const handleToggle = (index: number) => {
     const newCards = [...editorCards];
     newCards[index].isOpen = !newCards[index].isOpen;
     setEditorCards(newCards);

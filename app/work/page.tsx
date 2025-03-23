@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Tab } from "@/components/Tab";
 import { SpeechCard } from "@/components/Speech/SpeechCard";
 
@@ -20,13 +20,23 @@ const query2 = `
   }
 `;
 
+type CardType = {
+  id: string;
+  date: string;
+};
+
+type EditorType = {
+  dateLabel1: string;
+  dateLabel2: string;
+};
+
 export default function Page() {
-  const [editor, setEditor] = useState<any>(null);
-  const [useData, setUseData] = useState<any>([]);
-  const [event, setEvent] = useState<any>([]);
-  const [selectedTab, setSelectedTab] = useState(0);
-  const [fadeIn, setFadeIn] = useState(true);
-  const hasFetchedRef = useRef(false);
+  const [editor, setEditor] = useState<EditorType | null>(null);
+  const [useData, setUseData] = useState<CardType[]>([]);
+  const [event, setEvent] = useState<CardType[]>([]);
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [fadeIn, setFadeIn] = useState<boolean>(true);
+
   useEffect(() => {
     async function fetchData() {
       const res = await fetch("http://localhost:3000/api/graphql", {
@@ -52,7 +62,7 @@ export default function Page() {
         });
         const { data } = await res.json();
         const filteredEvent = data.event[0].section1.editorCards.filter(
-          (card) => {
+          (card: CardType) => {
             return (
               useData[selectedTab] && useData[selectedTab].id.includes(card.id)
             );
@@ -63,13 +73,12 @@ export default function Page() {
         console.error("Fetch error: ", error);
       }
     }
-    // 當 useData 有資料且 selectedTab 有定義時執行
-    if (Array.isArray(useData) && useData.length > 0) {
+    if (useData.length > 0) {
       fetchEventData();
     }
   }, [useData, selectedTab]);
 
-  const handleTabChange = (index) => {
+  const handleTabChange = (index: number) => {
     setFadeIn(false);
     const timeout = setTimeout(() => setFadeIn(true), 100);
     setSelectedTab(index);
@@ -114,7 +123,7 @@ export default function Page() {
         </div>
         <div className="bg-[#B080CA1A] flex-1 ps-[128px] flex items-center">
           {editor && (
-            <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
+            <div className="text-[20px] leading-[40px] font-[400] text-[#252F38B2] w-[610px]">
               {editor.dateLabel2}
             </div>
           )}
@@ -130,8 +139,8 @@ export default function Page() {
         >
           {event && event.length > 0 ? (
             <>
-              {event.map((event, index) => (
-                <SpeechCard data={event} key={index} />
+              {event.map((ev, index) => (
+                <SpeechCard data={ev} key={index} />
               ))}
             </>
           ) : (

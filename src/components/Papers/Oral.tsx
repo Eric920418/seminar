@@ -44,7 +44,7 @@ export const Oral = () => {
   useEffect(() => {
     async function fetchData() {
       const index = focus.findIndex((f) => f === true);
-      if (index !== -1) {
+      if (index !== -1 && card.length > index) {
         const selectedCardId = card[index].id;
         try {
           const res = await fetch("http://localhost:3000/api/graphql", {
@@ -66,7 +66,7 @@ export const Oral = () => {
       }
     }
     fetchData();
-  }, [focus]);
+  }, [focus, card]);
 
   return (
     <div className="flex flex-1 flex-col justify-start max-w-[976px]">

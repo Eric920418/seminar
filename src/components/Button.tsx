@@ -1,7 +1,17 @@
 import React from "react";
 import Image from "next/image";
 
-export const Button = ({
+interface ButtonProps {
+  text: string;
+  textSize: string;
+  textColor: string;
+  bgColor: string;
+  padding: string;
+  src: string;
+  onClick?: () => void;
+}
+
+export const Button: React.FC<ButtonProps> = ({
   text,
   textSize,
   textColor,
@@ -12,10 +22,10 @@ export const Button = ({
 }) => {
   return (
     <div
-      className={`w-fit ${bgColor} flex items-center gap-2 ${padding}  rounded-[100px] cursor-pointer`}
+      className={`w-fit ${bgColor} flex items-center gap-2 ${padding} rounded-[100px] cursor-pointer`}
       onClick={onClick}
     >
-      <span className={`${textColor} ${textSize} w-[150px]  text-nowrap`}>
+      <span className={`${textColor} ${textSize} w-[150px] text-nowrap`}>
         {text}
       </span>
       <Image src={src} alt="Example" width={32} height={32} />

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { SpeechCard } from "@/components/Speech/SpeechCard";
 import { Tab } from "@/components/Tab";
 
@@ -21,12 +21,21 @@ const query2 = `
 `;
 
 export default function Page() {
-  const [editor, setEditor] = useState<any>(null);
-  const [useData, setUseData] = useState<any>([]);
-  const [event, setEvent] = useState<any>([]);
-  const [selectedTab, setSelectedTab] = useState(0);
+  type CardType = {
+    id: string;
+    date: string;
+  };
+
+  interface EditorType {
+    dateLabel1: string;
+    dateLabel2: string;
+  }
+  const [editor, setEditor] = useState<EditorType | null>(null);
+  const [useData, setUseData] = useState<CardType[]>([]);
+  const [event, setEvent] = useState([]);
+  const [selectedTab, setSelectedTab] = useState<number>(0);
   const [fadeIn, setFadeIn] = useState(true);
-  const hasFetchedRef = useRef(false);
+
   useEffect(() => {
     async function fetchData() {
       const res = await fetch("http://localhost:3000/api/graphql", {
@@ -52,7 +61,7 @@ export default function Page() {
         });
         const { data } = await res.json();
         const filteredEvent = data.event[0].section1.editorCards.filter(
-          (card) => {
+          (card: CardType) => {
             return (
               useData[selectedTab] && useData[selectedTab].id.includes(card.id)
             );
@@ -69,7 +78,7 @@ export default function Page() {
     }
   }, [useData, selectedTab]);
 
-  const handleTabChange = (index) => {
+  const handleTabChange = (index: number) => {
     setFadeIn(false);
     const timeout = setTimeout(() => setFadeIn(true), 100);
     setSelectedTab(index);

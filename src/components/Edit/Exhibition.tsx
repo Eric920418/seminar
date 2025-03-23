@@ -29,6 +29,27 @@ const query2 = `
     }
   }
 `;
+type CardType = {
+  id: string;
+  title: string;
+  title2: string; // 新增此屬性
+};
+
+interface SelectEvent {
+  title: string;
+  id: string;
+}
+
+interface ExhibitionCard {
+  id: string;
+  date: string;
+  title: string;
+  content: string;
+  imageSrc: string;
+  images: string[];
+  introduce: string;
+  developer: string;
+}
 
 export const Exhibition = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -39,11 +60,11 @@ export const Exhibition = () => {
   const [height2, setHeight2] = useState(0);
   const contentRef2 = useRef<HTMLDivElement>(null);
 
-  const [editorCards, setEditorCards] = useState([]);
-  const [editorCards2, setEditorCards2] = useState([]);
+  const [editorCards, setEditorCards] = useState<ExhibitionCard[]>([]);
+  const [editorCards2, setEditorCards2] = useState<ExhibitionCard[]>([]);
 
   const [isFinish, setIsFinish] = useState(true);
-  const [selectEvent, setSelectEvent] = useState([]);
+  const [selectEvent, setSelectEvent] = useState<SelectEvent[]>([]);
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -83,8 +104,8 @@ export const Exhibition = () => {
           }),
         });
         const { data } = await res.json();
-        let events = [...selectEvent];
-        data.event[0].section1.editorCards.forEach((card: any) => {
+        const events = [...selectEvent];
+        data.event[0].section1.editorCards.forEach((card: CardType) => {
           events.push({
             title: card.title2,
             id: card.id,
@@ -96,7 +117,7 @@ export const Exhibition = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [selectEvent]);
 
   const handleCardChange = (
     index: number,

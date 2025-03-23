@@ -1,12 +1,10 @@
 "use client";
 import { gql } from "graphql-tag";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { QRCodeCanvas } from "qrcode.react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-
-import { ImageUploader } from "@/components/Admin/ImageUploader";
 
 const CustomEditor = dynamic(() => import("@/components/CustomEditor"), {
   ssr: false,
@@ -128,30 +126,30 @@ export const Papers = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("http://localhost:3000/api/graphql", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            query: query2,
-          }),
-        });
-        const { data } = await res.json();
-        data.host[0].section1.editorCards.forEach((card: any) => {
-          const hosts = [...selectHost];
-          hosts.push({
-            name: card.name,
-          });
-          setSelectHost(hosts);
-        });
-      } catch (error) {
-        console.error("Fetch error: ", error);
-      }
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: query2,
+        }),
+      });
+      const { data } = await res.json();
+      setSelectHost((prevHosts) => {
+        const newHosts = data.host[0].section1.editorCards.map((card) => ({
+          name: card.name,
+        }));
+        return [...prevHosts, ...newHosts];
+      });
+    } catch (error) {
+      console.error("Fetch error: ", error);
     }
-    fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   useEffect(() => {
     if (contentRef1.current) {

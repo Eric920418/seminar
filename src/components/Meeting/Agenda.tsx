@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Tab } from "@/components/Tab";
 
 const query = `
@@ -11,7 +11,7 @@ const query = `
 `;
 
 export const Agenda = () => {
-  const [useData, setUseData] = useState<any>([]);
+  const [useData, setUseData] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
   useEffect(() => {

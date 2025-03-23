@@ -1,7 +1,14 @@
 "use client";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/navigation";
-export const MainVisionButton = ({ url }) => {
+
+interface ConferenceVisionButtonProps {
+  url: string;
+}
+
+export const MainVisionButton: React.FC<ConferenceVisionButtonProps> = ({
+  url,
+}) => {
   const router = useRouter();
   const handOnClick = () => {
     router.push(url);

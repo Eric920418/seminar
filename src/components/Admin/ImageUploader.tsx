@@ -1,18 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import React from "react";
 
-export const ImageUploader = ({ onImageUpload }) => {
-  const [previewImage, setPreviewImage] = useState(null);
+interface UploadResponse {
+  imageUrl: string;
+  // 如果有其他欄位，也可以在這裡定義
+}
 
+interface ImageUploaderProps {
+  onImageUpload: (data: UploadResponse) => void;
+}
+
+export const ImageUploader: React.FC<ImageUploaderProps> = ({
+  onImageUpload,
+}) => {
   // 當檔案選擇改變時
-  const handleFileChange = async (e) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
     const file = e.target.files[0];
-    if (!file) return;
-
-    // 產生圖片預覽
-    const previewURL = URL.createObjectURL(file);
-    setPreviewImage(previewURL);
 
     // 建立 FormData 並附加檔案
     const formData = new FormData();
@@ -30,8 +35,7 @@ export const ImageUploader = ({ onImageUpload }) => {
         return;
       }
 
-      const data = await res.json();
-
+      const data: UploadResponse = await res.json();
       onImageUpload(data);
     } catch (error) {
       console.error("上傳錯誤:", error);
@@ -41,15 +45,6 @@ export const ImageUploader = ({ onImageUpload }) => {
   return (
     <div>
       <div className="mt-[64px]">
-        {/* {previewImage && (
-          <div className="mt-[16px]">
-            <img
-              src={previewImage}
-              alt="預覽圖片"
-              style={{ maxWidth: "600px" }}
-            />
-          </div>
-        )} */}
         <input
           className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 mt-[1rem]"
           type="file"

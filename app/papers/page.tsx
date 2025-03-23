@@ -6,7 +6,7 @@ import { Topics } from "@/components/Papers/Topics";
 import { Oral } from "@/components/Papers/Oral";
 import { Poster } from "@/components/Papers/Poster";
 
-function FadeIn({ children }) {
+function FadeIn({ children }: { children: React.ReactNode }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Page() {
   ];
 
   const [focus, setFocus] = useState(nav.map((_, i) => i === 0));
-  const toggle = (navIndex) => {
+  const toggle = (navIndex: number) => {
     setFocus((prev) => prev.map((_, i) => i === navIndex));
   };
 

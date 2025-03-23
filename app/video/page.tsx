@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { Tab } from "@/components/Tab";
+import { Tab } from "@/components/Tab"; // 已修改好的 Tab
 import { Button } from "@/components/Button";
 import { VideoPlayer } from "@/components/Video/VideoPlayer";
 import { useModalContext } from "@/components/ModalContext";
@@ -15,8 +15,20 @@ const query = `
 `;
 
 export default function Page() {
-  const [card, setCard] = useState([]);
-  const [card2, setCard2] = useState([]);
+  // 定義影片型別與卡片資料型別
+  type VideoType = {
+    src: string;
+    title: string;
+    content: string;
+  };
+  type CardItem = {
+    videos: string; // 假設是 YouTube 影片 ID or 影片 URL
+    title: string;
+    content: string;
+  };
+
+  const [card, setCard] = useState<CardItem[]>([]);
+  const [card2, setCard2] = useState<CardItem[]>([]);
   const [data, setData] = useState("");
   const [data2, setData2] = useState("");
 
@@ -39,7 +51,7 @@ export default function Page() {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [currentVideo, setCurrentVideo] = useState({
+  const [currentVideo, setCurrentVideo] = useState<VideoType>({
     src: "",
     title: "",
     content: "",
@@ -66,8 +78,8 @@ export default function Page() {
     };
   }, [isOpen, setModalOpen]);
 
-  const openModal = (video) => {
-    // 如非超連結點擊則不需要 preventDefault()
+  // 這裡傳入的 video 參數必須符合 VideoType，所以進行轉換
+  const openModal = (video: VideoType) => {
     setCurrentVideo(video);
     setIsOpen(true);
   };
@@ -85,13 +97,13 @@ export default function Page() {
   const [selectedTab2, setSelectedTab2] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
 
-  const handleTabChange = (index) => {
+  const handleTabChange = (index: number) => {
     setFadeIn(false);
     setTimeout(() => setFadeIn(true), 100);
     setSelectedTab(index);
   };
 
-  const handleTabChange2 = (index) => {
+  const handleTabChange2 = (index: number) => {
     setFadeIn(false);
     setTimeout(() => setFadeIn(true), 100);
     setSelectedTab2(index);
@@ -136,6 +148,7 @@ export default function Page() {
         <div className="mt-[64px]">
           {selectedTab === 0 ? (
             <>
+              {/* ICTE直播 */}
               <div
                 className={`w-fit mx-auto transition-opacity duration-500 ease-in-out ${
                   fadeIn ? "opacity-100" : "opacity-0"
@@ -163,7 +176,7 @@ export default function Page() {
                   <div className="text-black text-48M relative z-10">
                     卓越的學習與教學短講​​
                   </div>
-                  <div className="transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
+                  <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                 </div>
               )}
               <div className="mt-[128px]">
@@ -174,12 +187,19 @@ export default function Page() {
                 />
                 {selectedTab2 === 0 ? (
                   <>
+                    {/* 主題演講 */}
                     <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
                       {card.map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
-                            onClick={() => openModal(item)}
+                            onClick={() =>
+                              openModal({
+                                src: item.videos,
+                                title: item.title,
+                                content: item.content,
+                              })
+                            }
                           >
                             <VideoPlayer src={item.videos} small />
                           </div>
@@ -211,7 +231,7 @@ export default function Page() {
                         <div className="mt-[32px]">
                           <div className="h-[648px]">
                             {currentVideo && (
-                              <VideoPlayer src={currentVideo.videos} />
+                              <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
                           <div className="p-[24px]">
@@ -244,12 +264,19 @@ export default function Page() {
                   </>
                 ) : (
                   <>
+                    {/* 圓桌論壇 */}
                     <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
                       {card2.map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
-                            onClick={() => openModal(item)}
+                            onClick={() =>
+                              openModal({
+                                src: item.videos,
+                                title: item.title,
+                                content: item.content,
+                              })
+                            }
                           >
                             <VideoPlayer src={item.videos} small />
                           </div>
@@ -281,7 +308,7 @@ export default function Page() {
                         <div className="mt-[32px]">
                           <div className="h-[648px]">
                             {currentVideo && (
-                              <VideoPlayer src={currentVideo.videos} />
+                              <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
                           <div className="p-[24px]">
@@ -317,6 +344,7 @@ export default function Page() {
             </>
           ) : (
             <>
+              {/* ICTE宣傳短片 */}
               <div
                 className={`w-fit mx-auto transition-opacity duration-500 ease-in-out ${
                   fadeIn ? "opacity-100" : "opacity-0"
@@ -355,12 +383,19 @@ export default function Page() {
                 />
                 {selectedTab2 === 0 ? (
                   <>
+                    {/* 主題演講 */}
                     <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
                       {card.map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
-                            onClick={() => openModal(item)}
+                            onClick={() =>
+                              openModal({
+                                src: item.videos,
+                                title: item.title,
+                                content: item.content,
+                              })
+                            }
                           >
                             <VideoPlayer src={item.videos} small />
                           </div>
@@ -392,7 +427,7 @@ export default function Page() {
                         <div className="mt-[32px]">
                           <div className="h-[648px]">
                             {currentVideo && (
-                              <VideoPlayer src={currentVideo.videos} />
+                              <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
                           <div className="p-[24px]">
@@ -425,12 +460,19 @@ export default function Page() {
                   </>
                 ) : (
                   <>
+                    {/* 圓桌論壇 */}
                     <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
                       {card2.map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
-                            onClick={() => openModal(item)}
+                            onClick={() =>
+                              openModal({
+                                src: item.videos,
+                                title: item.title,
+                                content: item.content,
+                              })
+                            }
                           >
                             <VideoPlayer src={item.videos} small />
                           </div>
@@ -462,7 +504,7 @@ export default function Page() {
                         <div className="mt-[32px]">
                           <div className="h-[648px]">
                             {currentVideo && (
-                              <VideoPlayer src={currentVideo.videos} />
+                              <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
                           <div className="p-[24px]">

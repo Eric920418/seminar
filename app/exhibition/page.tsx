@@ -29,7 +29,7 @@ export default function Page() {
   ];
 
   const [focus, setFocus] = useState(nav.map((_, i) => i === 0));
-  const toggle = (navIndex) => {
+  const toggle = (navIndex: number) => {
     setFocus((prev) => prev.map((_, i) => i === navIndex));
   };
 

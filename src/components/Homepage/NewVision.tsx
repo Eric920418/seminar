@@ -1,5 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 const query = `
   query homePage {
@@ -9,29 +11,40 @@ const query = `
   }
 `;
 
-export const NewVision = async () => {
-  const res = await fetch("http://localhost:3000/api/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
-  });
-  const { data } = await res.json();
+export const NewVision = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const result = await res.json();
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) return <div>Loading...</div>;
 
   return (
-    <div className="w-full  pt-[128px] pb-[160px]">
-      <div className="w-full max-w-[1314px] mx-auto  flex flex-col ">
+    <div className="w-full pt-[128px] pb-[160px]">
+      <div className="w-full max-w-[1314px] mx-auto flex flex-col">
         <div className="text-16M text-primary">NEW</div>
         <div className="relative w-fit">
-          <div className="text-black text-48M  relative z-10">最新消息</div>
+          <div className="text-black text-48M relative z-10">最新消息</div>
           <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
         </div>
 
-        <div className="max-w-[1314px] mt-[64px]  bg-[#FFFFFF] p-[32px] rounded-[40px] ">
+        <div className="max-w-[1314px] mt-[64px] bg-[#FFFFFF] p-[32px] rounded-[40px]">
           {data.homePage[0].section2.cards.map((item, index) => (
             <div key={index} className="p-[32px] flex items-center">
               <div>
                 <div className="text-[#252F3880] text-14R">{item.year}</div>
-                <div className="text-primary text-[20px] font-[700] ">
+                <div className="text-primary text-[20px] font-[700]">
                   {item.date}
                 </div>
               </div>
@@ -53,8 +66,8 @@ export const NewVision = async () => {
             <div className="w-[32px] h-[32px] bg-white flex justify-center items-center rounded-[50%]">
               <div className="text-black text-14R">2</div>
             </div>
-            <div className="w-[32px] h-[32px] bg-white flex justify-center items-center rounded-[50%] z-0">
-              <div className="text-black text-14R z-10">2</div>
+            <div className="w-[32px] h-[32px] bg-white flex justify-center items-center rounded-[50%]">
+              <div className="text-black text-14R">3</div>
             </div>
             <Image
               src="/icons/24icon/arrow_right.svg"
