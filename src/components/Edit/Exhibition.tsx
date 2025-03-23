@@ -22,6 +22,14 @@ const query = `
   }
 `;
 
+const query2 = `
+  query event {
+    event {
+      section1
+    }
+  }
+`;
+
 export const Exhibition = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
@@ -35,6 +43,7 @@ export const Exhibition = () => {
   const [editorCards2, setEditorCards2] = useState([]);
 
   const [isFinish, setIsFinish] = useState(true);
+  const [selectEvent, setSelectEvent] = useState([]);
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -61,6 +70,31 @@ export const Exhibition = () => {
       setEditorCards2(data.exhibitionPage[0].section2.card);
     };
 
+    fetchData();
+  }, []);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("http://localhost:3000/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: query2,
+          }),
+        });
+        const { data } = await res.json();
+        let events = [...selectEvent];
+        data.event[0].section1.editorCards.forEach((card: any) => {
+          events.push({
+            title: card.title2,
+            id: card.id,
+          });
+        });
+        setSelectEvent(events);
+      } catch (error) {
+        console.error("Fetch error: ", error);
+      }
+    }
     fetchData();
   }, []);
 
@@ -181,7 +215,6 @@ export const Exhibition = () => {
     }
   };
 
-  console.log(editorCards);
   return (
     <div>
       <div className="text-32M mb-6">作品展示​</div>
@@ -312,7 +345,7 @@ export const Exhibition = () => {
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>卓越的學習與教學​短講​流</div>
+            <div>卓越的學習與教學​短講​流程 活動區域</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -331,13 +364,14 @@ export const Exhibition = () => {
             className="overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height2}px` }}
           >
-            <div className="my-3">
+            <div className="my-3 flex justify-between">
               <button
                 className="bg-blue-500 text-white px-3 py-1 rounded"
                 onClick={addCard2}
               >
                 新增卡片
               </button>
+              <div>Select 按住 Ctrl 複選 </div>
             </div>
             <div>
               {editorCards2.map((card, index) => (
@@ -345,23 +379,33 @@ export const Exhibition = () => {
                   <div className="flex gap-3">
                     <input
                       type="text"
-                      placeholder="日期"
+                      placeholder="日期 （格式：3.10)"
                       value={card.date}
                       onChange={(e) =>
                         handleCardChange2(index, "date", e.target.value)
                       }
                       className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                     />
-
-                    <textarea
-                      placeholder="等等改"
-                      value={card.id}
-                      onChange={(e) =>
-                        handleCardChange2(index, "id", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-
+                    <div>
+                      <div>{card.id}</div>
+                      <select
+                        multiple
+                        onChange={(e) => {
+                          const selectedValues = Array.from(
+                            e.target.selectedOptions,
+                            (option) => option.value
+                          );
+                          handleCardChange2(index, "id", selectedValues);
+                        }}
+                        className="block  rounded-md bg-white px-6 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                      >
+                        {selectEvent.map((event, idx) => (
+                          <option key={idx} value={event.id}>
+                            {event.id} - {event.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                     <button
                       className="bg-red-500 text-white px-3 py-1 rounded"
                       onClick={() => DeleteCard2(index)}

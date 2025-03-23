@@ -1,10 +1,10 @@
+import Image from "next/Image";
 export const PeopleCard = ({ card }) => {
   if (!card) {
     return null;
   }
-
   return (
-    <div className="rounded-[40px] bg-black flex mt-[48px]">
+    <div className="rounded-[40px] bg-black flex mt-[48px] min-h-[538px]">
       <div className="relative w-[414px]">
         <div
           className="absolute top-0 left-0 p-[32px] text-white text-[32px] font-[700] font-NotoSansTC"
@@ -14,11 +14,15 @@ export const PeopleCard = ({ card }) => {
         </div>
         {/* 如果需要顯示圖片，可以加上 img 元素 */}
         <div className="absolute top-18 left-15 bg-white rounded-[50%] w-[316px] h-[316px]">
-          <img
-            src={url}
-            alt={card.name}
-            className="w-full h-full object-cover rounded-[50%]"
-          />
+          {card.image && (
+            <Image
+              src={card.image ?? null}
+              alt="some image"
+              width={316}
+              height={316}
+              className="w-full h-full object-cover rounded-[50%]"
+            />
+          )}
         </div>
         <div className="absolute top-95 left-0 p-[32px]">
           <div className="text-white text-[32px] font-[700] font-NotoSansTC">

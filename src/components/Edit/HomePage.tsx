@@ -2,8 +2,8 @@
 import { gql } from "graphql-tag";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
+import dynamic from "next/dynamic";
 
 const CustomEditor = dynamic(() => import("@/components/CustomEditor"), {
   ssr: false,
@@ -94,9 +94,6 @@ export const HomePage = () => {
     editor2: "",
     editor3: "",
   });
-
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [previewImage2, setPreviewImage2] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -214,32 +211,6 @@ export const HomePage = () => {
     editorOrganizers.editor3,
   ]);
 
-  useEffect(() => {
-    const imageData = Array.isArray(uploadImage)
-      ? uploadImage
-      : uploadImage?.image;
-
-    const uint8Array = new Uint8Array(imageData);
-    const blob = new Blob([uint8Array], { type: "image/png" });
-    const url = URL.createObjectURL(blob);
-    setPreviewImage(url);
-
-    return () => URL.revokeObjectURL(url); // 释放 URL 避免内存泄漏
-  }, [uploadImage]);
-
-  useEffect(() => {
-    const imageData = Array.isArray(uploadImage2)
-      ? uploadImage2
-      : uploadImage2?.image;
-
-    const uint8Array = new Uint8Array(imageData);
-    const blob = new Blob([uint8Array], { type: "image/png" });
-    const url = URL.createObjectURL(blob);
-    setPreviewImage2(url);
-
-    return () => URL.revokeObjectURL(url); // 释放 URL 避免内存泄漏
-  }, [uploadImage2]);
-
   const handleEditorChange = (id: string, content: string) => {
     setEditorContents((prev) => ({
       ...prev,
@@ -288,10 +259,10 @@ export const HomePage = () => {
   };
 
   const handleImageUpload = (data: any) => {
-    setUploadImage(data);
+    setUploadImage(data.fileUrl.fileUrl);
   };
   const handleImageUpload2 = (data: any) => {
-    setUploadImage2(data);
+    setUploadImage2(data.fileUrl.fileUrl);
   };
 
   // 使用 fetch 發送 GraphQL mutation 更新資料
@@ -765,17 +736,10 @@ export const HomePage = () => {
               </div>
             </div>
             <div>
-              {previewImage && (
-                <Image
-                  src={previewImage}
-                  alt="Preview"
-                  width={100}
-                  height={100}
-                ></Image>
-              )}
               <ImageUploader
-                uploaderId="uploader1"
-                onImageUpload={handleImageUpload}
+                onImageUpload={(filename) =>
+                  handleImageUpload({ fileUrl: filename })
+                }
               />
             </div>
           </div>
@@ -813,17 +777,10 @@ export const HomePage = () => {
               />
             </div>
             <div className="my-3">
-              {previewImage2 && (
-                <Image
-                  src={previewImage2}
-                  alt="Preview2"
-                  width={100}
-                  height={100}
-                ></Image>
-              )}
               <ImageUploader
-                uploaderId="uploader1"
-                onImageUpload={handleImageUpload2}
+                onImageUpload={(filename) =>
+                  handleImageUpload2({ fileUrl: filename })
+                }
               />
             </div>
           </div>

@@ -1,6 +1,36 @@
+"use client";
+import { useEffect, useState } from "react";
+import { TimeVisionButton } from "@/components/Button/TimeVisionButton";
 import { Button } from "@/components/Button";
+import Image from "next/image";
+
+const query = `
+  query meetingPage {
+    meetingPage {
+      section2
+    }
+  }
+`;
 
 export const ImportantDates = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setData(data.meetingPage[0].section2.times);
+    }
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="flex flex-1 flex-col justify-start max-w-[976px]">
       <div className="text-16M text-primary ">Important Dates</div>
@@ -16,20 +46,20 @@ export const ImportantDates = () => {
           <div className="text-black text-36M mt-[16px] ">徵稿</div>
           <div className="mt-[32px] w-[240px] h-[204px]">
             <div className="flex">
-              <div className="text-primary text-20M ">
-                2025/1/31&nbsp;~&nbsp;
-              </div>
+              <div className="text-primary text-20M me-1">{data.time1}</div>
               <div className="line-through text-[#252F3880] text-20M ">
-                5/31
+                {data.time2}
               </div>
             </div>
             <div className="line-through text-[#252F3880] text-20M ">
-              延長至 2025/8/10
+              延長至 {data.extend[0]}
             </div>
             <div className="line-through text-[#252F3880] text-20M ">
-              延長至 2025/8/27
+              延長至 {data.extend[1]}
             </div>
-            <div className=" text-primary text-20M ">延長至 2025/9/12</div>
+            <div className=" text-primary text-20M ">
+              延長至 {data.extend[2]}
+            </div>
           </div>
         </div>
         <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
@@ -38,7 +68,7 @@ export const ImportantDates = () => {
           </div>
           <div className="text-black text-36M mt-[16px] ">論文接受通知</div>
           <div className="mt-[32px] w-[240px] h-[204px]">
-            <div className=" text-primary text-20M ">2025/6/30</div>
+            <div className=" text-primary text-20M ">{data.time6}</div>
           </div>
         </div>
         <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
@@ -47,16 +77,17 @@ export const ImportantDates = () => {
           </div>
           <div className="text-black text-36M mt-[16px] ">論文定稿</div>
           <div className="mt-[32px] w-[240px] h-[117px]">
-            <div className=" text-primary text-20M ">2025/9/05</div>
+            <div className=" text-primary text-20M ">{data.time7}</div>
           </div>
           <div className="mt-[32px] w-[240px] ">
-            <Button
+            <TimeVisionButton
               text="論文格式與規則"
               textColor="text-white"
               textSize="text-16M"
               bgColor="bg-third"
               padding="p-[16px_24px_16px_24px]"
               src="/button/arrow_right_2.svg"
+              url="/meeting"
             />
           </div>
         </div>
@@ -66,16 +97,17 @@ export const ImportantDates = () => {
           </div>
           <div className="text-black text-36M mt-[16px] ">線上報名</div>
           <div className="mt-[32px] w-[240px] h-[117px]">
-            <div className=" text-primary text-20M ">2023/09/11~30</div>
+            <div className=" text-primary text-20M ">{data.time8}</div>
           </div>
           <div className="mt-[32px] w-[240px] ">
-            <Button
+            <TimeVisionButton
               text="報名費用與規則"
               textColor="text-white"
               textSize="text-16M"
               bgColor="bg-third"
               padding="p-[16px_24px_16px_24px]"
               src="/button/arrow_right_2.svg"
+              url="/meeting"
             />
           </div>
         </div>
@@ -84,21 +116,22 @@ export const ImportantDates = () => {
           <div className="mt-[32px] flex flex-col gap-[16px]">
             <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
               <div className="text-black text-20M ">會議</div>
-              <div className="text-black text-16M ">2025/10/17~18</div>
+              <div className="text-black text-16M ">{data.meeting}</div>
             </div>
             <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
               <div className="text-black text-20M ">晚宴</div>
-              <div className="text-black text-16M ">2025/10/17 19:00</div>
+              <div className="text-black text-16M ">{data.dinner}</div>
             </div>
           </div>
           <div className="mt-[32px]">
-            <Button
+            <TimeVisionButton
               text="交通資訊"
               textColor="text-black"
               textSize="text-16M"
               bgColor="bg-[#FFFFFF]"
               padding="p-[16px_24px_16px_24px]"
               src="/icons/24icon/arrow_right_2.svg"
+              url="/meeting"
             />
           </div>
         </div>

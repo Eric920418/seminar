@@ -4,6 +4,10 @@ import paperQuery from "./paperPage";
 import hostQuery from "./host";
 import eventQuery from "./event";
 import exhibitionPageQuery from "./exhibitionPage";
+import workShopPageQuery from "./WorkShopPage";
+import speechPageQuery from "./speechPage";
+import forumPageQuery from "./forumPage";
+import meetingPageQuery from "./meetingPage";
 
 const Query = {
   ...homePageQuery,
@@ -12,6 +16,10 @@ const Query = {
   ...hostQuery,
   ...eventQuery,
   ...exhibitionPageQuery,
+  ...workShopPageQuery,
+  ...speechPageQuery,
+  ...forumPageQuery,
+  ...meetingPageQuery,
 };
 
 export default Query;

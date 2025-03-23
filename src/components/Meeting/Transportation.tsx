@@ -1,4 +1,28 @@
+"use client";
+import { useState, useEffect } from "react";
+const query = `
+  query meetingPage {
+    meetingPage {
+      section5
+    }
+  }
+`;
+
 export const Transportation = () => {
+  const [editorTransportation, setEditorTransportation] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setEditorTransportation(data.meetingPage[0].section5?.location || "");
+    }
+    fetchData();
+  }, []);
   return (
     <div className="flex flex-1 flex-col justify-start max-w-[976px]">
       <div className="text-16M text-primary ">Transportation</div>
@@ -10,7 +34,7 @@ export const Transportation = () => {
       <div className="mt-[64px]">
         <div className="text-secondary text-20M ">會議預定地點</div>
         <div className="text-[#252F38B2] text-20M  mt-[24px]">
-          國立臺北教育大學至善樓國際會議廳
+          {editorTransportation}
         </div>
       </div>
       <div className="mt-[64px]">

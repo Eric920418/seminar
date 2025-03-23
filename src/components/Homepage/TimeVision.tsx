@@ -24,14 +24,8 @@ export const TimeVision = () => {
       });
       const { data } = await res.json();
       setData(data.homePage[0].section3.times);
-      const imageData = Array.isArray(data.homePage[0].section3.times.image)
-        ? data.homePage[0].section3.times.image
-        : data.homePage[0].section3.times.image?.image;
 
-      const uint8Array = new Uint8Array(imageData);
-      const blob = new Blob([uint8Array.buffer], { type: "image/png" });
-      const url = URL.createObjectURL(blob);
-      setImgUrl(url);
+      setImgUrl(data.homePage[0].section3.times.image);
     }
     fetchData();
   }, []);
@@ -151,10 +145,10 @@ export const TimeVision = () => {
             <Image
               src={imgUrl}
               alt="Example"
-              width={0}
-              height={0}
+              width={300}
+              height={300}
               style={{
-                objectFit: "contain",
+                objectFit: "cover",
                 borderRadius: "40px",
                 width: "100%",
                 height: "100%",

@@ -1,19 +1,83 @@
-import { SpeechCard } from "@/components/Speech/SpeechCard";
+"use client";
+import { useState, useEffect, useRef } from "react";
 import { Tab } from "@/components/Tab";
+import { SpeechCard } from "@/components/Speech/SpeechCard";
+
+const query = `
+  query workShopPage {
+    workShopPage {
+      section1
+      section2
+    }
+  }
+`;
+
+const query2 = `
+  query event {
+    event {
+      section1
+    }
+  }
+`;
 
 export default function Page() {
-  const card = [
-    {
-      title: "Keynote Speech I",
-      content:
-        "探討多元性別概念，擴展編審視野與深化知能～2024年審定本教科用書第4次專題研習",
-    },
-    {
-      title: "Keynote Speech II",
-      content:
-        "探討多元性別概念，擴展編審視野與深化知能～2024年審定本教科用書第4次專題研習",
-    },
-  ];
+  const [editor, setEditor] = useState<any>(null);
+  const [useData, setUseData] = useState<any>([]);
+  const [event, setEvent] = useState<any>([]);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+  const hasFetchedRef = useRef(false);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+
+      setEditor(data.workShopPage[0].section1);
+      setUseData(data.workShopPage[0].section2.card);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchEventData() {
+      try {
+        const res = await fetch("http://localhost:3000/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: query2 }),
+        });
+        const { data } = await res.json();
+        const filteredEvent = data.event[0].section1.editorCards.filter(
+          (card) => {
+            return (
+              useData[selectedTab] && useData[selectedTab].id.includes(card.id)
+            );
+          }
+        );
+        setEvent(filteredEvent);
+      } catch (error) {
+        console.error("Fetch error: ", error);
+      }
+    }
+    // 當 useData 有資料且 selectedTab 有定義時執行
+    if (Array.isArray(useData) && useData.length > 0) {
+      fetchEventData();
+    }
+  }, [useData, selectedTab]);
+
+  const handleTabChange = (index) => {
+    setFadeIn(false);
+    const timeout = setTimeout(() => setFadeIn(true), 100);
+    setSelectedTab(index);
+    return () => clearTimeout(timeout);
+  };
+
+  const dates = useData.map((card) => card.date);
+  const titles = dates.map((_, index) => `第${index + 1}天`);
 
   return (
     <div className="bg-[#FAFBFD]">
@@ -43,33 +107,36 @@ export default function Page() {
           }}
         >
           <div className="text-start w-[334px]">
-            <div className="text-white text-32M ">
-              素養導向﻿教學方法創新應用嘉年華
-            </div>
+            {editor && (
+              <div className="text-white text-32M ">{editor.dateLabel1}</div>
+            )}
           </div>
         </div>
         <div className="bg-[#B080CA1A] flex-1 ps-[128px] flex items-center">
-          <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
-            整合現場教學專家教師、國內知名創新教育或具備實務經驗之講師、
-            師培大學相關科系，以及各大領域教學研究中心等師資培育課程教學
-            投入者，針對未來教師教學所需之跨領域素養導向課程發展、教學設
-            計與學習評量等知能(例如概念為本教學、現象本位教學、DFC 教學、
-            AI-pedagogy、數位平臺應用與多元評量、探究與實作......)，分別提
-            供不同角度提出創新教學理念與實作之分享嘉年華，期能更強化教材
-            教法研究與教學之影響與效益。另外，也預計邀請師資培育教學實踐
-            相關優良計畫之授課教師及師資生，分享其教學理念設計以及師資生
-            學習參與，或安排場次邀請師資生發表參與師資培育課程或教育實踐
-            研究之經驗反思。
-          </div>
+          {editor && (
+            <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
+              {editor.dateLabel2}
+            </div>
+          )}
         </div>
       </div>
 
       <div className="pt-[128px] pb-[160px] mx-auto">
-        <Tab titles={["第一天", "第二天"]} dates={["10.18", "10.19"]} />
-        <div className="flex flex-col ">
-          {card.map((card, index) => (
-            <SpeechCard key={index} />
-          ))}
+        <Tab titles={titles} dates={dates} onChange={handleTabChange} />
+        <div
+          className={`flex flex-col transition-opacity duration-500 ease-in-out ${
+            fadeIn ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {event && event.length > 0 ? (
+            <>
+              {event.map((event, index) => (
+                <SpeechCard data={event} key={index} />
+              ))}
+            </>
+          ) : (
+            <div className="bg-white w-[976px] h-[1157px]"></div>
+          )}
         </div>
       </div>
     </div>

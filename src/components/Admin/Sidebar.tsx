@@ -45,7 +45,7 @@ export const Sidebar = () => {
               圓桌論壇
             </Link>
             <Link
-              href="/admin/workshop"
+              href="/admin/work"
               className="block px-4 py-2 hover:bg-gray-700"
             >
               工作坊

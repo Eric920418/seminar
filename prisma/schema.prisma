@@ -56,6 +56,43 @@ model ExhibitionPage {
   section2 Json
 }
 
+model WorkshopPage{
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+  section2 Json
+}
+
+model SpeechPage{
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+  section2 Json
+}
+
+model ForumPage {
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+  section2 Json
+}
+
+model MeetingPage {
+  id Int @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  section1 Json
+  section2 Json
+  section3 Json
+  section4 Json
+  section5 Json
+  section6 Json
+  section7 Json
+}
+
 model Host {
   id Int @id @default(autoincrement())
   createdAt  DateTime  @default(now())

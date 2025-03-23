@@ -4,6 +4,10 @@ import paperPageMutation from "./paperPage";
 import hostMutation from "./host";
 import eventMutation from "./event";
 import exhibitionPageMutation from "./exhibitionPage";
+import workShopPageMutation from "./WorkShopPage";
+import speechPageMutation from "./speechPage";
+import forumPageMutation from "./forumPage";
+import meetingPageMutation from "./meetingPage";
 
 const Mutations = {
   ...homePageMutation,
@@ -12,6 +16,10 @@ const Mutations = {
   ...hostMutation,
   ...eventMutation,
   ...exhibitionPageMutation,
+  ...workShopPageMutation,
+  ...speechPageMutation,
+  ...forumPageMutation,
+  ...meetingPageMutation,
 };
 
 export default Mutations;

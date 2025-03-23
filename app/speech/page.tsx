@@ -1,20 +1,83 @@
+"use client";
+import { useState, useEffect, useRef } from "react";
 import { SpeechCard } from "@/components/Speech/SpeechCard";
 import { Tab } from "@/components/Tab";
 
-export default function Page() {
-  const card = [
-    {
-      title: "Keynote Speech I",
-      content:
-        "探討多元性別概念，擴展編審視野與深化知能～2024年審定本教科用書第4次專題研習",
-    },
-    {
-      title: "Keynote Speech II",
-      content:
-        "探討多元性別概念，擴展編審視野與深化知能～2024年審定本教科用書第4次專題研習",
-    },
-  ];
+const query = `
+  query speechPage {
+    speechPage {
+      section1
+      section2
+    }
+  }
+`;
 
+const query2 = `
+  query event {
+    event {
+      section1
+    }
+  }
+`;
+
+export default function Page() {
+  const [editor, setEditor] = useState<any>(null);
+  const [useData, setUseData] = useState<any>([]);
+  const [event, setEvent] = useState<any>([]);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+  const hasFetchedRef = useRef(false);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+
+      setEditor(data.speechPage[0].section1);
+      setUseData(data.speechPage[0].section2.card);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchEventData() {
+      try {
+        const res = await fetch("http://localhost:3000/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: query2 }),
+        });
+        const { data } = await res.json();
+        const filteredEvent = data.event[0].section1.editorCards.filter(
+          (card) => {
+            return (
+              useData[selectedTab] && useData[selectedTab].id.includes(card.id)
+            );
+          }
+        );
+        setEvent(filteredEvent);
+      } catch (error) {
+        console.error("Fetch error: ", error);
+      }
+    }
+    // 當 useData 有資料且 selectedTab 有定義時執行
+    if (Array.isArray(useData) && useData.length > 0) {
+      fetchEventData();
+    }
+  }, [useData, selectedTab]);
+
+  const handleTabChange = (index) => {
+    setFadeIn(false);
+    const timeout = setTimeout(() => setFadeIn(true), 100);
+    setSelectedTab(index);
+    return () => clearTimeout(timeout);
+  };
+
+  const dates = useData.map((card) => card.date);
+  const titles = dates.map((_, index) => `第${index + 1}天`);
   return (
     <div className="bg-[#FAFBFD]">
       <div
@@ -43,28 +106,36 @@ export default function Page() {
           }}
         >
           <div className="text-start w-[334px]">
-            <div className="text-white text-32M ">
-              教材教法創新與師資培育交流論壇
-            </div>
+            {editor && (
+              <div className="text-white text-32M ">{editor.dateLabel1}</div>
+            )}
           </div>
         </div>
         <div className="bg-[#B080CA1A] flex-1 ps-[128px] flex items-center">
-          <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
-            預定邀請國內外對教材教法素有專精之學者數名，除了探討不同國家
-            之師資培育制度特色、重要政策以及當前整體師資培育所面臨的挑戰
-            等面向，同時探討應用於各領域之 PBL、現象本位、AI 教育及跨領域
-            教學學習等創新教學方法，進而瞭解當前國際趨勢下的師資培育變革
-            趨勢，以及教材教法創新與實踐，促進學術交流與師資培育合作。
-          </div>
+          {editor && (
+            <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
+              {editor.dateLabel2}
+            </div>
+          )}
         </div>
       </div>
 
       <div className="pt-[128px] pb-[160px] mx-auto">
-        <Tab titles={["第一天", "第二天"]} dates={["10.18", "10.19"]} />
-        <div className="flex flex-col ">
-          {card.map((card, index) => (
-            <SpeechCard key={index} />
-          ))}
+        <Tab titles={titles} dates={dates} onChange={handleTabChange} />
+        <div
+          className={`flex flex-col transition-opacity duration-500 ease-in-out ${
+            fadeIn ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {event && event.length > 0 ? (
+            <>
+              {event.map((event, index) => (
+                <SpeechCard data={event} key={index} />
+              ))}
+            </>
+          ) : (
+            <div className="bg-white w-[976px] h-[1157px]"></div>
+          )}
         </div>
       </div>
     </div>

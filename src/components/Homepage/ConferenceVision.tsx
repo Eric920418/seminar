@@ -25,14 +25,7 @@ export const ConferenceVision = () => {
       const json = await res.json();
       setData(json.data);
 
-      const imageData = Array.isArray(json.data.homePage[0].section4.images)
-        ? json.data.homePage[0].section4.images
-        : json.data.homePage[0].section4.images?.image;
-
-      const uint8Array = new Uint8Array(imageData);
-      const blob = new Blob([uint8Array.buffer], { type: "image/png" });
-      const url = URL.createObjectURL(blob);
-      setImgUrl(url);
+      setImgUrl(json.data.homePage[0].section4.images);
     }
     fetchData();
   }, []);

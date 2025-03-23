@@ -1,6 +1,29 @@
+"use client";
+import { useState, useEffect } from "react";
+const query = `
+  query meetingPage {
+    meetingPage {
+      section7
+    }
+  }
+`;
 import Image from "next/Image";
 
 export const Map = () => {
+  const [editorMapImage, setEditorMapImage] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setEditorMapImage(data.meetingPage[0].section7?.MapUrl);
+    }
+    fetchData();
+  }, []);
   return (
     <div className="flex flex-1 flex-col justify-start max-w-[976px]">
       <div className="text-16M text-primary ">Venue Map</div>
@@ -10,13 +33,15 @@ export const Map = () => {
       </div>
 
       <div className="mt-[64px]">
-        <Image
-          className=" rounded-[8px]"
-          src="/banner/Rectangle 235.png"
-          width={976}
-          height={669}
-          alt="map"
-        ></Image>
+        {editorMapImage ? (
+          <Image
+            className=" rounded-[8px]"
+            src={editorMapImage}
+            width={976}
+            height={669}
+            alt="map"
+          ></Image>
+        ) : null}
       </div>
     </div>
   );

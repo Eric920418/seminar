@@ -153,8 +153,9 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             />
             <ImageUploader
-              uploaderId={`uploader${index}`}
-              onImageUpload={(data) => handleImageUpload({ ...data, index })}
+              onImageUpload={(filename) =>
+                handleImageUpload({ fileUrl: filename, index })
+              }
             />
           </div>
         </div>
@@ -216,7 +217,7 @@ export const Host = () => {
   const handleImageUpload = (data) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
-      newCards[data.index].image = data;
+      newCards[data.index].image = data.fileUrl.fileUrl;
       setEditorCards(newCards);
     }
   };

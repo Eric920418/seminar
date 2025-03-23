@@ -63,9 +63,12 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
   }, []);
 
   return (
-    <div className="bg-gray-200 p-6 rounded-xl">
+    <div className="bg-gray-200 p-6 rounded-xl flex-1">
       <div className="flex justify-between mb-2">
-        <div className="text-20M">{card.title2}</div>
+        <div className="text-20M">
+          {card.id}&nbsp;-&nbsp;
+          {card.title2}
+        </div>
         <Image
           src="/icons/24icon/arrow_right.svg"
           width={24}
@@ -161,7 +164,7 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
         <div className="mt-[32px]">
           <input
             type="text"
-            placeholder="日期"
+            placeholder="日期 (格式：3.10)"
             value={card.date}
             onChange={(e) => onCardChange(index, "date", e.target.value)}
             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
@@ -249,7 +252,7 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             />
           </div>
-          <div className="py-2">按住 Shift 鍵可以多選</div>
+          <div className="py-2">按住 Ctrl 鍵可以多選</div>
           <select
             multiple
             size={selectHost.length > 0 ? selectHost.length : 4}
@@ -301,7 +304,6 @@ export const Event = () => {
     const newCards = [...editorCards];
     newCards[index] = { ...newCards[index], [field]: value };
     setEditorCards(newCards);
-    console.log(editorCards);
   };
 
   // 處理卡片展開／收合開關
@@ -315,6 +317,7 @@ export const Event = () => {
     setEditorCards([
       ...editorCards,
       {
+        id: Math.floor(100000 + Math.random() * 900000).toString(),
         date: "",
         title: "",
         title2: "",
@@ -331,6 +334,11 @@ export const Event = () => {
         isOpen: false, // 初始狀態為收合
       },
     ]);
+  };
+
+  const DeleteCard = (index: number) => {
+    const newCards = editorCards.filter((_, idx) => idx !== index);
+    setEditorCards(newCards);
   };
 
   const handleUpdate = async () => {
@@ -360,27 +368,34 @@ export const Event = () => {
     }
   };
 
-  console.log(editorCards);
   return (
     <div>
       <div className="flex justify-between">
-        <div className="text-32M mb-6">主持人</div>
+        <div className="text-32M mb-6">活動</div>
         <button
           className="bg-blue-500 text-white px-2 rounded"
           onClick={addCard}
         >
-          新增主持人
+          新增活動
         </button>
       </div>
       <div className="flex flex-col gap-[16px] mt-3">
         {editorCards.map((card, index) => (
-          <Card
-            key={index}
-            card={card}
-            index={index}
-            onToggle={handleToggle}
-            onCardChange={handleCardChange}
-          />
+          <div className="flex space-x-6 " key={index}>
+            <Card
+              card={card}
+              index={index}
+              onToggle={handleToggle}
+              onCardChange={handleCardChange}
+            />
+
+            <button
+              className="bg-red-500 text-white px-3 py-1 rounded"
+              onClick={() => DeleteCard(index)}
+            >
+              刪除
+            </button>
+          </div>
         ))}
       </div>
       <div className="mt-6">
