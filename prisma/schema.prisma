@@ -108,4 +108,16 @@ model Event {
 }
 
 
+model Logo{
+  id Int @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  section1    Json      
+}
 
+model Color{
+  id Int @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  section1    Json  
+}

@@ -8,6 +8,8 @@ import workShopPageMutation from "./WorkShopPage";
 import speechPageMutation from "./speechPage";
 import forumPageMutation from "./forumPage";
 import meetingPageMutation from "./meetingPage";
+import logoMutation from "./logo";
+import colorMutation from "./color";
 
 const Mutations = {
   ...homePageMutation,
@@ -20,6 +22,8 @@ const Mutations = {
   ...speechPageMutation,
   ...forumPageMutation,
   ...meetingPageMutation,
+  ...logoMutation,
+  ...colorMutation,
 };
 
 export default Mutations;

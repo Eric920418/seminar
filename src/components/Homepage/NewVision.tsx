@@ -31,7 +31,7 @@ export const NewVision = () => {
   if (!data) return <div>Loading...</div>;
 
   return (
-    <div className="w-full pt-[128px] pb-[160px]">
+    <div className="w-full pt-[64px] pb-[80px] desktop:pt-[128px] desktop:pb-[160px]  px-3 desktop:px-0">
       <div className="w-full max-w-[1314px] mx-auto flex flex-col">
         <div className="text-16M text-primary">NEW</div>
         <div className="relative w-fit">

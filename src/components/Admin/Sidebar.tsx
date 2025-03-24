@@ -81,6 +81,18 @@ export const Sidebar = () => {
             >
               講師
             </Link>
+            <Link
+              href="/admin/logo"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              Logo
+            </Link>
+            <Link
+              href="/admin/color"
+              className="block px-4 py-2 hover:bg-gray-700"
+            >
+              顏色
+            </Link>
           </nav>
         )}
       </div>

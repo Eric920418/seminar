@@ -130,7 +130,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="pt-[128px] pb-[160px] mx-auto">
+      <div className="pt-[128px] pb-[160px] mx-auto  px-3 desktop:px-0">
         <Tab titles={titles} dates={dates} onChange={handleTabChange} />
         <div
           className={`flex flex-col transition-opacity duration-500 ease-in-out ${

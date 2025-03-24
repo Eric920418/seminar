@@ -71,6 +71,7 @@ export const HomePage = () => {
     editor6: "",
     editor7: "",
     editor8: "",
+    editor9: "",
   });
   const [editorCards, setEditorCards] = useState([]);
   const [uploadImage, setUploadImage] = useState();
@@ -114,6 +115,7 @@ export const HomePage = () => {
           editor6: data.homePage[0].section1?.subTitle?.[2],
           editor7: data.homePage[0].section1?.subTitle?.[3],
           editor8: data.homePage[0].section1.location || "",
+          editor9: data.homePage[0].section1.image,
         });
 
         setEditorCards(data.homePage[0].section2?.cards || []);
@@ -162,6 +164,7 @@ export const HomePage = () => {
     editorContents.editor6,
     editorContents.editor7,
     editorContents.editor8,
+    editorContents.editor9,
   ]);
 
   useEffect(() => {
@@ -217,7 +220,12 @@ export const HomePage = () => {
       [id]: content,
     }));
   };
-
+  const handleImageUploadBanner = (id, data) => {
+    setEditorContents((prev) => ({
+      ...prev,
+      [id]: data.fileUrl.fileUrl,
+    }));
+  };
   const handleCardChange = (index: number, field: string, value: string) => {
     const newCards = [...editorCards];
     newCards[index] = { ...newCards[index], [field]: value };
@@ -281,6 +289,7 @@ export const HomePage = () => {
           editorContents.editor7,
         ],
         location: editorContents.editor8,
+        image: editorContents.editor9,
       },
       section2: {
         cards: editorCards,
@@ -336,6 +345,7 @@ export const HomePage = () => {
     }
   };
 
+  console.log(editorContents.editor9);
   return (
     <div>
       <div className="text-32M mb-6">首頁</div>
@@ -483,6 +493,21 @@ export const HomePage = () => {
                     handleEditorChange("editor8", e.target.value)
                   }
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                />
+              </div>
+              <div className="mt-[12px]">
+                {editorContents.editor9 && (
+                  <Image
+                    src={editorContents.editor9}
+                    alt="some image"
+                    width={240}
+                    height={240}
+                  ></Image>
+                )}
+                <ImageUploader
+                  onImageUpload={(filename) =>
+                    handleImageUploadBanner("editor9", { fileUrl: filename })
+                  }
                 />
               </div>
             </div>

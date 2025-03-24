@@ -12,6 +12,8 @@ import { Meeting } from "@/components/Edit/Meeting";
 import { Forum } from "@/components/Edit/Forum";
 import { Host } from "@/components/Edit/Host";
 import { Event } from "@/components/Edit/Event";
+import { Logo } from "@/components/Edit/Logo";
+import { Color } from "@/components/Edit/Color";
 export default function Page() {
   const params = useParams();
   const { slug } = params;
@@ -27,6 +29,8 @@ export default function Page() {
     { slug: "forum", component: <Forum /> },
     { slug: "host", component: <Host /> },
     { slug: "event", component: <Event /> },
+    { slug: "logo", component: <Logo /> },
+    { slug: "color", component: <Color /> },
   ];
 
   return (

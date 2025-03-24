@@ -182,7 +182,9 @@ export const SpeechCard = ({ data }) => {
         </div>
         <div ref={contentRef}>
           {selectHost &&
-            selectHost.map((card, i) => <PeopleCard card={card} key={i} />)}
+            selectHost.map((card, i) => (
+              <PeopleCard card={card} useIndex={i} key={i} />
+            ))}
         </div>
       </div>
     </div>

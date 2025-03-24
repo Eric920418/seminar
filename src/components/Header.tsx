@@ -1,8 +1,16 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
+const query = `
+  query logo {
+    logo {
+      section1
+    }
+  }
+`;
 export const Header = () => {
   const router = useRouter();
   const nav = [
@@ -69,6 +77,22 @@ export const Header = () => {
     },
   ];
 
+  const [editorMapImage, setEditorMapImage] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+
+      setEditorMapImage(data.logo[0].section1?.image);
+    };
+
+    fetchData();
+  }, []);
   // 電腦版狀態
   const [openStates, setOpenStates] = useState(nav.map(() => false));
   const [smOpenStates, setSmOpenStates] = useState(
@@ -114,7 +138,6 @@ export const Header = () => {
 
   const handleNavigation2 = (path) => {
     if (path) {
-      const replacedTitle = path.title.replace(/\s+/g, "-");
       const targetUrl = `http://localhost:3000/${path.path}/${path.index}`; // 加上斜線
       window.location.href = targetUrl;
     }
@@ -165,7 +188,20 @@ export const Header = () => {
     <>
       {/* 電腦版 Header */}
       <div className="hidden laptop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
-        <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px]"></div>
+        <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
+          <div className="h-[45px] w-[200px] ">
+            {editorMapImage && (
+              <Image
+                src={editorMapImage}
+                alt="logo"
+                width={269}
+                height={90}
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                className="w-full h-full object-cover"
+              />
+            )}
+          </div>
+        </div>
 
         <div className="bg-[#FFFFFF80] rounded-[40px] flex items-center space-x-[64px] px-[64px]">
           {nav.map((navItem, navIndex) => (
@@ -238,6 +274,18 @@ export const Header = () => {
       {/* 手機版 Header */}
       <div className="laptop:hidden fixed top-0 left-0 w-full z-[30] bg-yellow-50 shadow-md">
         <div className="flex items-center justify-between p-4">
+          <div className="h-[45px] w-[200px]">
+            {editorMapImage && (
+              <Image
+                src={editorMapImage}
+                alt="logo"
+                width={269}
+                height={90}
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                className="w-full h-full object-cover"
+              />
+            )}
+          </div>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-2xl"

@@ -29,11 +29,6 @@ const query2 = `
     }
   }
 `;
-type CardType = {
-  id: string;
-  title: string;
-  title2: string; // 新增此屬性
-};
 
 interface SelectEvent {
   title: string;
@@ -93,31 +88,36 @@ export const Exhibition = () => {
 
     fetchData();
   }, []);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("http://localhost:3000/api/graphql", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            query: query2,
-          }),
-        });
-        const { data } = await res.json();
-        const events = [...selectEvent];
-        data.event[0].section1.editorCards.forEach((card: CardType) => {
+
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: query2,
+        }),
+      });
+      const { data } = await res.json();
+      setSelectEvent((prevEvents) => {
+        // 取得前一次的狀態，然後新增新的資料
+        const events = [...prevEvents];
+        data.event[0].section1.editorCards.forEach((card) => {
           events.push({
             title: card.title2,
             id: card.id,
           });
         });
-        setSelectEvent(events);
-      } catch (error) {
-        console.error("Fetch error: ", error);
-      }
+        return events;
+      });
+    } catch (error) {
+      console.error("Fetch error: ", error);
     }
+  }, []);
+
+  useEffect(() => {
     fetchData();
-  }, [selectEvent]);
+  }, [fetchData]);
 
   const handleCardChange = (
     index: number,

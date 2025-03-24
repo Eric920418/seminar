@@ -1,0 +1,18 @@
+scalar JSON
+
+type Logo {
+  id: ID!
+  section1: JSON
+}
+
+type Query {
+  logo: [Logo!]!
+}
+
+input UpdateLogoInput {
+  section1: JSON
+}
+
+type Mutation {
+  updateLogo(input: UpdateLogoInput!): Logo
+}

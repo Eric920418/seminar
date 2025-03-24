@@ -8,6 +8,8 @@ import workShopPageQuery from "./WorkShopPage";
 import speechPageQuery from "./speechPage";
 import forumPageQuery from "./forumPage";
 import meetingPageQuery from "./meetingPage";
+import logoQuery from "./logo";
+import colorQuery from "./color";
 
 const Query = {
   ...homePageQuery,
@@ -20,6 +22,8 @@ const Query = {
   ...speechPageQuery,
   ...forumPageQuery,
   ...meetingPageQuery,
+  ...logoQuery,
+  ...colorQuery,
 };
 
 export default Query;

@@ -54,9 +54,11 @@ export const Video = () => {
       });
       const { data } = await res.json();
 
+      console.log(data);
+
       if (data.videoPage[0].section1) {
-        setEditorCards(data.videoPage[0].section1.tab[0].cards);
-        setEditorCards2(data.videoPage[0].section1.tab[1].cards);
+        setEditorCards(data.videoPage[0].section1.tab[0].card);
+        setEditorCards2(data.videoPage[0].section1.tab[1].card);
         setEditorVideoURL(data.videoPage[0].section1.tab[0].video);
         setEditorVideoURL2(data.videoPage[0].section1.tab[1].video);
       }
@@ -161,7 +163,7 @@ export const Video = () => {
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>ICTE直播 區塊</div>
+            <div>區塊一</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -179,6 +181,7 @@ export const Video = () => {
             style={{ maxHeight: `${height1}px` }}
           >
             <div className="my-3">
+              <div className="my-3">ICTE直播</div>
               <input
                 type="text"
                 value={editorVideoURL}
@@ -188,6 +191,41 @@ export const Video = () => {
               />
             </div>
             <div className="my-3">
+              <div className="my-3">ICTE宣傳短片</div>
+              <input
+                type="text"
+                value={editorVideoURL2}
+                placeholder="ytube影片網址 ?v={這段}"
+                onChange={handleEditorVideoURL2}
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              />
+            </div>
+          </div>
+        </div>
+        {/* 區塊二 */}
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between items-center">
+            <div>區塊二</div>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icons/24icon/arrow_right.svg"
+                className={`cursor-pointer transition-transform duration-300 ${
+                  isOpen2 ? "rotate-90" : ""
+                }`}
+                width={24}
+                height={24}
+                alt="arrow"
+                onClick={() => setIsOpen2(!isOpen2)}
+              />
+            </div>
+          </div>
+          <div
+            ref={contentRef2}
+            className="overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height2}px` }}
+          >
+            <div className="my-3 flex space-x-6">
+              <div>主題演講​</div>
               <button
                 className="bg-blue-500 text-white px-3 py-1 rounded"
                 onClick={addCard}
@@ -219,7 +257,7 @@ export const Video = () => {
                     />
                     <input
                       type="text"
-                      placeholder="影片網址"
+                      placeholder="ytube影片網址 ?v={這段}"
                       value={card.videos}
                       onChange={(e) =>
                         handleCardChange(index, "videos", e.target.value)
@@ -236,40 +274,8 @@ export const Video = () => {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-        {/* 區塊二 */}
-        <div className="relative bg-gray-200 w-full p-3">
-          <div className="flex justify-between items-center">
-            <div>ICTE宣傳短片 區塊</div>
-            <div className="flex items-center gap-2">
-              <Image
-                src="/icons/24icon/arrow_right.svg"
-                className={`cursor-pointer transition-transform duration-300 ${
-                  isOpen2 ? "rotate-90" : ""
-                }`}
-                width={24}
-                height={24}
-                alt="arrow"
-                onClick={() => setIsOpen2(!isOpen2)}
-              />
-            </div>
-          </div>
-          <div
-            ref={contentRef2}
-            className="overflow-hidden transition-all duration-500 ease-in-out"
-            style={{ maxHeight: `${height2}px` }}
-          >
-            <div className="my-3">
-              <input
-                type="text"
-                value={editorVideoURL2}
-                placeholder="ytube影片網址 ?v={這段}"
-                onChange={handleEditorVideoURL2}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-              />
-            </div>
-            <div className="my-3">
+            <div className="my-3 flex space-x-6">
+              <div>圓桌論壇​</div>
               <button
                 className="bg-blue-500 text-white px-3 py-1 rounded"
                 onClick={addCard2}
@@ -301,7 +307,7 @@ export const Video = () => {
                     />
                     <input
                       type="text"
-                      placeholder="影片網址"
+                      placeholder="ytube影片網址 ?v={這段}"
                       value={card.videos}
                       onChange={(e) =>
                         handleCardChange2(index, "videos", e.target.value)

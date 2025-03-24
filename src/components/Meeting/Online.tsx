@@ -37,7 +37,7 @@ export const Online = () => {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-1 flex-col justify-start w-full desktop:max-w-[976px]">
+    <div className="flex flex-1 flex-col justify-start w-full desktop:max-w-[976px]  px-3 desktop:px-0">
       <div className="text-16M text-primary ">
         Online Registration and Rules
       </div>

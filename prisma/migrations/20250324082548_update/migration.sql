@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Logo" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "section1" JSONB NOT NULL,
+
+    CONSTRAINT "Logo_pkey" PRIMARY KEY ("id")
+);

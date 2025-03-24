@@ -46,7 +46,7 @@ export const Presentation = () => {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-1 flex-col justify-start ">
+    <div className="flex flex-1 flex-col justify-start  px-3 desktop:px-0">
       <div className="text-16M text-primary ">Presentation Guidelines</div>
       <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">​發表規則</div>
@@ -68,7 +68,7 @@ export const Presentation = () => {
               }}
             ></div>
           </div>
-          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
+          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0 ">
             <div className="text-secondary text-[15px] desktop:text-20M">
               國外學者專題演講I、II、III
             </div>

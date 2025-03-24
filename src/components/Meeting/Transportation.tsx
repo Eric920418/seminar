@@ -24,7 +24,7 @@ export const Transportation = () => {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-1 flex-col justify-start desktop:max-w-[976px]">
+    <div className="flex flex-1 flex-col justify-start desktop:max-w-[976px]  px-3 desktop:px-0">
       <div className="text-16M text-primary ">Transportation</div>
       <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">交通</div>

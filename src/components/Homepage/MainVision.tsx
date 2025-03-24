@@ -34,7 +34,7 @@ export const MainVision = () => {
     <div
       className="h-screen w-screen"
       style={{
-        backgroundImage: "url('/banner/icte_banner.png')",
+        backgroundImage: `url('${data.homePage[0].section1.image}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

@@ -41,9 +41,8 @@ export default function Page() {
       });
       const { data } = await res.json();
 
-      // 假設結構為：tab[0] 為 ICTE直播，tab[1] 為 ICTE宣傳短片
-      setCard(data.videoPage[0].section1.tab[0].cards);
-      setCard2(data.videoPage[0].section1.tab[1].cards);
+      setCard(data.videoPage[0].section1.tab[0].card);
+      setCard2(data.videoPage[0].section1.tab[1].card);
       setData(data.videoPage[0].section1.tab[0].video);
       setData2(data.videoPage[0].section1.tab[1].video);
     }
@@ -126,18 +125,18 @@ export default function Page() {
           <div className="text-black text-48M">影片專區​​​</div>
         </div>
       </div>
-      <div className="mx-auto w-fit pt-[128px] pb-[160px] max-w-[1200px]">
+      <div className="mx-auto w-fit pt-[128px] pb-[160px] max-w-[1200px]  px-3 desktop:px-0">
         <div>
           <div className="text-16M text-primary text-center">
             Abstract Review Results
           </div>
           <div className="relative w-fit mx-auto">
-            <div className="text-black text-48M relative z-10">
+            <div className="text-black text-20M desktop:text-48M relative z-10">
               第十二屆師資培育國際學術研討會
             </div>
             <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
-          <div className="mt-[128px]">
+          <div className="mt-[64px] desktop:mt-[128px]">
             <Tab
               titles={["ICTE直播", "ICTE宣傳短片"]}
               color="text-[#DD6B00] border-b-6 border-[#DD6B00]"

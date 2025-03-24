@@ -51,15 +51,44 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
         style={{ maxHeight: card.isOpen ? `${contentHeight}px` : "0px" }}
       >
         {/* 卡片內容範例，可依需求自行調整 */}
-        <div className="rounded-[40px] bg-black flex min-h-[538px]">
+        <div
+          className="rounded-[40px]  flex min-h-[538px]"
+          style={{
+            backgroundImage: `url('/banner/card-img${
+              index % 2 === 0 ? 0 : 1
+            }.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
           <div className="relative w-[414px]">
             <div
-              className="absolute top-0 left-0 p-[32px] text-white text-[32px] font-[700] font-NotoSansTC"
+              className="absolute top-0 left-0 p-[32px] text-white text-[32px] font-[700] font-NotoSansTC z-10"
               style={{ writingMode: "vertical-rl" }}
             >
               主 持 人
             </div>
-            <div className="absolute top-18 left-15 bg-white rounded-[50%] w-[316px] h-[316px]"></div>
+            <div
+              className={`absolute   desktop:top-[80px] desktop:left-[50px] bg-white 
+          ${
+            index % 2 === 0
+              ? "rounded-[40px] rotate-[-4deg] translate-y-5  translate-x-5  w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
+              : "rounded-full w-[200px] top-18 left-15 h-[200px] desktop:w-[316px] desktop:h-[316px]"
+          } `}
+            >
+              {card.image && (
+                <Image
+                  src={card.image ?? null}
+                  alt="some image"
+                  width={316}
+                  height={316}
+                  className={`w-full h-full object-cover  ${
+                    index % 2 === 0 ? "rounded-[40px] " : "rounded-full"
+                  } `}
+                />
+              )}
+            </div>
             <div className="absolute top-95 left-0 p-[32px]">
               <div className="text-white text-[32px] font-[700] font-NotoSansTC">
                 {card.name}​​​​ ​教授​

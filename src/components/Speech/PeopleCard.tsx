@@ -1,28 +1,49 @@
 import Image from "next/image";
 
-export const PeopleCard = ({ card }) => {
+export const PeopleCard = ({ card, useIndex }) => {
   if (!card) {
     return null;
   }
+
   return (
-    <div className="rounded-[40px] bg-black flex flex-col desktop:flex-row mt-12 desktop:mt-[48px] min-h-[538px]">
+    <div
+      className="rounded-[40px]  flex flex-col desktop:flex-row mt-12 desktop:mt-[48px] min-h-[538px]"
+      style={{
+        backgroundImage: `url('/banner/card-img${
+          useIndex % 2 === 0 ? 0 : 1
+        }.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       {/* 左側：圖片與基本資訊 */}
       <div className="relative w-full h-[314px] desktop:w-[414px]">
         <div
-          className="absolute top-3 desktop:top-[-10px] desktop:left-[-10px] p-4 desktop:p-[32px] text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC"
+          className="absolute top-3 desktop:top-[-10px] desktop:left-[-10px] p-4 desktop:p-[32px] text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC z-10"
           style={{ writingMode: "vertical-rl" }}
         >
           主 持 人
         </div>
         {/* 圖片容器，手機版尺寸較小，桌機版較大 */}
-        <div className="absolute left-20 top-5 desktop:top-[80px] desktop:left-[50px] bg-white rounded-full w-[200px] h-[200px] desktop:w-[316px] desktop:h-[316px]">
+        <div
+          className={`absolute   desktop:top-[80px] desktop:left-[50px] bg-white 
+                ${
+                  useIndex % 2 === 0
+                    ? "rounded-[40px] rotate-[-4deg] translate-y-5 translate-x-20  desktop:translate-x-5  w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
+                    : "rounded-full left-20 top-5 w-[200px] h-[200px] desktop:w-[316px] desktop:h-[316px]"
+                } 
+            `}
+        >
           {card.image && (
             <Image
               src={card.image ?? null}
               alt="some image"
               width={316}
               height={316}
-              className="w-full h-full object-cover rounded-full"
+              className={`w-full h-full object-cover  ${
+                useIndex % 2 === 0 ? "rounded-[40px] " : "rounded-full"
+              } `}
             />
           )}
         </div>

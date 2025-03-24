@@ -81,7 +81,7 @@ export const Project = () => {
 
   return (
     <div
-      className={`flex flex-col  w-screen max-w-[976px] transition-opacity duration-500 ${
+      className={`flex flex-col  w-screen max-w-[976px]  px-3 desktop:px-0 transition-opacity duration-500 ${
         containerFade ? "opacity-100" : "opacity-0"
       }`}
     >

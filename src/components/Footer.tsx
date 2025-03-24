@@ -1,4 +1,13 @@
+"use client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+const query = `
+  query logo {
+    logo {
+      section1
+    }
+  }
+`;
 export const Footer = () => {
   const nav = [
     {
@@ -56,10 +65,40 @@ export const Footer = () => {
       inSelect: [],
     },
   ];
+
+  const [editorMapImage, setEditorMapImage] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:3000/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+
+      setEditorMapImage(data.logo[0].section1?.image);
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="bg-[#6EC7B9] p-[16px] laptop:p-[64px] desktop:p-[128px]">
       <div className="flex justify-between ">
-        <div className="bg-[#FFFFFF80] desktop:w-[205px] h-[64px] rounded-[40px] "></div>
+        <div className="hidden bg-[#FFFFFF80] desktop:w-[205px] h-[64px] rounded-[40px] desktop:flex items-center px-6">
+          <div className="h-[35px] w-[200px] ">
+            {editorMapImage && (
+              <Image
+                src={editorMapImage}
+                alt="logo"
+                width={269}
+                height={90}
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                className="w-full h-full object-cover"
+              />
+            )}
+          </div>
+        </div>
         <div className="flex space-x-[56px] overflow-x-scroll">
           {nav.map((item, index) => (
             <div key={index}>

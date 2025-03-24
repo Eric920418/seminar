@@ -103,32 +103,7 @@ export const Meeting = () => {
 
   const [editorTransportation, setEditorTransportation] = useState("");
 
-  const [editorStay, setEditorStay] = useState({
-    editor1: "",
-    editor2: "",
-    editor3: "",
-    editor4: "",
-    editor5: "",
-    editor6: "",
-    editor7: "",
-    editor8: "",
-    editor9: "",
-    editor10: "",
-    editor11: "",
-    editor12: "",
-    editor13: "",
-    editor14: "",
-    editor15: "",
-    editor16: "",
-    editor17: "",
-    editor18: "",
-    editor19: "",
-    editor20: "",
-    editor21: "",
-    editor22: "",
-    editor23: "",
-    editor24: "",
-  });
+  const [accommodations, setAccommodations] = useState([]);
 
   const [editorMapImage, setEditorMapImage] = useState("");
 
@@ -179,32 +154,7 @@ export const Meeting = () => {
 
       setEditorTransportation(data.meetingPage[0].section5?.location || "");
 
-      setEditorStay({
-        editor1: data.meetingPage[0].section6[0].image || "",
-        editor2: data.meetingPage[0].section6[0].title || "",
-        editor3: data.meetingPage[0].section6[0].url || "",
-        editor4: data.meetingPage[0].section6[0].location || "",
-        editor5: data.meetingPage[0].section6[0].phone || "",
-        editor6: data.meetingPage[0].section6[0].map || "",
-        editor7: data.meetingPage[0].section6[0].form || "",
-        editor8: data.meetingPage[0].section6[0].content || "",
-        editor9: data.meetingPage[0].section6[1].image || "",
-        editor10: data.meetingPage[0].section6[1].title || "",
-        editor11: data.meetingPage[0].section6[1].url || "",
-        editor12: data.meetingPage[0].section6[1].location || "",
-        editor13: data.meetingPage[0].section6[1].phone || "",
-        editor14: data.meetingPage[0].section6[1].map || "",
-        editor15: data.meetingPage[0].section6[1].form || "",
-        editor16: data.meetingPage[0].section6[1].content || "",
-        editor17: data.meetingPage[0].section6[2].image || "",
-        editor18: data.meetingPage[0].section6[2].title || "",
-        editor19: data.meetingPage[0].section6[2].url || "",
-        editor20: data.meetingPage[0].section6[2].location || "",
-        editor21: data.meetingPage[0].section6[2].phone || "",
-        editor22: data.meetingPage[0].section6[2].map || "",
-        editor23: data.meetingPage[0].section6[2].form || "",
-        editor24: data.meetingPage[0].section6[2].content || "",
-      });
+      setAccommodations(data.meetingPage[0].section6);
 
       setEditorMapImage(data.meetingPage[0].section7?.MapUrl);
     };
@@ -277,7 +227,7 @@ export const Meeting = () => {
     if (contentRef6.current) {
       setHeight6(isOpen6 ? contentRef6.current.scrollHeight : 0);
     }
-  }, [isOpen6, editorStay]);
+  }, [isOpen6, accommodations]);
 
   useEffect(() => {
     if (contentRef7.current) {
@@ -290,6 +240,7 @@ export const Meeting = () => {
     newCards[index] = { ...newCards[index], [field]: value };
     setEditorCards(newCards);
   };
+
   const addCard = () => {
     if (!isOpen2) {
       setIsOpen2(true);
@@ -322,18 +273,39 @@ export const Meeting = () => {
     }));
   };
 
-  const handleEditorChange5 = (id: string, content: string) => {
-    setEditorStay((prev) => ({
-      ...prev,
-      [id]: content,
-    }));
+  const handleImageUpload = (index, data) => {
+    handleInputChange(index, "image", data.fileUrl.fileUrl);
   };
 
-  const handleImageUpload2 = (id, data) => {
-    setEditorStay((prev) => ({
-      ...prev,
-      [id]: data.fileUrl.fileUrl,
-    }));
+  const addAccommodation = () => {
+    setAccommodations([
+      ...accommodations,
+      {
+        image: "",
+        title: "",
+        url: "",
+        location: "",
+        phone: "",
+        map: "",
+        form: "",
+        content: "",
+      },
+    ]);
+  };
+
+  // 更新某一筆住宿資料的欄位值
+  const handleInputChange = (index, key, value) => {
+    const newAccommodations = accommodations.map((item, idx) =>
+      idx === index ? { ...item, [key]: value } : item
+    );
+    setAccommodations(newAccommodations);
+  };
+
+  const handleDeleteAccommodation = (index) => {
+    const updatedAccommodations = accommodations.filter(
+      (_, idx) => idx !== index
+    );
+    setAccommodations(updatedAccommodations);
   };
 
   const handleImageUpload3 = (data) => {
@@ -383,38 +355,7 @@ export const Meeting = () => {
       section5: {
         location: editorTransportation,
       },
-      section6: [
-        {
-          image: editorStay.editor1,
-          title: editorStay.editor2,
-          url: editorStay.editor3,
-          location: editorStay.editor4,
-          phone: editorStay.editor5,
-          map: editorStay.editor6,
-          form: editorStay.editor7,
-          content: editorStay.editor8,
-        },
-        {
-          image: editorStay.editor9,
-          title: editorStay.editor10,
-          url: editorStay.editor11,
-          location: editorStay.editor12,
-          phone: editorStay.editor13,
-          map: editorStay.editor14,
-          form: editorStay.editor15,
-          content: editorStay.editor16,
-        },
-        {
-          image: editorStay.editor17,
-          title: editorStay.editor18,
-          url: editorStay.editor19,
-          location: editorStay.editor20,
-          phone: editorStay.editor21,
-          map: editorStay.editor22,
-          form: editorStay.editor23,
-          content: editorStay.editor24,
-        },
-      ],
+      section6: accommodations,
       section7: {
         MapUrl: editorMapImage,
       },
@@ -982,7 +923,7 @@ export const Meeting = () => {
         {/* 區塊五 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊五 交通</div>
+            <div>交通</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -1016,414 +957,188 @@ export const Meeting = () => {
         {/* 區塊六 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊五 住宿</div>
+            <div>住宿</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
+                alt="arrow"
+                width={24}
+                height={24}
                 className={`cursor-pointer transition-transform duration-300 ${
                   isOpen6 ? "rotate-90" : ""
                 }`}
-                width={24}
-                height={24}
-                alt="arrow"
                 onClick={() => setIsOpen6(!isOpen6)}
               />
             </div>
           </div>
           <div
             ref={contentRef6}
-            className="  overflow-hidden transition-all duration-500 ease-in-out"
+            className="overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height6}px` }}
           >
+            {/* 卡片呈現區 */}
             <div className="mt-[16px] grid grid-cols-3 gap-[16px]">
-              <div className="bg-white rounded-[24px]">
-                {editorStay.editor1 && (
-                  <div>
-                    <Image
-                      src={editorStay.editor1}
-                      className="rounded-t-[24px]"
-                      style={{ objectFit: "cover", width: "100%" }}
-                      width={304}
-                      height={200}
-                      alt="image"
-                    />
-                  </div>
-                )}
-                <div className="p-[32px] flex flex-col space-y-[36px] ">
-                  <div>
-                    <div className="text-secondary text-20M ">
-                      {editorStay.editor2}
+              {accommodations.map((item, index) => (
+                <div key={index} className="bg-white rounded-[24px]">
+                  {item.image && (
+                    <div>
+                      <Image
+                        src={item.image}
+                        alt={`image${index}`}
+                        width={304}
+                        height={200}
+                        style={{ objectFit: "cover", width: "100%" }}
+                        className="rounded-t-[24px]"
+                      />
                     </div>
-                    <Link
-                      href={editorStay.editor3}
-                      className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {editorStay.editor3}
-                    </Link>
-                  </div>
-                  <div className="border w-full border-[#252F381A] "></div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">地址​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor4}
+                  )}
+                  {/* 卡片右上角的刪除按鈕 */}
+                  <button
+                    onClick={() => handleDeleteAccommodation(index)}
+                    className=" bg-red-500 text-white px-2 py-1 rounded text-xs"
+                  >
+                    刪除
+                  </button>
+                  <div className="p-[32px] flex flex-col space-y-[36px]">
+                    <div>
+                      <div className="text-secondary text-20M">
+                        {item.title}
+                      </div>
+                      <Link
+                        href={item.url}
+                        className="text-blue-500 underline text-16R break-all mt-[4px]"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.url}
+                      </Link>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">電話​​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor5}
+                    <div className="border w-full border-[#252F381A]" />
+                    <div>
+                      <div className="text-[#252F3880] text-14R">地址</div>
+                      <div className="mt-[8px] text-black text-16R">
+                        {item.location}
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">地圖​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor6}
+                    <div>
+                      <div className="text-[#252F3880] text-14R">電話</div>
+                      <div className="mt-[8px] text-black text-16R">
+                        {item.phone}
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">
-                      飯店預定表格​
+                    <div>
+                      <div className="text-[#252F3880] text-14R">地圖</div>
+                      <div className="mt-[8px] text-black text-16R">
+                        {item.map}
+                      </div>
                     </div>
-                    <Link
-                      href={editorStay.editor7}
-                      className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {editorStay.editor7}
-                    </Link>
-                  </div>
-                  <div className="p-[16px] rounded-[16px] bg-[#0DC7AB0D]">
-                    <div className="text-secondary text-16R ">
-                      {editorStay.editor8}
+                    <div>
+                      <div className="text-[#252F3880] text-14R">
+                        飯店預定表格
+                      </div>
+                      <Link
+                        href={item.form}
+                        className="text-blue-500 underline text-16R break-all mt-[4px]"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.form}
+                      </Link>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white rounded-[24px]">
-                {editorStay.editor9 && (
-                  <div>
-                    <Image
-                      src={editorStay.editor9}
-                      className="rounded-t-[24px]"
-                      style={{ objectFit: "cover", width: "100%" }}
-                      width={304}
-                      height={200}
-                      alt="image2"
-                    />
-                  </div>
-                )}
-                <div className="p-[32px] flex flex-col space-y-[36px] ">
-                  <div>
-                    <div className="text-secondary text-20M ">
-                      {editorStay.editor10}
-                    </div>
-                    <Link
-                      href={editorStay.editor11}
-                      className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                      target="_blank"
-                    >
-                      {editorStay.editor11}
-                    </Link>
-                  </div>
-                  <div className="border w-full border-[#252F381A] "></div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">地址​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor12}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">電話​​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor13}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">地圖​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor14}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">
-                      飯店預定表格​
-                    </div>
-                    <Link
-                      href={editorStay.editor15}
-                      className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {editorStay.editor15}
-                    </Link>
-                  </div>
-                  <div className="p-[16px] rounded-[16px] bg-[#0DC7AB0D]">
-                    <div className="text-secondary text-16R ">
-                      {editorStay.editor16}
+                    <div className="p-[16px] rounded-[16px] bg-[#0DC7AB0D]">
+                      <div className="text-secondary text-16R">
+                        {item.content}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="bg-white rounded-[24px]">
-                {editorStay.editor17 && (
-                  <div>
-                    <Image
-                      src={editorStay.editor17}
-                      className="rounded-t-[24px]"
-                      style={{ objectFit: "cover", width: "100%" }}
-                      width={304}
-                      height={200}
-                      alt="image3"
-                    />
-                  </div>
-                )}
-                <div className="p-[32px] flex flex-col space-y-[36px] ">
-                  <div>
-                    <div className="text-secondary text-20M ">
-                      {editorStay.editor18}
-                    </div>
-                    <Link
-                      href={editorStay.editor19}
-                      className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {editorStay.editor19}
-                    </Link>
-                  </div>
-                  <div className="border w-full border-[#252F381A] "></div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">地址​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor20}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">電話​​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor21}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">地圖​</div>
-                    <div className="mt-[8px] text-black text-16R ">
-                      {editorStay.editor22}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[#252F3880] text-14R ">
-                      飯店預定表格​
-                    </div>
-                    <Link
-                      href={editorStay.editor23}
-                      className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {editorStay.editor23}
-                    </Link>
-                  </div>
-                  <div className="p-[16px] rounded-[16px] bg-[#0DC7AB0D]">
-                    <div className="text-secondary text-16R ">
-                      {editorStay.editor24}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
-            <div className=" grid grid-cols-3 gap-[16px]">
-              <div className="flex flex-col gap-3">
-                <ImageUploader
-                  onImageUpload={(filename) =>
-                    handleImageUpload2("editor1", { fileUrl: filename })
-                  }
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor2}
-                  onChange={(e) =>
-                    handleEditorChange5("editor2", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor3}
-                  onChange={(e) =>
-                    handleEditorChange5("editor3", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor4}
-                  onChange={(e) =>
-                    handleEditorChange5("editor4", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor5}
-                  onChange={(e) =>
-                    handleEditorChange5("editor5", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor6}
-                  onChange={(e) =>
-                    handleEditorChange5("editor6", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor7}
-                  onChange={(e) =>
-                    handleEditorChange5("editor7", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor8}
-                  onChange={(e) =>
-                    handleEditorChange5("editor8", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="flex flex-col gap-3">
-                <ImageUploader
-                  onImageUpload={(filename) =>
-                    handleImageUpload2("editor9", { fileUrl: filename })
-                  }
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor10}
-                  onChange={(e) =>
-                    handleEditorChange5("editor10", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor11}
-                  onChange={(e) =>
-                    handleEditorChange5("editor11", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor12}
-                  onChange={(e) =>
-                    handleEditorChange5("editor12", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor13}
-                  onChange={(e) =>
-                    handleEditorChange5("editor13", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor14}
-                  onChange={(e) =>
-                    handleEditorChange5("editor14", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor15}
-                  onChange={(e) =>
-                    handleEditorChange5("editor15", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor16}
-                  onChange={(e) =>
-                    handleEditorChange5("editor16", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="flex flex-col gap-3">
-                <ImageUploader
-                  onImageUpload={(filename) =>
-                    handleImageUpload2("editor17", { fileUrl: filename })
-                  }
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor18}
-                  onChange={(e) =>
-                    handleEditorChange5("editor18", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor19}
-                  onChange={(e) =>
-                    handleEditorChange5("editor19", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor20}
-                  onChange={(e) =>
-                    handleEditorChange5("editor20", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor21}
-                  onChange={(e) =>
-                    handleEditorChange5("editor21", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor22}
-                  onChange={(e) =>
-                    handleEditorChange5("editor22", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor23}
-                  onChange={(e) =>
-                    handleEditorChange5("editor23", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorStay.editor24}
-                  onChange={(e) =>
-                    handleEditorChange5("editor24", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
+
+            {/* 編輯區，每個住宿卡片對應一組編輯欄位 */}
+            <div className="grid grid-cols-3 gap-[16px] mt-6">
+              {accommodations.map((item, index) => (
+                <div key={index} className="flex flex-col gap-3">
+                  <ImageUploader
+                    onImageUpload={(filename) =>
+                      handleImageUpload(index, { fileUrl: filename })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="標題"
+                    value={item.title}
+                    onChange={(e) =>
+                      handleInputChange(index, "title", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="連結網址"
+                    value={item.url}
+                    onChange={(e) =>
+                      handleInputChange(index, "url", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="地址"
+                    value={item.location}
+                    onChange={(e) =>
+                      handleInputChange(index, "location", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="電話"
+                    value={item.phone}
+                    onChange={(e) =>
+                      handleInputChange(index, "phone", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="地圖"
+                    value={item.map}
+                    onChange={(e) =>
+                      handleInputChange(index, "map", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="飯店預定表格連結"
+                    value={item.form}
+                    onChange={(e) =>
+                      handleInputChange(index, "form", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="內容"
+                    value={item.content}
+                    onChange={(e) =>
+                      handleInputChange(index, "content", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* 新增住宿卡片按鈕 */}
+            <div className="mt-6">
+              <button
+                onClick={addAccommodation}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                新增住宿卡片
+              </button>
             </div>
           </div>
         </div>
@@ -1431,7 +1146,7 @@ export const Meeting = () => {
         {/* 區塊七 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊五 會議平面圖</div>
+            <div>會議平面圖</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"

@@ -38,7 +38,7 @@ export const Results = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full max-w-[976px]">
+    <div className="flex flex-col w-full max-w-[976px]  px-3 desktop:px-0">
       <div className="text-16M text-primary">Abstract Review Results</div>
       <div className="relative w-fit">
         <div className="text-black text-36M desktop:text-48M  relative z-10">
@@ -83,7 +83,7 @@ export const Results = () => {
       ) : (
         <div
           key={selectedTab}
-          className={`mt-[48px] w-full transition-opacity duration-500 ease-in-out ${
+          className={`mt-[48px] w-full transition-opacity duration-500 ease-in-out  ${
             fadeIn ? "opacity-100" : "opacity-0"
           }`}
         >
