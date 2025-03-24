@@ -41,7 +41,7 @@ export const Results = () => {
     <div className="flex flex-col w-full max-w-[976px]">
       <div className="text-16M text-primary">Abstract Review Results</div>
       <div className="relative w-fit">
-        <div className="text-black text-48M  relative z-10">
+        <div className="text-black text-36M desktop:text-48M  relative z-10">
           論文摘要審查結果公告
         </div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
@@ -66,7 +66,7 @@ export const Results = () => {
           <div className="mt-[8px] text-[#252F3880] text-20M ">
             Oral presentation Acceptance List
           </div>
-          <div className="mt-[32px] grid grid-cols-3 gap-[32px]">
+          <div className="mt-[32px] grid desktop:grid-cols-3 gap-[32px]">
             {card.map((item, index) => (
               <div key={index} className="rounded-[24px] p-[32px] bg-white">
                 <div className="text-secondary text-20M ">{item.title}</div>
@@ -91,7 +91,7 @@ export const Results = () => {
           <div className="mt-[8px] text-[#252F3880] text-20M ">
             Oral presentation Acceptance List
           </div>
-          <div className="mt-[32px] grid grid-cols-3 gap-[32px]">
+          <div className="mt-[32px] grid desktop:grid-cols-3 gap-[32px]">
             {card2.map((item, index) => (
               <div key={index} className="rounded-[24px] p-[32px] bg-white">
                 <div className="text-secondary text-20M ">{item.title}</div>

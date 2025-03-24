@@ -37,7 +37,7 @@ export const Online = () => {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-1 flex-col justify-start max-w-[976px]">
+    <div className="flex flex-1 flex-col justify-start w-full desktop:max-w-[976px]">
       <div className="text-16M text-primary ">
         Online Registration and Rules
       </div>
@@ -49,24 +49,24 @@ export const Online = () => {
       <div className="mt-[64px] text-16R text-[#252F38B2]  ">
         {editorOnline.editor1}
       </div>
-      <div className="mt-[64px] flex space-x-[32px]">
-        <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
+      <div className="mt-[64px] flex flex-col desktop:flex-row space-x-[32px]">
+        <div className="bg-white p-[32px] rounded-[24px] flex-1 desktop:min-w-0">
           <div className="text-secondary text-36R ">線上​報名表單​​</div>
           <div className="mt-[32px] max-w-[408px] h-[142px]">
             <div className="text-black text-16R ">{editorOnline.editor2}</div>
           </div>
           <div className=" mt-[32px] text-[#252F3880] text-16R ">
-            最後更新時間：{editorOnline.editor4}
+            最後更新時間：{editorOnline.editor3}
           </div>
         </div>
-        <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
+        <div className="bg-white p-[32px] rounded-[24px] flex-1 desktop:min-w-0">
           <div className="text-secondary text-36R ">
             一般與會者 <br />
             報名成功名單
           </div>
           <div className="mt-[32px] h-[90px]">
             <Link
-              href={editorOnline.editor3}
+              href={editorOnline.editor4}
               className="text-blue-500 underline text-[15px] leading-[28px] font-[500]  break-all"
               target="_blank"
               rel="noopener noreferrer"

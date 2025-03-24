@@ -30,13 +30,13 @@ export const ImportantDates = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="flex flex-1 flex-col justify-start max-w-[976px]">
+    <div className="flex flex-1 flex-col justify-start w-screen desktop:max-w-[976px]">
       <div className="text-16M text-primary ">Important Dates</div>
       <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">重要時程</div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
-      <div className="mt-[64px] flex flex-wrap  justify-start gap-[32px]">
+      <div className="mt-[64px] flex flex-col justify-center    desktop:flex-wrap   desktop:justify-start gap-[32px]">
         <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
           <div className="w-[48px] h-[48px] rounded-[40px] bg-primary flex justify-center items-center">
             <div className="text-[#FFFFFF] text-20M ">1</div>
@@ -112,11 +112,11 @@ export const ImportantDates = () => {
         <div className="bg-[#FFF8DC] p-[32px] rounded-[40px]">
           <div className="text-black text-36M ">會議舉辦日期</div>
           <div className="mt-[32px] flex flex-col gap-[16px]">
-            <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
+            <div className="desktop:w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
               <div className="text-black text-20M ">會議</div>
               <div className="text-black text-16M ">{data.meeting}</div>
             </div>
-            <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
+            <div className="desktop:w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
               <div className="text-black text-20M ">晚宴</div>
               <div className="text-black text-16M ">{data.dinner}</div>
             </div>

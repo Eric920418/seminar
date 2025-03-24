@@ -108,7 +108,7 @@ export const Accommodation = () => {
   ];
 
   return (
-    <div className="flex flex-1 flex-col justify-start max-w-[976px]">
+    <div className="flex flex-1 flex-col justify-start desktop:max-w-[976px]">
       <div className="text-16M text-primary ">Accommodation</div>
       <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">住宿</div>
@@ -116,13 +116,14 @@ export const Accommodation = () => {
       </div>
 
       <div className="mt-[64px] text-secondary text-20M ">飯店資訊​​</div>
-      <div className="mt-[64px] flex space-x-[32px]">
+      <div className="mt-[64px] flex flex-col gap-6 desktop:flex-row space-x-[32px]">
         {card.map((item, index) => (
-          <div key={index} className="bg-white rounded-[24px]">
+          <div key={index} className="bg-white rounded-[24px] w-full">
             {item.src ? (
               <Image
                 className="rounded-t-[24px]"
                 src={item.src}
+                style={{ objectFit: "cover", width: "100%" }}
                 width={304}
                 height={200}
                 alt={item.title}

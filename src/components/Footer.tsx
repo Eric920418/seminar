@@ -57,7 +57,7 @@ export const Footer = () => {
     },
   ];
   return (
-    <div className="bg-[#6EC7B9] p-[32px] laptop:p-[64px] desktop:p-[128px]">
+    <div className="bg-[#6EC7B9] p-[16px] laptop:p-[64px] desktop:p-[128px]">
       <div className="flex justify-between ">
         <div className="bg-[#FFFFFF80] desktop:w-[205px] h-[64px] rounded-[40px] "></div>
         <div className="flex space-x-[56px] overflow-x-scroll">
@@ -77,11 +77,11 @@ export const Footer = () => {
           ))}
         </div>
       </div>
-      <div className="mt-[128px] flex justify-between desktop:py-[10px] overflow-auto">
-        <div className="text-white text-14R ">
+      <div className="mt-[64px] desktop:mt-[128px] desktop:flex justify-between desktop:py-[10px] overflow-auto">
+        <div className="text-white text-[12px]  desktop:text-14R ">
           Copyright © 2025 第12屆師資培育國際學術研討會 保留一切權利。
         </div>
-        <div className="flex space-x-[8px]">
+        <div className="flex justify-center desktop:justify-start space-x-[8px]">
           <Image
             className="text-white"
             src="/icons/24icon/fb.svg"

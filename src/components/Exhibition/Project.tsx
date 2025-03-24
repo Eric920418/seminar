@@ -81,7 +81,7 @@ export const Project = () => {
 
   return (
     <div
-      className={`flex flex-col w-full max-w-[976px] transition-opacity duration-500 ${
+      className={`flex flex-col  w-screen max-w-[976px] transition-opacity duration-500 ${
         containerFade ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -111,7 +111,7 @@ export const Project = () => {
 
       {/* 卡片列表：當沒有選中卡片時顯示 */}
       {selectedIndex === null && (
-        <div className="mt-[64px] grid grid-cols-4 gap-[32px]">
+        <div className="mt-[64px] grid  desktop:grid-cols-4 gap-[32px] mx-auto">
           {card.map((item, index) => (
             <div
               key={index}
@@ -141,7 +141,7 @@ export const Project = () => {
       {/* 選中卡片後的展示 */}
       {selectedIndex !== null && (
         <>
-          <div className="mt-[64px] w-[976px] flex items-center justify-between">
+          <div className="desktop:mt-[64px] desktop:w-[976px] flex items-center justify-between">
             {/* 左箭頭按鈕，點擊切換上一張圖片 */}
             <div className="w-[56px] h-[56px] rounded-full border border-[#252F381A] flex justify-center items-center cursor-pointer">
               <Image
@@ -176,7 +176,7 @@ export const Project = () => {
               />
             </div>
           </div>
-          <div className="mt-[64px]">
+          <div className="mt-[32px] desktop:mt-[64px] px-3 desktop:px-0">
             <div className="text-secondary text-20M">介紹​</div>
             <div
               className="mt-[24px] text-[#252F38B2] text-16R"
@@ -185,7 +185,7 @@ export const Project = () => {
               }}
             ></div>
           </div>
-          <div className="mt-[64px]">
+          <div className="mt-[32px] desktop:mt-[64px] px-3 desktop:px-0">
             <div className="text-secondary text-20M">教材研發者​</div>
             <div
               className="mt-[24px] text-[#252F38B2] text-16R"

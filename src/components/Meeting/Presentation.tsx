@@ -52,73 +52,77 @@ export const Presentation = () => {
         <div className="text-black text-48M  relative z-10">​發表規則</div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
-      <div className="w-[976px] ">
-        <div className="mt-[64px] flex space-x-[32px] ">
-          <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-            <div className="text-secondary text-20M ">
+      <div className="desktop:w-[976px] ">
+        <div className="mt-[64px] flex space-x-1 desktop:space-x-[32px] ">
+          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
+            <div className="text-secondary text-[15px] desktop:text-20M ">
               圓桌論﻿壇I、II、III、IV
             </div>
-            <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
+            <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor1}
             </div>
             <div
-              className=" mt-[16px] text-black text-[15px] leading-[28px] font-[400]"
+              className=" mt-[16px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[400]"
               dangerouslySetInnerHTML={{
                 __html: editorRule.editor2.replace(/\n/g, "<br>"),
               }}
             ></div>
           </div>
-          <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-            <div className="text-secondary text-20M ">
+          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
+            <div className="text-secondary text-[15px] desktop:text-20M">
               國外學者專題演講I、II、III
             </div>
-            <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
+            <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor3}
             </div>
             <div
-              className=" mt-[16px] text-black text-[15px] leading-[28px] font-[400] "
+              className=" mt-[16px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[400] "
               dangerouslySetInnerHTML={{
                 __html: editorRule.editor4.replace(/\n/g, "<br>"),
               }}
             ></div>
           </div>
         </div>
-        <div className="mt-[32px] ">
-          <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-            <div className="text-secondary text-20M ">論文發表</div>
-            <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
+        <div className="mt-[16px] desktop:mt-[32px] ">
+          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
+            <div className="text-secondary text-[15px] desktop:text-20M ">
+              論文發表
+            </div>
+            <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor5}
             </div>
             <div
-              className=" mt-[16px] text-black text-[15px] leading-[28px] font-[400] "
+              className=" mt-[16px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[400] "
               dangerouslySetInnerHTML={{
                 __html: editorRule.editor6.replace(/\n/g, "<br>"),
               }}
             ></div>
           </div>
         </div>
-        <div className="mt-[32px] flex space-x-[32px] ">
-          <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-            <div className="text-secondary text-20M ">工作坊</div>
-            <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
+        <div className="mt-[16px] desktop:mt-[32px] flex space-x-1 desktop:space-x-[32px] ">
+          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
+            <div className="text-secondary text-[15px] desktop:text-20M">
+              工作坊
+            </div>
+            <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor7}
             </div>
             <div
-              className=" mt-[16px] text-black text-[15px] leading-[28px] font-[400] "
+              className=" mt-[16px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[400] "
               dangerouslySetInnerHTML={{
                 __html: editorRule.editor8.replace(/\n/g, "<br>"),
               }}
             ></div>
           </div>
-          <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-            <div className="text-secondary text-20M ">
+          <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
+            <div className="text-secondary text-[15px] desktop:text-20M">
               Excell﻿ence in Teaching Talk（EIT Talk）
             </div>
-            <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
+            <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor9}
             </div>
             <div
-              className=" mt-[16px] text-black text-[15px] leading-[28px] font-[400] "
+              className=" mt-[16px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[400] "
               dangerouslySetInnerHTML={{
                 __html: editorRule.editor10.replace(/\n/g, "<br>"),
               }}

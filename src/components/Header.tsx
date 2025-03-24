@@ -10,23 +10,23 @@ export const Header = () => {
       title: "最新消息",
       path: "/",
       inSelect: [
-        { title: "重要時程" },
-        { title: "手冊完整版" },
-        { title: "會後影片" },
-        { title: "會議組成", smSelect: [{ title: "最新消息" }] },
+        // { title: "重要時程" },
+        // { title: "手冊完整版" },
+        // { title: "會後影片" },
+        // { title: "會議組成", smSelect: [{ title: "最新消息" }] },
       ],
     },
     {
       title: "ICTE​會議​資訊",
       path: "/meeting",
       inSelect: [
-        { title: "會議議程" },
-        { title: "重要時刻" },
-        { title: "發表規則" },
-        { title: "線上報名規則" },
-        { title: "交通" },
-        { title: "住宿" },
-        { title: "會議平面圖" },
+        { title: "會議議程", path: "/meeting", index: 0 },
+        { title: "重要時刻", path: "/meeting", index: 1 },
+        { title: "發表規則", path: "/meeting", index: 2 },
+        { title: "線上報名規則", path: "/meeting", index: 3 },
+        { title: "交通", path: "/meeting", index: 4 },
+        { title: "住宿", path: "/meeting", index: 5 },
+        { title: "會議平面圖", path: "/meeting", index: 6 },
       ],
     },
     {
@@ -48,19 +48,18 @@ export const Header = () => {
       title: "教學教具展​​​",
       path: "/exhibition",
       inSelect: [
-        { title: "作品展示", smSelect: [{ title: "最新消息" }] },
-        { title: "卓越的學習與教學​短講​流程" },
+        { title: "作品展示", path: "/exhibition", index: 0 },
+        { title: "卓越的學習與教學​短講​流程", path: "/exhibition", index: 1 },
       ],
     },
     {
       title: "ICTE論文",
       path: "/papers",
       inSelect: [
-        { title: "論文摘要審查結果公告" },
-        { title: "徵文主題與論文格式" },
-        { title: "海報發表場次" },
-        { title: "口頭發表場次" },
-        { title: "論文發表規則" },
+        { title: "論文摘要審查結果公告", path: "/papers", index: 0 },
+        { title: "徵文主題與論文格式", path: "/papers", index: 1 },
+        { title: "口頭發表場次", path: "/papers", index: 2 },
+        { title: "海報發表場次", path: "/papers", index: 3 },
       ],
     },
     {
@@ -110,6 +109,14 @@ export const Header = () => {
   const handleNavigation = (path) => {
     if (path) {
       router.push(path);
+    }
+  };
+
+  const handleNavigation2 = (path) => {
+    if (path) {
+      const replacedTitle = path.title.replace(/\s+/g, "-");
+      const targetUrl = `http://localhost:3000/${path.path}/${path.index}`; // 加上斜線
+      window.location.href = targetUrl;
     }
   };
 
@@ -192,6 +199,7 @@ export const Header = () => {
                           toggleMenu(navIndex);
                           toggleSmMenu(navIndex, inSelectIndex);
                         }}
+                        onClick={() => handleNavigation2(item)}
                       >
                         <div className="text-16M text-black text-nowrap text-center cursor-pointer">
                           {item.title}
@@ -267,9 +275,7 @@ export const Header = () => {
                         <div className="flex justify-between items-center p-4">
                           <span
                             className="cursor-pointer"
-                            onClick={() => {
-                              // 可在此加入路由或其他行為
-                            }}
+                            onClick={() => handleNavigation2(item)}
                           >
                             {item.title}
                           </span>

@@ -72,19 +72,21 @@ export const Topics = () => {
     <div className="flex flex-col w-full max-w-[976px]">
       <div className="text-16M text-primary">Topics & Paper Format</div>
       <div className="relative w-fit">
-        <div className="text-black text-48M  relative z-10">
+        <div className="text-black text-36M desktop:text-48M  relative z-10">
           徵文主題與論文格式
         </div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
 
       <div className="mt-[16px]">
-        <div className="text-secondary text-20M ">學術論文發表</div>
-        <div className="mt-[24px] text-[#252F38B2] text-16R ">
+        <div className="text-secondary text-20M px-3 desktop:px-0">
+          學術論文發表
+        </div>
+        <div className="mt-[24px] text-[#252F38B2] text-16R px-3 desktop:px-0">
           {editorContents.editor1}
         </div>
       </div>
-      <div className="mt-[32px] grid grid-cols-2 gap-[32px] ">
+      <div className="mt-[32px] grid desktop:grid-cols-2 gap-[32px] ">
         <div className="flex flex-col gap-[32px] ">
           <div className="bg-white p-[32px] rounded-[24px]">
             <div className="text-secondary text-20M ">徵稿主題</div>
@@ -92,7 +94,7 @@ export const Topics = () => {
               {editorContents.editor2}
             </div>
             <div
-              className="mt-[16px] text-black text-15R  "
+              className="mt-[16px] text-black text-[12px] desktop:text-15R  "
               dangerouslySetInnerHTML={{
                 __html: editorContents.editor3.replace(/\n/g, "<br>"),
               }}
@@ -184,7 +186,7 @@ export const Topics = () => {
       <div className="mt-[16px]">
         <div className="bg-white p-[32px] rounded-[24px]">
           <div className="text-secondary text-20M ">入選稿件之注意事項</div>
-          <div className="mt-[24px] text-black text-15R  ">
+          <div className="mt-[24px] text-black text-[12px] desktop:text-15R  ">
             <span>{editorContents.editor11}</span>
             <br />
             <span>{editorContents.editor12}</span>

@@ -188,7 +188,7 @@ export default function Page() {
                 {selectedTab2 === 0 ? (
                   <>
                     {/* 主題演講 */}
-                    <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
+                    <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
                       {card.map((item, index) => (
                         <div key={index}>
                           <div
@@ -265,7 +265,7 @@ export default function Page() {
                 ) : (
                   <>
                     {/* 圓桌論壇 */}
-                    <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
+                    <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
                       {card2.map((item, index) => (
                         <div key={index}>
                           <div
@@ -384,7 +384,7 @@ export default function Page() {
                 {selectedTab2 === 0 ? (
                   <>
                     {/* 主題演講 */}
-                    <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
+                    <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
                       {card.map((item, index) => (
                         <div key={index}>
                           <div
@@ -461,7 +461,7 @@ export default function Page() {
                 ) : (
                   <>
                     {/* 圓桌論壇 */}
-                    <div className="mt-[64px] grid grid-cols-3 gap-[32px]">
+                    <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
                       {card2.map((item, index) => (
                         <div key={index}>
                           <div

@@ -104,7 +104,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex h-[496px]">
+      <div className="flex flex-col desktop:flex-row h-[496px]">
         <div
           className="flex justify-end items-center flex-1 pe-[128px]"
           style={{
@@ -114,22 +114,22 @@ export default function Page() {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="text-start w-[334px]">
+          <div className="text-start w-[334px]  ">
             {editor && (
               <div className="text-white text-32M ">{editor.dateLabel1}</div>
             )}
           </div>
         </div>
-        <div className="bg-[#B080CA1A] flex-1 ps-[128px] flex items-center">
+        <div className="bg-[#B080CA1A] flex-1 desktop:ps-[128px] flex items-center ">
           {editor && (
-            <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
+            <div className="text-[12px] desktop:text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
               {editor.dateLabel2}
             </div>
           )}
         </div>
       </div>
 
-      <div className="pt-[128px] pb-[160px] mx-auto">
+      <div className=" pt-[64px] pb-[64px] desktop:pt-[128px] desktop:pb-[160px] mx-auto">
         <Tab titles={titles} dates={dates} onChange={handleTabChange} />
         <div
           className={`flex flex-col transition-opacity duration-500 ease-in-out ${

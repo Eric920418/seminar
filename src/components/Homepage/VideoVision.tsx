@@ -30,7 +30,7 @@ export const VideoVision = () => {
   if (!videoUrl) return <div>Loading...</div>;
 
   return (
-    <div className="w-full pt-[128px] pb-[160px]">
+    <div className="w-full desktop:pt-[128px] pb-[160px]">
       <div className="w-full justify-center flex-row laptop:flex items-center space-x-[64px]">
         <div className="desktop:w-[608px] flex flex-col items-start">
           <div className="text-16M text-primary">video</div>

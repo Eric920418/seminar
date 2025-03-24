@@ -42,10 +42,10 @@ export const MainVision = () => {
     >
       <div className="h-full flex justify-center flex-col mx-[6%]">
         <div className="flex">
-          <div className="text-[#009982] text-[80px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8">
+          <div className="text-[#009982] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8">
             {data.homePage[0].section1.title.left}
           </div>
-          <div className="text-[#FFFFFF] text-[80px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title">
+          <div className="text-[#FFFFFF] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title">
             {data.homePage[0].section1.title.right}
           </div>
         </div>

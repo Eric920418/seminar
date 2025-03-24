@@ -66,7 +66,7 @@ export const Poster = () => {
 
   return (
     <div
-      className={`flex flex-1 flex-col justify-start max-w-[976px] transition-opacity duration-500 ${
+      className={`flex flex-1 flex-col justify-start w-screen max-w-[976px] transition-opacity duration-500 ${
         containerFade ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -141,7 +141,7 @@ export const Poster = () => {
       )}
 
       {selectedIndex !== null && (
-        <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD] w-[976px]">
+        <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD] desktop:w-[976px]">
           <PDFViewer src={card[selectedIndex].id} />
         </div>
       )}

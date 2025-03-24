@@ -38,14 +38,14 @@ export const Agenda = () => {
   const dates = useData.map((card) => card.date);
   const titles = dates.map((_, index) => `第${index + 1}天`);
   return (
-    <div className="flex flex-1 flex-col justify-start max-w-[976px]">
+    <div className="flex flex-1 flex-col justify-start w-full desktop:max-w-[976px]">
       <div className="text-16M text-primary ">Agenda</div>
       <div className="relative w-fit">
         <div className="text-black text-48M  relative z-10">會議議程</div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
 
-      <div className="mt-[64px] me-auto">
+      <div className="mt-[64px] w-full  desktop:w-fit desktop:me-auto">
         <Tab titles={titles} dates={dates} onChange={handleTabChange} />
       </div>
       <div
@@ -54,7 +54,7 @@ export const Agenda = () => {
         }`}
       >
         {useData && useData.length > 0 ? (
-          <div className=" w-[976px] h-[1157px]">
+          <div className="w-screen desktop:w-[976px] h-[1157px]">
             <span
               dangerouslySetInnerHTML={{
                 __html: useData[selectedTab].content,

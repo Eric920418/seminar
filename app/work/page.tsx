@@ -105,7 +105,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex h-[696px]">
+      <div className="flex flex-col desktop:flex-row h-[696px]">
         <div
           className="flex justify-end items-center flex-1 pe-[128px]"
           style={{
@@ -121,9 +121,9 @@ export default function Page() {
             )}
           </div>
         </div>
-        <div className="bg-[#B080CA1A] flex-1 ps-[128px] flex items-center">
+        <div className="bg-[#B080CA1A] flex-1 desktop:ps-[128px] flex items-center">
           {editor && (
-            <div className="text-[20px] leading-[40px] font-[400] text-[#252F38B2] w-[610px]">
+            <div className="text-[12px] desktop:text-[20px] leading-[40px] font-[400] text-[#252F38B2] w-[610px]">
               {editor.dateLabel2}
             </div>
           )}

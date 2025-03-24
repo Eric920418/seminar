@@ -9,6 +9,8 @@ import { Transportation } from "@/components/Meeting/Transportation";
 import { Accommodation } from "@/components/Meeting/Accommodation";
 import { Map } from "@/components/Meeting/Map";
 
+import { useParams } from "next/navigation";
+
 function FadeIn({ children }: { children: React.ReactNode }) {
   const [visible, setVisible] = useState(false);
 
@@ -38,11 +40,18 @@ export default function Page() {
     { title: "住宿", component: <Accommodation /> },
     { title: "會議平面圖", component: <Map /> },
   ];
-
+  const params = useParams();
+  const { slug } = params;
   const [focus, setFocus] = useState(nav.map((_, i) => i === 0));
   const toggle = (navIndex: number) => {
     setFocus((prev) => prev.map((_, i) => i === navIndex));
   };
+
+  useEffect(() => {
+    if (slug) {
+      toggle(Number(slug[0])); // 將字串轉為數字
+    }
+  }, [slug]);
 
   return (
     <div className="bg-[#FAFBFD]">
@@ -60,9 +69,9 @@ export default function Page() {
           <div className="text-black text-48M ">ICTE會議資訊</div>
         </div>
       </div>
-      <div className="pb-[160px] pt-[128px] mx-auto w-fit">
-        <div className="max-w-[1312px] mx-auto flex space-x-[32px]">
-          <div className="w-[304px] flex flex-col gap-[24px]">
+      <div className="pb-[64px] desktop:pb-[160px] pt-[64px] desktop:pt-[128px] mx-auto w-full desktop:w-fit">
+        <div className="w-full desktop:max-w-[1312px]   mx-auto flex space-x-[32px]">
+          <div className="hidden desktop:w-[304px] w-fit text-nowrap desktop:flex flex-col gap-[24px]">
             {nav.map((item, index) => (
               <div
                 key={index}
