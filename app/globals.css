@@ -107,6 +107,22 @@
   color: var(--color-warning);
 }
 
+.bg-primary {
+  background-color: var(--color-primary);
+}
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+.bg-third {
+  background-color: var(--color-third);
+}
+.bg-black {
+  background-color: var(--color-black);
+}
+.bg-white {
+  background-color: var(--color-white);
+}
+
 body {
   font-family: var(--font-sans);
 }
