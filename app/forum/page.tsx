@@ -106,7 +106,7 @@ export default function Page() {
 
       <div className="flex flex-col desktop:flex-row h-[696px]">
         <div
-          className="flex justify-end items-center flex-1 pe-[128px]"
+          className="flex desktop:justify-end items-center flex-1 desktop:pe-[128px] px-3 desktop:px-0"
           style={{
             backgroundImage: "url('/banner/Frame 776.png')",
             backgroundSize: "cover",
@@ -120,9 +120,9 @@ export default function Page() {
             )}
           </div>
         </div>
-        <div className="bg-[#B080CA1A] flex-1 desktop:ps-[128px] flex items-center">
+        <div className="bg-[#B080CA1A] flex-1 desktop:ps-[128px] flex items-center px-3 desktop:px-0">
           {editor && (
-            <div className="text-[12px] desktop:text-[20px] leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
+            <div className="text-[12px] leading-[30px] desktop:text-[20px] desktop:leading-[40px] font-[400]  text-[#252F38B2] w-[610px]">
               {editor.dateLabel2}
             </div>
           )}

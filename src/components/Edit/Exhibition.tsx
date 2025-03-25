@@ -1,6 +1,6 @@
 "use client";
 import { gql } from "graphql-tag";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
 

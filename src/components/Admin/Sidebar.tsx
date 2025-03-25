@@ -85,7 +85,7 @@ export const Sidebar = () => {
               href="/admin/logo"
               className="block px-4 py-2 hover:bg-gray-700"
             >
-              Logo
+              Logo/Footer
             </Link>
             <Link
               href="/admin/color"

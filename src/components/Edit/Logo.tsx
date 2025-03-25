@@ -1,6 +1,6 @@
 "use client";
 import { gql } from "graphql-tag";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
 const UPDATE_PAGE = gql`
@@ -20,7 +20,12 @@ const query = `
 `;
 export const Logo = () => {
   const [editorMapImage, setEditorMapImage] = useState("");
-
+  const [editorFooter, setEditorFooter] = useState({
+    editor1: "",
+    editor2: "",
+    editor3: "",
+    editor4: "",
+  });
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("http://localhost:3000/api/graphql", {
@@ -30,11 +35,23 @@ export const Logo = () => {
       });
       const { data } = await res.json();
       setEditorMapImage(data.logo[0].section1?.image);
+      setEditorFooter({
+        editor1: data.logo[0].section1?.footer.editor1,
+        editor2: data.logo[0].section1?.footer.editor2,
+        editor3: data.logo[0].section1?.footer.editor3,
+        editor4: data.logo[0].section1?.footer.editor4,
+      });
     };
 
     fetchData();
   }, []);
 
+  const handleEditorChange2 = (id: string, content: string) => {
+    setEditorFooter((prev) => ({
+      ...prev,
+      [id]: content,
+    }));
+  };
   const handleImageUpload3 = (data) => {
     setEditorMapImage(data.fileUrl.fileUrl);
   };
@@ -43,6 +60,7 @@ export const Logo = () => {
     const input = {
       section1: {
         image: editorMapImage,
+        footer: editorFooter,
       },
     };
 
@@ -68,10 +86,10 @@ export const Logo = () => {
 
   return (
     <div>
-      <div className="text-32M mb-6">ICTE會議資訊</div>
+      <div className="text-32M mb-6">Logo/Footer</div>
       <div className="flex flex-col gap-[16px]">
         <div className="relative bg-gray-200 w-full p-3">
-          <div className="  overflow-hidden transition-all duration-500 ease-in-out">
+          <div className=" overflow-hidden transition-all duration-500 ease-in-out">
             <div className="flex flex-col gap-3 mt-5">
               {editorMapImage && (
                 <Image
@@ -85,6 +103,44 @@ export const Logo = () => {
                 onImageUpload={(filename) =>
                   handleImageUpload3({ fileUrl: filename })
                 }
+              />
+            </div>
+          </div>
+        </div>
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className=" overflow-hidden transition-all duration-500 ease-in-out">
+            <div className="flex flex-col gap-3 ">
+              <div className="text-16M">{editorFooter.editor1}</div>
+              <input
+                type="text"
+                value={editorFooter.editor1}
+                placeholder="Footer"
+                onChange={(e) => handleEditorChange2("editor1", e.target.value)}
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              />
+              <div className="text-16M">{editorFooter.editor2}</div>
+              <input
+                type="text"
+                value={editorFooter.editor2}
+                placeholder="Footer"
+                onChange={(e) => handleEditorChange2("editor2", e.target.value)}
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              />
+              <div className="text-16M">{editorFooter.editor3}</div>
+              <input
+                type="text"
+                value={editorFooter.editor3}
+                placeholder="Footer"
+                onChange={(e) => handleEditorChange2("editor3", e.target.value)}
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              />
+              <div className="text-16M">{editorFooter.editor4}</div>
+              <input
+                type="text"
+                value={editorFooter.editor4}
+                placeholder="Footer"
+                onChange={(e) => handleEditorChange2("editor4", e.target.value)}
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
             </div>
           </div>
