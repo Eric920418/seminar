@@ -91,7 +91,6 @@ export const Footer = () => {
       });
       const { data } = await res.json();
 
-      setEditorMapImage(data.logo[0].section1?.image);
       setEditorFooter({
         editor1: data.logo[0].section1?.footer.editor1,
         editor2: data.logo[0].section1?.footer.editor2,
