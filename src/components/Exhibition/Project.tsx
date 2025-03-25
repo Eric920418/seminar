@@ -21,7 +21,7 @@ export const Project = () => {
   // 取得資料並轉換 imageSrc 與 images (二進位資料轉 URL)
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("http://localhost:3000/api/graphql", {
+      const res = await fetch("/api/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),

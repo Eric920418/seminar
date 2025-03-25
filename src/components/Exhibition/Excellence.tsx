@@ -26,7 +26,7 @@ export const Excellence = () => {
   const [fadeIn, setFadeIn] = useState(true);
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("http://localhost:3000/api/graphql", {
+      const res = await fetch("/api/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -41,7 +41,7 @@ export const Excellence = () => {
   useEffect(() => {
     async function fetchEventData() {
       try {
-        const res = await fetch("http://localhost:3000/api/graphql", {
+        const res = await fetch("/api/graphql", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query: query2 }),

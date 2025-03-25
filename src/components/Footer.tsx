@@ -84,7 +84,7 @@ export const Footer = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:3000/api/graphql", {
+      const res = await fetch("/api/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -111,7 +111,7 @@ export const Footer = () => {
 
   const handleNavigation2 = (path) => {
     if (path) {
-      const targetUrl = `http://localhost:3000/${path.path}/${path.index}`; // 加上斜線
+      const targetUrl = `/${path.path}/${path.index}`; // 移除 localhost:3000
       window.location.href = targetUrl;
     }
   };

@@ -30,7 +30,7 @@ export const Oral = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("http://localhost:3000/api/graphql", {
+      const res = await fetch("/api/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -47,7 +47,7 @@ export const Oral = () => {
       if (index !== -1 && card.length > index) {
         const selectedCardId = card[index].id;
         try {
-          const res = await fetch("http://localhost:3000/api/graphql", {
+          const res = await fetch("/api/graphql", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

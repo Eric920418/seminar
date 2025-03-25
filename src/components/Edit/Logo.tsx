@@ -28,7 +28,7 @@ export const Logo = () => {
   });
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:3000/api/graphql", {
+      const res = await fetch("/api/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -65,7 +65,7 @@ export const Logo = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/graphql", {
+      const response = await fetch("/api/graphql", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
