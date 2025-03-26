@@ -78,10 +78,7 @@ export const HomePage = () => {
   const [uploadImage2, setUploadImage2] = useState();
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
-    editor2: "",
-    editor3: "",
-    editor4: "",
-    editor5: "",
+
     editor6: "",
     editor7: "",
     editor8: "",
@@ -122,10 +119,7 @@ export const HomePage = () => {
 
         setEditorTimes({
           editor1: data.homePage[0].section3?.times?.time1 || "",
-          editor2: data.homePage[0].section3?.times?.time2 || "",
-          editor3: data.homePage[0].section3?.times?.extend?.[0] || "",
-          editor4: data.homePage[0].section3?.times?.extend?.[1] || "",
-          editor5: data.homePage[0].section3?.times?.extend?.[2] || "",
+
           editor6: data.homePage[0].section3?.times?.time6 || "",
           editor7: data.homePage[0].section3?.times?.time7 || "",
           editor8: data.homePage[0].section3?.times?.time8 || "",
@@ -180,10 +174,7 @@ export const HomePage = () => {
   }, [
     isOpen3,
     editorTimes.editor1,
-    editorTimes.editor2,
-    editorTimes.editor3,
-    editorTimes.editor4,
-    editorTimes.editor5,
+
     editorTimes.editor6,
     editorTimes.editor7,
     editorTimes.editor8,
@@ -297,12 +288,7 @@ export const HomePage = () => {
       section3: {
         times: {
           time1: editorTimes.editor1,
-          time2: editorTimes.editor2,
-          extend: [
-            editorTimes.editor3,
-            editorTimes.editor4,
-            editorTimes.editor5,
-          ],
+
           time6: editorTimes.editor6,
           time7: editorTimes.editor7,
           time8: editorTimes.editor8,
@@ -345,7 +331,6 @@ export const HomePage = () => {
     }
   };
 
-  console.log(editorContents.editor9);
   return (
     <div>
       <div className="text-32M mb-6">首頁</div>
@@ -353,7 +338,7 @@ export const HomePage = () => {
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>區塊一</div>
+            <div>主視覺資訊</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -516,7 +501,7 @@ export const HomePage = () => {
         {/* 區塊二 - 卡片列表 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊二 - 卡片列表</div>
+            <div>最新消息</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -601,7 +586,7 @@ export const HomePage = () => {
         {/* 區塊三 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊三</div>
+            <div>徵稿資訊</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -617,76 +602,28 @@ export const HomePage = () => {
           </div>
           <div
             ref={contentRef3}
-            className="grid grid-cols-4 gap-[32px] overflow-hidden transition-all duration-500 ease-in-out"
+            className="  overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height3}px` }}
           >
-            <div className="mt-[32px] w-[240px] h-[204px]">
+            <div className="mt-[32px] w-[240px] my-12">
               <div className="flex">
                 <div className="text-primary text-20M me-1">
-                  {editorTimes.editor1}
-                </div>
-                <div className="line-through text-[#252F3880] text-20M">
-                  {editorTimes.editor2}
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: editorTimes.editor1,
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex space-x-1">
-                <input
-                  type="text"
-                  value={editorTimes.editor1}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor1", e.target.value)
+                <CustomEditor
+                  onContentChange={(content) =>
+                    handleEditorChange2("editor1", content)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorTimes.editor2}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor2", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="line-through text-[#252F3880] text-20M">
-                延長至 {editorTimes.editor3}
-                <input
-                  type="text"
-                  placeholder=""
-                  value={editorTimes.editor3}
-                  onChange={(e) =>
-                    handleEditorChange2("editor3", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="line-through text-[#252F3880] text-20M">
-                延長至 {editorTimes.editor4}
-                <input
-                  type="text"
-                  value={editorTimes.editor4}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor4", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="text-primary text-20M">
-                延長至 {editorTimes.editor5}
-                <input
-                  type="text"
-                  value={editorTimes.editor5}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor5", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                 />
               </div>
             </div>
-            <div className="mt-[32px] w-[240px] h-[204px]">
+            <div className="flex gap-[32px]  w-full  my-6">
               <div className="text-primary text-20M">
                 {editorTimes.editor6}
                 <input
@@ -699,8 +636,6 @@ export const HomePage = () => {
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                 />
               </div>
-            </div>
-            <div className="mt-[32px] w-[240px] h-[117px]">
               <div className="text-primary text-20M">
                 {editorTimes.editor7}
                 <input
@@ -713,8 +648,6 @@ export const HomePage = () => {
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                 />
               </div>
-            </div>
-            <div className="mt-[32px] w-[240px] h-[117px]">
               <div className="text-primary text-20M">
                 {editorTimes.editor8}
                 <input
@@ -728,51 +661,54 @@ export const HomePage = () => {
                 />
               </div>
             </div>
-            <div className="mt-[64px] flex flex-col gap-[16px]">
-              <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-                <div className="text-black text-20M">會議</div>
-                <div className="text-black text-16M">
-                  {editorTimes.editor9}
-                  <input
-                    type="text"
-                    value={editorTimes.editor9}
-                    placeholder=""
-                    onChange={(e) =>
-                      handleEditorChange2("editor9", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
+
+            <div className=" gap-[16px]">
+              <div>
+                <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
+                  <div className="text-black text-20M">會議</div>
+                  <div className="text-black text-16M">
+                    {editorTimes.editor9}
+                    <input
+                      type="text"
+                      value={editorTimes.editor9}
+                      placeholder=""
+                      onChange={(e) =>
+                        handleEditorChange2("editor9", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                  </div>
+                </div>
+                <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
+                  <div className="text-black text-20M">晚宴</div>
+                  <div className="text-black text-16M">
+                    {editorTimes.editor10}
+                    <input
+                      type="text"
+                      value={editorTimes.editor10}
+                      placeholder=""
+                      onChange={(e) =>
+                        handleEditorChange2("editor10", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-                <div className="text-black text-20M">晚宴</div>
-                <div className="text-black text-16M">
-                  {editorTimes.editor10}
-                  <input
-                    type="text"
-                    value={editorTimes.editor10}
-                    placeholder=""
-                    onChange={(e) =>
-                      handleEditorChange2("editor10", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div>
+              <div>
+                <ImageUploader
+                  onImageUpload={(filename) =>
+                    handleImageUpload({ fileUrl: filename })
+                  }
+                />
               </div>
-            </div>
-            <div>
-              <ImageUploader
-                onImageUpload={(filename) =>
-                  handleImageUpload({ fileUrl: filename })
-                }
-              />
             </div>
           </div>
         </div>
         {/* 區塊四 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊四</div>
+            <div>會議手冊</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -813,7 +749,7 @@ export const HomePage = () => {
         {/* 區塊五 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊五</div>
+            <div>會議影片</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -846,7 +782,7 @@ export const HomePage = () => {
         {/* 區塊六 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊六</div>
+            <div>主辦單位</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"

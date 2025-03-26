@@ -125,7 +125,7 @@ export const Footer = () => {
   return (
     <div className="bg-[#6EC7B9] p-[16px] laptop:p-[64px] desktop:p-[128px]">
       <div className="flex justify-between ">
-        <div className="flex space-x-[56px] overflow-x-scroll">
+        <div className="flex space-x-[56px] flex-wrap">
           {nav.map((item, index) => (
             <div key={index}>
               <div

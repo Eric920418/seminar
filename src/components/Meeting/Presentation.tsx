@@ -56,7 +56,7 @@ export const Presentation = () => {
         <div className="mt-[64px] flex space-x-1 desktop:space-x-[32px] ">
           <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
             <div className="text-secondary text-[15px] desktop:text-20M ">
-              圓桌論﻿壇I、II、III、IV
+              圓桌論﻿壇
             </div>
             <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor1}
@@ -70,7 +70,7 @@ export const Presentation = () => {
           </div>
           <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0 ">
             <div className="text-secondary text-[15px] desktop:text-20M">
-              國外學者專題演講I、II、III
+              國外學者專題演講
             </div>
             <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor3}

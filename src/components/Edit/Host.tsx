@@ -19,8 +19,33 @@ const query = `
   }
 `;
 
+interface Card {
+  name: string;
+  school: string;
+  highest: string;
+  interests: string;
+  experience: string;
+  image: string;
+  isHost: boolean;
+  isOpen: boolean;
+}
+
+interface CardProps {
+  card: Card;
+  index: number;
+  onToggle: (index: number) => void;
+  onCardChange: (index: number, field: keyof Card, value: any) => void;
+  handleImageUpload: (data: { fileUrl: any; index: number }) => void;
+}
+
 // 單一卡片元件
-const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
+const Card = ({
+  card,
+  index,
+  onToggle,
+  onCardChange,
+  handleImageUpload,
+}: CardProps) => {
   const contentRef = useRef(null);
   const [contentHeight, setContentHeight] = useState(0);
 
@@ -52,10 +77,10 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
       >
         {/* 卡片內容範例，可依需求自行調整 */}
         <div
-          className="rounded-[40px]  flex min-h-[538px]"
+          className="rounded-[40px] flex min-h-[538px]"
           style={{
             backgroundImage: `url('/banner/card-img${
-              index % 2 === 0 ? 0 : 1
+              card.isHost ? "1" : "0"
             }.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -67,13 +92,13 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
               className="absolute top-0 left-0 p-[32px] text-white text-[32px] font-[700] font-NotoSansTC z-10"
               style={{ writingMode: "vertical-rl" }}
             >
-              主 持 人
+              {card.isHost ? "主 持 人" : "與 談 人"}
             </div>
             <div
-              className={`absolute   desktop:top-[80px] desktop:left-[50px] bg-white 
+              className={`absolute desktop:top-[80px] desktop:left-[50px] bg-white 
           ${
-            index % 2 === 0
-              ? "rounded-[40px] rotate-[-4deg] translate-y-5  translate-x-5  w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
+            !card.isHost
+              ? "rounded-[40px] rotate-[-4deg] translate-y-5 translate-x-5 w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
               : "rounded-full w-[200px] top-18 left-15 h-[200px] desktop:w-[316px] desktop:h-[316px]"
           } `}
             >
@@ -83,15 +108,15 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
                   alt="some image"
                   width={316}
                   height={316}
-                  className={`w-full h-full object-cover  ${
-                    index % 2 === 0 ? "rounded-[40px] " : "rounded-full"
+                  className={`w-full h-full object-cover ${
+                    !card.isHost ? "rounded-[40px]" : "rounded-full"
                   } `}
                 />
               )}
             </div>
             <div className="absolute top-95 left-0 p-[32px]">
               <div className="text-white text-[32px] font-[700] font-NotoSansTC">
-                {card.name}​​​​ ​教授​
+                {card.name}​​​​ ​
               </div>
               <div
                 className="mt-[8px] text-white text-[14px] font-[500] leading-[22px] w-[175px] font-NotoSansTC"
@@ -143,10 +168,23 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
 
         {/* 可在此處加入編輯欄位 */}
         <div>
-          <div className="flex py-2 space-x-3">
+          <div className="flex py-2 space-x-3 items-center">
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={card.isHost}
+                onChange={(e) =>
+                  onCardChange(index, "isHost", e.target.checked)
+                }
+                className="w-4 h-4"
+              />
+              <label className="text-sm text-gray-700">
+                {card.isHost ? "主持人" : "與談人"}
+              </label>
+            </div>
             <input
               type="text"
-              placeholder="教授"
+              placeholder="姓名"
               value={card.name}
               onChange={(e) => onCardChange(index, "name", e.target.value)}
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
@@ -183,7 +221,7 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
             />
             <ImageUploader
               onImageUpload={(filename) =>
-                handleImageUpload({ fileUrl: filename, index })
+                handleImageUpload({ fileUrl: { fileUrl: filename }, index })
               }
             />
           </div>
@@ -195,8 +233,8 @@ const Card = ({ card, index, onToggle, onCardChange, handleImageUpload }) => {
 
 // 主元件
 export const Host = () => {
-  // 將每張卡片初始資料包含 isOpen 屬性
-  const [editorCards, setEditorCards] = useState([]);
+  // 將每張卡片初始資料包含 isOpen 和 isHost 屬性
+  const [editorCards, setEditorCards] = useState<Card[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -206,14 +244,21 @@ export const Host = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      setEditorCards(data.host[0].section1.editorCards);
+      // 如果後端資料沒有 isHost 屬性，預設為 true
+      const cards: Card[] = data.host[0].section1.editorCards.map(
+        (card: Partial<Card>) => ({
+          ...card,
+          isHost: card.isHost !== undefined ? card.isHost : true,
+        })
+      );
+      setEditorCards(cards);
     };
 
     fetchData();
   }, []);
 
   // 處理卡片內容欄位更新
-  const handleCardChange = (index, field, value) => {
+  const handleCardChange = (index: number, field: keyof Card, value: any) => {
     const newCards = [...editorCards];
     newCards[index] = { ...newCards[index], [field]: value };
     setEditorCards(newCards);
@@ -221,32 +266,37 @@ export const Host = () => {
   };
 
   // 處理卡片展開／收合開關
-  const handleToggle = (index) => {
+  const handleToggle = (index: number) => {
     const newCards = [...editorCards];
-    newCards[index].isOpen = !newCards[index].isOpen;
+    newCards[index] = { ...newCards[index], isOpen: !newCards[index].isOpen };
     setEditorCards(newCards);
   };
 
   const addCard = () => {
-    setEditorCards([
-      ...editorCards,
-      {
-        name: "",
-        school: "",
-        highest: "",
-        interests: "",
-        experience: "",
-        image: "",
-        isOpen: false, // 初始狀態為收合
-      },
-    ]);
+    const newCard: Card = {
+      name: "",
+      school: "",
+      highest: "",
+      interests: "",
+      experience: "",
+      image: "",
+      isHost: true, // 預設為主持人
+      isOpen: false, // 初始狀態為收合
+    };
+    setEditorCards([...editorCards, newCard]);
   };
 
   // 圖片上傳處理
-  const handleImageUpload = (data) => {
+  const handleImageUpload = (data: {
+    fileUrl: { fileUrl: string };
+    index: number;
+  }) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
-      newCards[data.index].image = data.fileUrl.fileUrl;
+      newCards[data.index] = {
+        ...newCards[data.index],
+        image: data.fileUrl.fileUrl,
+      };
       setEditorCards(newCards);
     }
   };

@@ -56,7 +56,7 @@ export const Online = () => {
             <div className="text-black text-16R ">{editorOnline.editor2}</div>
           </div>
           <div className=" mt-[32px] text-[#252F3880] text-16R ">
-            最後更新時間：{editorOnline.editor3}
+            最後更新時間：{editorOnline.editor4}
           </div>
         </div>
         <div className="bg-white p-[32px] rounded-[24px] flex-1 desktop:min-w-0">
@@ -66,7 +66,7 @@ export const Online = () => {
           </div>
           <div className="mt-[32px] h-[90px]">
             <Link
-              href={editorOnline.editor4}
+              href={editorOnline.editor3}
               className="text-blue-500 underline text-[15px] leading-[28px] font-[500]  break-all"
               target="_blank"
               rel="noopener noreferrer"

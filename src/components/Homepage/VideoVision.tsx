@@ -41,16 +41,22 @@ export const VideoVision = () => {
         </div>
         <div>
           <div className="bg-black rounded-[40px] laptop:w-[540px] desktop:w-[640px] h-[360px]">
-            <iframe
-              width="100%"
-              height="100%"
-              style={{ width: "100%", height: "100%", borderRadius: "40px" }}
-              src={`https://www.youtube.com/embed/${videoUrl}?si=YEACs7k0u1_CezFi`}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+            {videoUrl ? (
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ width: "100%", height: "100%", borderRadius: "40px" }}
+                src={`https://www.youtube.com/embed/${videoUrl}?si=YEACs7k0u1_CezFi`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="text-secondary text-20M">敬請期待</div>
+              </div>
+            )}
           </div>
           <div className="mt-[16px]">
             <div className="w-fit ms-auto px-[24px]">

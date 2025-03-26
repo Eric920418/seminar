@@ -44,19 +44,13 @@ export const ImportantDates = () => {
           <div className="text-black text-36M mt-[16px] ">徵稿</div>
           <div className="mt-[32px] w-[240px] h-[204px]">
             <div className="flex">
-              <div className="text-primary text-20M me-1">{data.time1}</div>
-              <div className="line-through text-[#252F3880] text-20M ">
-                {data.time2}
+              <div className="text-primary text-20M me-1">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: data.time1,
+                  }}
+                />
               </div>
-            </div>
-            <div className="line-through text-[#252F3880] text-20M ">
-              延長至 {data.extend[0]}
-            </div>
-            <div className="line-through text-[#252F3880] text-20M ">
-              延長至 {data.extend[1]}
-            </div>
-            <div className=" text-primary text-20M ">
-              延長至 {data.extend[2]}
             </div>
           </div>
         </div>
@@ -85,7 +79,7 @@ export const ImportantDates = () => {
               bgColor="bg-third"
               padding="p-[16px_24px_16px_24px]"
               src="/button/arrow_right_2.svg"
-              url="/meeting"
+              url="/meeting/2"
             />
           </div>
         </div>
@@ -105,7 +99,7 @@ export const ImportantDates = () => {
               bgColor="bg-third"
               padding="p-[16px_24px_16px_24px]"
               src="/button/arrow_right_2.svg"
-              url="/meeting"
+              url="/meeting/3"
             />
           </div>
         </div>
@@ -129,7 +123,7 @@ export const ImportantDates = () => {
               bgColor="bg-[#FFFFFF]"
               padding="p-[16px_24px_16px_24px]"
               src="/icons/24icon/arrow_right_2.svg"
-              url="/meeting"
+              url="/meeting/4"
             />
           </div>
         </div>

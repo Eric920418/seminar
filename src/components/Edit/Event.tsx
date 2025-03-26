@@ -212,7 +212,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
         </div>
 
         {/* 編輯欄位 */}
-        <div className="mt-[32px]">
+        <div className="mt-[32px] min-h-[500px]">
           <input
             type="text"
             placeholder="日期 (格式：3.10)"

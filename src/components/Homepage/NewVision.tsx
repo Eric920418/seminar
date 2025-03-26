@@ -24,7 +24,13 @@ export const NewVision = () => {
         body: JSON.stringify({ query }),
       });
       const result = await res.json();
-      setData(result.data);
+      // 反轉陣列以顯示最新的消息在前面
+      const reversedData = { ...result.data };
+      reversedData.homePage[0].section2.cards = [
+        ...result.data.homePage[0].section2.cards,
+      ].reverse();
+
+      setData(reversedData);
     };
 
     fetchData();

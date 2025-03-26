@@ -270,7 +270,7 @@ export const Speech = () => {
               >
                 新增卡片
               </button>
-              <div>Select 按住 Ctrl 複選 </div>
+              <div>按住 Ctrl 複選 </div>
             </div>
             <div>
               {editorCards2.map((card, index) => (

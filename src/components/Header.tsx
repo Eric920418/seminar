@@ -138,7 +138,14 @@ export const Header = () => {
 
   const handleNavigation2 = (path) => {
     if (path) {
-      const targetUrl = `/${path.path}/${path.index}`; // 加上斜線
+      // 檢查是否為完整 URL
+      if (path.path.startsWith("http://") || path.path.startsWith("https://")) {
+        window.location.href = path.path;
+        return;
+      }
+      // 內部路由跳轉,保持完整的 URL 結構
+      const baseUrl = window.location.origin;
+      const targetUrl = `${baseUrl}/${path.path}/${path.index}`;
       window.location.href = targetUrl;
     }
   };
@@ -190,16 +197,22 @@ export const Header = () => {
       <div className="hidden laptop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
         <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
           <div className="h-[45px] w-[200px] ">
-            {editorMapImage && (
-              <Image
-                src={editorMapImage}
-                alt="logo"
-                width={269}
-                height={90}
-                style={{ objectFit: "contain", width: "100%", height: "100%" }}
-                className="w-full h-full object-cover"
-              />
-            )}
+            <a href="/">
+              {editorMapImage && (
+                <Image
+                  src={editorMapImage}
+                  alt="logo"
+                  width={269}
+                  height={90}
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </a>
           </div>
         </div>
 

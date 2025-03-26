@@ -42,8 +42,8 @@ export const Accommodation = () => {
                 className="rounded-t-[24px]"
                 src={item.image}
                 style={{ objectFit: "cover", width: "100%" }}
-                width={304}
-                height={200}
+                width={1920}
+                height={1080}
                 alt={item.title}
               />
             ) : null}
@@ -63,7 +63,9 @@ export const Accommodation = () => {
               <div className="border w-full border-[#252F381A] "></div>
               <div>
                 <div className="text-[#252F3880] text-14R ">地址​</div>
-                <div className="mt-[8px] text-black text-16R ">{item.addr}</div>
+                <div className="mt-[8px] text-black text-16R ">
+                  {item.location}
+                </div>
               </div>
               <div>
                 <div className="text-[#252F3880] text-14R ">電話​​</div>
@@ -73,7 +75,16 @@ export const Accommodation = () => {
               </div>
               <div>
                 <div className="text-[#252F3880] text-14R ">地圖​</div>
-                <div className="mt-[8px] text-black text-16R ">{item.map}</div>
+                <div className="mt-[8px] text-black text-16R ">
+                  <Link
+                    href={item.map}
+                    className="text-blue-500 underline text-16R  break-all mt-[4px]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.map}
+                  </Link>
+                </div>
               </div>
               <div>
                 <div className="text-[#252F3880] text-14R ">飯店預定表格​</div>

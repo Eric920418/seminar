@@ -69,10 +69,7 @@ export const Meeting = () => {
   const [editorCards, setEditorCards] = useState([]);
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
-    editor2: "",
-    editor3: "",
-    editor4: "",
-    editor5: "",
+
     editor6: "",
     editor7: "",
     editor8: "",
@@ -120,10 +117,7 @@ export const Meeting = () => {
 
       setEditorTimes({
         editor1: data.meetingPage[0].section2?.times?.time1 || "",
-        editor2: data.meetingPage[0].section2?.times?.time2 || "",
-        editor3: data.meetingPage[0].section2?.times?.extend?.[0] || "",
-        editor4: data.meetingPage[0].section2?.times?.extend?.[1] || "",
-        editor5: data.meetingPage[0].section2?.times?.extend?.[2] || "",
+
         editor6: data.meetingPage[0].section2?.times?.time6 || "",
         editor7: data.meetingPage[0].section2?.times?.time7 || "",
         editor8: data.meetingPage[0].section2?.times?.time8 || "",
@@ -175,10 +169,7 @@ export const Meeting = () => {
   }, [
     isOpen2,
     editorTimes.editor1,
-    editorTimes.editor2,
-    editorTimes.editor3,
-    editorTimes.editor4,
-    editorTimes.editor5,
+
     editorTimes.editor6,
     editorTimes.editor7,
     editorTimes.editor8,
@@ -320,12 +311,7 @@ export const Meeting = () => {
       section2: {
         times: {
           time1: editorTimes.editor1,
-          time2: editorTimes.editor2,
-          extend: [
-            editorTimes.editor3,
-            editorTimes.editor4,
-            editorTimes.editor5,
-          ],
+
           time6: editorTimes.editor6,
           time7: editorTimes.editor7,
           time8: editorTimes.editor8,
@@ -348,8 +334,8 @@ export const Meeting = () => {
       section4: {
         content: editorOnline.editor1,
         form: editorOnline.editor2,
-        date1: editorOnline.editor4,
-        url: editorOnline.editor3,
+        date1: editorOnline.editor3,
+        url: editorOnline.editor4,
         date2: editorOnline.editor5,
       },
       section5: {
@@ -429,11 +415,6 @@ export const Meeting = () => {
                       }
                       className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                     />
-                    <CustomEditor
-                      onContentChange={(content) =>
-                        handleCardChange(index, "content", content)
-                      }
-                    />
                   </div>
                   <button
                     className="bg-red-500 text-white px-3 py-1 rounded mt-2"
@@ -472,145 +453,96 @@ export const Meeting = () => {
           </div>
           <div
             ref={contentRef2}
-            className="grid grid-cols-4 gap-[32px] overflow-hidden transition-all duration-500 ease-in-out"
+            className=" overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height2}px` }}
           >
-            <div className="mt-[32px] w-[240px] h-[204px]">
+            <div className="mt-[32px] w-[240px] my-12">
               <div className="flex">
                 <div className="text-primary text-20M me-1">
-                  {editorTimes.editor1}
-                </div>
-                <div className="line-through text-[#252F3880] text-20M">
-                  {editorTimes.editor2}
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: editorTimes.editor1,
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex space-x-1">
-                <input
-                  type="text"
-                  value={editorTimes.editor1}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor1", e.target.value)
+                <CustomEditor
+                  onContentChange={(content) =>
+                    handleEditorChange2("editor1", content)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorTimes.editor2}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor2", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="line-through text-[#252F3880] text-20M">
-                延長至 {editorTimes.editor3}
-                <input
-                  type="text"
-                  value={editorTimes.editor3}
-                  onChange={(e) =>
-                    handleEditorChange2("editor3", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="line-through text-[#252F3880] text-20M">
-                延長至 {editorTimes.editor4}
-                <input
-                  type="text"
-                  value={editorTimes.editor4}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor4", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="text-primary text-20M">
-                延長至 {editorTimes.editor5}
-                <input
-                  type="text"
-                  value={editorTimes.editor5}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor5", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                 />
               </div>
             </div>
-            <div className="mt-[32px] w-[240px] h-[204px]">
-              <div className="text-primary text-20M">
-                {editorTimes.editor6}
-                <input
-                  type="text"
-                  value={editorTimes.editor6}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor6", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-            </div>
-            <div className="mt-[32px] w-[240px] h-[117px]">
-              <div className="text-primary text-20M">
-                {editorTimes.editor7}
-                <input
-                  type="text"
-                  value={editorTimes.editor7}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor7", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-            </div>
-            <div className="mt-[32px] w-[240px] h-[117px]">
-              <div className="text-primary text-20M">
-                {editorTimes.editor8}
-                <input
-                  type="text"
-                  value={editorTimes.editor8}
-                  placeholder=""
-                  onChange={(e) =>
-                    handleEditorChange2("editor8", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-            </div>
-            <div className="mt-[64px] flex flex-col gap-[16px]">
-              <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-                <div className="text-black text-20M">會議</div>
-                <div className="text-black text-16M">
-                  {editorTimes.editor9}
+            <div className="mt-[32px] flex gap-[32px]  w-full  my-6">
+              <div>
+                <div className="text-primary text-20M">
+                  {editorTimes.editor6}
                   <input
                     type="text"
-                    value={editorTimes.editor9}
+                    value={editorTimes.editor6}
                     placeholder=""
                     onChange={(e) =>
-                      handleEditorChange2("editor9", e.target.value)
+                      handleEditorChange2("editor6", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                </div>
+                <div className="text-primary text-20M">
+                  {editorTimes.editor7}
+                  <input
+                    type="text"
+                    value={editorTimes.editor7}
+                    placeholder=""
+                    onChange={(e) =>
+                      handleEditorChange2("editor7", e.target.value)
+                    }
+                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  />
+                </div>
+                <div className="text-primary text-20M">
+                  {editorTimes.editor8}
+                  <input
+                    type="text"
+                    value={editorTimes.editor8}
+                    placeholder=""
+                    onChange={(e) =>
+                      handleEditorChange2("editor8", e.target.value)
                     }
                     className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                   />
                 </div>
               </div>
-              <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-                <div className="text-black text-20M">晚宴</div>
-                <div className="text-black text-16M">
-                  {editorTimes.editor10}
-                  <input
-                    type="text"
-                    value={editorTimes.editor10}
-                    placeholder=""
-                    onChange={(e) =>
-                      handleEditorChange2("editor10", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
+              <div className=" flex flex-col gap-[16px]">
+                <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
+                  <div className="text-black text-20M">會議</div>
+                  <div className="text-black text-16M">
+                    {editorTimes.editor9}
+                    <input
+                      type="text"
+                      value={editorTimes.editor9}
+                      placeholder=""
+                      onChange={(e) =>
+                        handleEditorChange2("editor9", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                  </div>
+                </div>
+                <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
+                  <div className="text-black text-20M">晚宴</div>
+                  <div className="text-black text-16M">
+                    {editorTimes.editor10}
+                    <input
+                      type="text"
+                      value={editorTimes.editor10}
+                      placeholder=""
+                      onChange={(e) =>
+                        handleEditorChange2("editor10", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -641,9 +573,7 @@ export const Meeting = () => {
             <div className="w-full">
               <div className="mt-[16px] flex space-x-[32px] ">
                 <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-                  <div className="text-secondary text-20M ">
-                    圓桌論﻿壇I、II、III、IV
-                  </div>
+                  <div className="text-secondary text-20M ">圓桌論﻿壇</div>
                   <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
                     {editorRule.editor1}
                   </div>
@@ -656,7 +586,7 @@ export const Meeting = () => {
                 </div>
                 <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
                   <div className="text-secondary text-20M ">
-                    國外學者專題演講I、II、III
+                    國外學者專題演講
                   </div>
                   <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
                     {editorRule.editor3}
@@ -741,7 +671,7 @@ export const Meeting = () => {
                   onChange={(e) =>
                     handleEditorChange3("editor2", e.target.value)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
                 />
                 <textarea
                   type="text"
@@ -750,7 +680,7 @@ export const Meeting = () => {
                   onChange={(e) =>
                     handleEditorChange3("editor4", e.target.value)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
                 />
               </div>
               <input
@@ -765,7 +695,7 @@ export const Meeting = () => {
                 placeholder=""
                 value={editorRule.editor6}
                 onChange={(e) => handleEditorChange3("editor6", e.target.value)}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
               />
               <div className="flex space-x-[32px] ">
                 <input
@@ -795,7 +725,7 @@ export const Meeting = () => {
                   onChange={(e) =>
                     handleEditorChange3("editor8", e.target.value)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
                 />
                 <textarea
                   type="text"
@@ -804,7 +734,7 @@ export const Meeting = () => {
                   onChange={(e) =>
                     handleEditorChange3("editor10", e.target.value)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
                 />
               </div>
             </div>
@@ -843,11 +773,15 @@ export const Meeting = () => {
                   </div>
                   <div className="mt-[32px] max-w-[408px] h-[142px]">
                     <div className="text-black text-16R ">
-                      {editorOnline.editor2}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: editorOnline.editor2,
+                        }}
+                      />
                     </div>
                   </div>
                   <div className=" mt-[32px] text-[#252F3880] text-16R ">
-                    最後更新時間：{editorOnline.editor3}
+                    最後更新時間：{editorOnline.editor4}
                   </div>
                 </div>
                 <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
@@ -856,14 +790,11 @@ export const Meeting = () => {
                     報名成功名單
                   </div>
                   <div className="mt-[32px] h-[90px]">
-                    <Link
-                      href={editorOnline.editor4}
-                      className="text-blue-500 underline text-[15px] leading-[28px] font-[500]  break-all"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      名單詳如本附件，點此即可下載
-                    </Link>
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: editorOnline.editor3,
+                      }}
+                    />
                   </div>
                   <div className=" mt-[32px] text-[#252F3880] text-16R ">
                     最後更新時間：{editorOnline.editor5}
@@ -880,30 +811,28 @@ export const Meeting = () => {
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
               <div className="flex space-x-[32px] ">
-                <input
-                  type="text"
-                  value={editorOnline.editor2}
-                  onChange={(e) =>
-                    handleEditorChange4("editor2", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-                <input
-                  type="text"
-                  value={editorOnline.editor4}
-                  onChange={(e) =>
-                    handleEditorChange4("editor4", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
+                <div className="w-1/2">
+                  <CustomEditor
+                    onContentChange={(content) =>
+                      handleEditorChange4("editor2", content)
+                    }
+                  />
+                </div>
+                <div className="w-1/2">
+                  <CustomEditor
+                    onContentChange={(content) =>
+                      handleEditorChange4("editor3", content)
+                    }
+                  />
+                </div>
               </div>
               <div className="flex space-x-[32px] ">
                 <input
                   type="text"
                   placeholder="更新時間"
-                  value={editorOnline.editor3}
+                  value={editorOnline.editor4}
                   onChange={(e) =>
-                    handleEditorChange4("editor3", e.target.value)
+                    handleEditorChange4("editor4", e.target.value)
                   }
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                 />
@@ -943,13 +872,13 @@ export const Meeting = () => {
             style={{ maxHeight: `${height5}px` }}
           >
             <div className="flex flex-col gap-3 mt-5">
-              <div>{editorTransportation}</div>
-              <input
-                type="text"
-                value={editorTransportation}
-                placeholder="地點"
-                onChange={(e) => setEditorTransportation(e.target.value)}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: editorTransportation,
+                }}
+              />
+              <CustomEditor
+                onContentChange={(content) => setEditorTransportation(content)}
               />
             </div>
           </div>

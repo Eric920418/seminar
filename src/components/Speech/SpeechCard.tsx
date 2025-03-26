@@ -162,7 +162,7 @@ export const SpeechCard = ({ data }) => {
         className="flex flex-col overflow-hidden transition-all duration-500 ease-in-out"
         style={{ maxHeight: showDetail ? `${height}px` : "0px" }}
       >
-        <div>
+        <div ref={contentRef}>
           {data.abstract && (
             <>
               <div className="border my-8 desktop:my-[48px] border-[#252F381A]"></div>
@@ -179,8 +179,6 @@ export const SpeechCard = ({ data }) => {
               </div>
             </>
           )}
-        </div>
-        <div ref={contentRef}>
           {selectHost &&
             selectHost.map((card, i) => (
               <PeopleCard card={card} useIndex={i} key={i} />

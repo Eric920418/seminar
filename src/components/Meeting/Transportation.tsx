@@ -32,7 +32,7 @@ export const Transportation = () => {
       </div>
 
       <div className="mt-[64px] px-6 desktop:px-0">
-        <div className="text-secondary text-20M ">會議預定地點</div>
+        <div className="text-secondary text-20M ">會議舉行地點</div>
         <div className="text-[#252F38B2] text-20M  mt-[24px]">
           {editorTransportation}
         </div>

@@ -1,63 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import {
-
-//   Autoformat,
-//   AutoImage,
-//   AutoLink,
-//   Autosave,
-//   BalloonToolbar,
-//   BlockQuote,
-//   Bold,
-//   Bookmark,
-//   CloudServices,
-//   Code,
-//   CodeBlock,
-//   Essentials,
-//   FindAndReplace,
-//   FontBackgroundColor,
-//   FontColor,
-//   FontFamily,
-//   FontSize,
-//   Heading,
-//   Highlight,
-//   HorizontalLine,
-//   ImageBlock,
-//   ImageCaption,
-//   ImageInline,
-//   ImageInsertViaUrl,
-//   ImageResize,
-//   ImageStyle,
-//   ImageTextAlternative,
-//   ImageToolbar,
-//   ImageUpload,
-//   Indent,
-//   IndentBlock,
-//   Italic,
-//   Link,
-//   LinkImage,
-//   List,
-//   ListProperties,
-//   Paragraph,
-//   SourceEditing,
-//   SpecialCharacters,
-//   SpecialCharactersArrows,
-//   SpecialCharactersCurrency,
-//   SpecialCharactersEssentials,
-//   SpecialCharactersLatin,
-//   SpecialCharactersMathematical,
-//   SpecialCharactersText,
-//   Strikethrough,
-//   Table,
-//   TableCellProperties,
-//   TableProperties,
-//   TableToolbar,
-//   TextTransformation,
-//   TodoList,
-//   Underline,
-// } from "ckeditor5";
 
 import {
   ClassicEditor,
@@ -66,13 +10,11 @@ import {
   AutoImage,
   AutoLink,
   Autosave,
-  BalloonToolbar,
   Base64UploadAdapter,
+  BlockQuote,
   Bold,
-  CloudServices,
-  Code,
+  Emoji,
   Essentials,
-  FindAndReplace,
   FontBackgroundColor,
   FontColor,
   FontFamily,
@@ -81,31 +23,25 @@ import {
   Highlight,
   HorizontalLine,
   ImageBlock,
-  ImageEditing,
+  ImageCaption,
   ImageInline,
   ImageInsert,
   ImageInsertViaUrl,
+  ImageResize,
+  ImageStyle,
   ImageToolbar,
   ImageUpload,
-  ImageUtils,
   Indent,
   IndentBlock,
   Italic,
   Link,
+  LinkImage,
   List,
   ListProperties,
+  Mention,
   Paragraph,
   RemoveFormat,
-  SpecialCharacters,
-  SpecialCharactersArrows,
-  SpecialCharactersCurrency,
-  SpecialCharactersEssentials,
-  SpecialCharactersLatin,
-  SpecialCharactersMathematical,
-  SpecialCharactersText,
   Strikethrough,
-  Subscript,
-  Superscript,
   Table,
   TableCaption,
   TableCellProperties,
@@ -125,12 +61,15 @@ interface CustomEditorProps {
 }
 
 export default function CustomEditor({ onContentChange }: CustomEditorProps) {
+  const editorContainerRef = useRef(null);
+  const editorRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     setIsReady(true);
     return () => setIsReady(false);
   }, []);
+
   const editorConfig = useMemo(() => {
     if (!isReady) return {};
 
@@ -147,11 +86,16 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
           "bold",
           "italic",
           "underline",
+          "strikethrough",
+          "removeFormat",
           "|",
+          "emoji",
+          "horizontalLine",
           "link",
           "insertImage",
           "insertTable",
           "highlight",
+          "blockQuote",
           "|",
           "alignment",
           "|",
@@ -169,13 +113,11 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
         AutoImage,
         AutoLink,
         Autosave,
-        BalloonToolbar,
         Base64UploadAdapter,
+        BlockQuote,
         Bold,
-        CloudServices,
-        Code,
+        Emoji,
         Essentials,
-        FindAndReplace,
         FontBackgroundColor,
         FontColor,
         FontFamily,
@@ -184,31 +126,25 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
         Highlight,
         HorizontalLine,
         ImageBlock,
-        ImageEditing,
+        ImageCaption,
         ImageInline,
         ImageInsert,
         ImageInsertViaUrl,
+        ImageResize,
+        ImageStyle,
         ImageToolbar,
         ImageUpload,
-        ImageUtils,
         Indent,
         IndentBlock,
         Italic,
         Link,
+        LinkImage,
         List,
         ListProperties,
+        Mention,
         Paragraph,
         RemoveFormat,
-        SpecialCharacters,
-        SpecialCharactersArrows,
-        SpecialCharactersCurrency,
-        SpecialCharactersEssentials,
-        SpecialCharactersLatin,
-        SpecialCharactersMathematical,
-        SpecialCharactersText,
         Strikethrough,
-        Subscript,
-        Superscript,
         Table,
         TableCaption,
         TableCellProperties,
@@ -218,16 +154,6 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
         TextTransformation,
         TodoList,
         Underline,
-      ],
-      balloonToolbar: [
-        "bold",
-        "italic",
-        "|",
-        "link",
-        "insertImage",
-        "|",
-        "bulletedList",
-        "numberedList",
       ],
       fontFamily: {
         supportAllValues: true,
@@ -239,50 +165,59 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
       heading: {
         options: [
           {
-            model: "paragraph",
-            title: "Paragraph",
+            model: "paragraph" as const,
+            title: "段落",
             class: "ck-heading_paragraph",
           },
           {
-            model: "heading1",
+            model: "heading1" as const,
             view: "h1",
-            title: "Heading 1",
+            title: "標題 1",
             class: "ck-heading_heading1",
           },
           {
-            model: "heading2",
+            model: "heading2" as const,
             view: "h2",
-            title: "Heading 2",
+            title: "標題 2",
             class: "ck-heading_heading2",
           },
           {
-            model: "heading3",
+            model: "heading3" as const,
             view: "h3",
-            title: "Heading 3",
+            title: "標題 3",
             class: "ck-heading_heading3",
           },
           {
-            model: "heading4",
+            model: "heading4" as const,
             view: "h4",
-            title: "Heading 4",
+            title: "標題 4",
             class: "ck-heading_heading4",
           },
           {
-            model: "heading5",
+            model: "heading5" as const,
             view: "h5",
-            title: "Heading 5",
+            title: "標題 5",
             class: "ck-heading_heading5",
           },
           {
-            model: "heading6",
+            model: "heading6" as const,
             view: "h6",
-            title: "Heading 6",
+            title: "標題 6",
             class: "ck-heading_heading6",
           },
         ],
       },
       image: {
-        toolbar: ["imageTextAlternative"],
+        toolbar: [
+          "toggleImageCaption",
+          "imageTextAlternative",
+          "|",
+          "imageStyle:inline",
+          "imageStyle:wrapText",
+          "imageStyle:breakText",
+          "|",
+          "resizeImage",
+        ],
       },
       initialData: "",
       language: "zh",
@@ -292,8 +227,8 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
         defaultProtocol: "https://",
         decorators: {
           toggleDownloadable: {
-            mode: "manual",
-            label: "Downloadable",
+            mode: "manual" as const,
+            label: "可下載",
             attributes: {
               download: "file",
             },
@@ -307,10 +242,15 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
           reversed: true,
         },
       },
-      menuBar: {
-        isVisible: true,
+      mention: {
+        feeds: [
+          {
+            marker: "@",
+            feed: [],
+          },
+        ],
       },
-      placeholder: "Type or paste your content here!",
+      placeholder: "在此輸入或貼上您的內容！",
       table: {
         contentToolbar: [
           "tableColumn",
@@ -327,19 +267,23 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
   const handleEditorChange = (event: any, editor: any) => {
     const data = editor.getData();
     if (onContentChange) {
-      onContentChange(data); // 傳遞給父組件
+      onContentChange(data);
     }
   };
 
   return (
     <div className="editor-wrapper">
-      {isReady && (
-        <CKEditor
-          editor={ClassicEditor}
-          config={editorConfig}
-          onChange={handleEditorChange}
-        />
-      )}
+      <div className="editor-container" ref={editorContainerRef}>
+        <div className="editor-container__editor" ref={editorRef}>
+          {isReady && (
+            <CKEditor
+              editor={ClassicEditor}
+              config={editorConfig}
+              onChange={handleEditorChange}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

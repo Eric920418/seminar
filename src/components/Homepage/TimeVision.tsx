@@ -50,19 +50,10 @@ export const TimeVision = () => {
             <div className="text-black text-36M mt-[16px] ">徵稿</div>
             <div className="mt-[32px] w-[240px] h-[204px]">
               <div className="flex">
-                <div className="text-primary text-20M me-1">{data.time1}</div>
-                <div className="line-through text-[#252F3880] text-20M ">
-                  {data.time2}
-                </div>
-              </div>
-              <div className="line-through text-[#252F3880] text-20M ">
-                延長至 {data.extend[0]}
-              </div>
-              <div className="line-through text-[#252F3880] text-20M ">
-                延長至 {data.extend[1]}
-              </div>
-              <div className=" text-primary text-20M ">
-                延長至 {data.extend[2]}
+                <div
+                  className="text-primary text-20M me-1"
+                  dangerouslySetInnerHTML={{ __html: data.time1 }}
+                ></div>
               </div>
             </div>
           </div>
@@ -91,7 +82,7 @@ export const TimeVision = () => {
                 bgColor="bg-third"
                 padding="p-[16px_24px_16px_24px]"
                 src="/button/arrow_right_2.svg"
-                url="/meeting"
+                url="/meeting/2"
               />
             </div>
           </div>
@@ -111,7 +102,7 @@ export const TimeVision = () => {
                 bgColor="bg-third"
                 padding="p-[16px_24px_16px_24px]"
                 src="/button/arrow_right_2.svg"
-                url="/meeting"
+                url="/meeting/3"
               />
             </div>
           </div>
@@ -145,8 +136,8 @@ export const TimeVision = () => {
             <Image
               src={imgUrl}
               alt="Example"
-              width={300}
-              height={300}
+              width={1920}
+              height={1080}
               style={{
                 objectFit: "cover",
                 borderRadius: "40px",

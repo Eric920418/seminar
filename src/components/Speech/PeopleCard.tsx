@@ -1,16 +1,30 @@
 import Image from "next/image";
 
-export const PeopleCard = ({ card, useIndex }) => {
+interface Card {
+  name: string;
+  school: string;
+  highest: string;
+  interests: string;
+  experience: string;
+  image: string;
+  isHost: boolean;
+}
+
+interface PeopleCardProps {
+  card: Card;
+}
+
+export const PeopleCard = ({ card }: PeopleCardProps) => {
   if (!card) {
     return null;
   }
 
   return (
     <div
-      className="rounded-[40px]  flex flex-col desktop:flex-row mt-12 desktop:mt-[48px] min-h-[538px]"
+      className="rounded-[40px] flex flex-col desktop:flex-row mt-12 desktop:mt-[48px] min-h-[538px]"
       style={{
         backgroundImage: `url('/banner/card-img${
-          useIndex % 2 === 0 ? 0 : 1
+          card.isHost ? "1" : "0"
         }.png')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -23,14 +37,14 @@ export const PeopleCard = ({ card, useIndex }) => {
           className="absolute top-3 desktop:top-[-10px] desktop:left-[-10px] p-4 desktop:p-[32px] text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC z-10"
           style={{ writingMode: "vertical-rl" }}
         >
-          主 持 人
+          {card.isHost ? "主 持 人" : "與 談 人"}
         </div>
         {/* 圖片容器，手機版尺寸較小，桌機版較大 */}
         <div
-          className={`absolute   desktop:top-[80px] desktop:left-[50px] bg-white 
+          className={`absolute desktop:top-[80px] desktop:left-[50px] bg-white 
                 ${
-                  useIndex % 2 === 0
-                    ? "rounded-[40px] rotate-[-4deg] translate-y-5 translate-x-20  desktop:translate-x-5  w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
+                  !card.isHost
+                    ? "rounded-[40px] rotate-[-4deg] translate-y-5 translate-x-20 desktop:translate-x-5 w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
                     : "rounded-full left-20 top-5 w-[200px] h-[200px] desktop:w-[316px] desktop:h-[316px]"
                 } 
             `}
@@ -39,18 +53,18 @@ export const PeopleCard = ({ card, useIndex }) => {
             <Image
               src={card.image ?? null}
               alt="some image"
-              width={316}
-              height={316}
-              className={`w-full h-full object-cover  ${
-                useIndex % 2 === 0 ? "rounded-[40px] " : "rounded-full"
-              } `}
+              width={1920}
+              height={1080}
+              className={`w-full h-full object-cover ${
+                !card.isHost ? "rounded-[40px]" : "rounded-full"
+              }`}
             />
           )}
         </div>
         {/* 名字與學校資訊，手機版位置較低 */}
         <div className="absolute top-50 desktop:top-95 left-0 p-4 desktop:p-[32px]">
           <div className="text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC">
-            {card.name} ​教授​
+            {card.name} ​
           </div>
           <div
             className="mt-2 text-white text-sm desktop:text-[14px] font-[500] leading-[22px] w-[175px] font-NotoSansTC"
@@ -63,7 +77,7 @@ export const PeopleCard = ({ card, useIndex }) => {
       {/* 右側：詳細介紹 */}
       <div className="bg-amber-50 p-4 desktop:p-[32px] flex-1 rounded-b-[40px] desktop:rounded-r-[40px] desktop:rounded-bl-none mt-4 desktop:mt-0">
         <div className="text-primary text-base desktop:text-16M font-NotoSansTC">
-          關於主持人​
+          關於{card.isHost ? "主持人" : "與談人"}​
         </div>
         <div className="mt-4 bg-[#FFD8561A] p-4 desktop:p-[16px] rounded-[16px]">
           <div className="text-[#252F3880] text-sm desktop:text-14R font-NotoSansTC">
