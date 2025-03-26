@@ -1,11 +1,21 @@
 import type { Configuration } from "webpack";
-const withVideos = require("next-videos");
 
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false, // 關閉 React Strict Mode
+  // 添加 images 配置
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/api/images/**",
+      },
+    ],
+  },
   // 添加 CORS 設定
   async headers() {
     return [
@@ -50,4 +60,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withVideos(nextConfig);
+export default nextConfig;

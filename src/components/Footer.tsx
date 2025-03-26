@@ -110,7 +110,14 @@ export const Footer = () => {
 
   const handleNavigation2 = (path) => {
     if (path) {
-      const targetUrl = `/${path.path}/${path.index}`; // 移除 localhost:3000
+      // 檢查是否為完整 URL
+      if (path.path.startsWith("http://") || path.path.startsWith("https://")) {
+        window.location.href = path.path;
+        return;
+      }
+      // 內部路由跳轉,保持完整的 URL 結構
+      const baseUrl = window.location.origin;
+      const targetUrl = `${baseUrl}/${path.path}/${path.index}`;
       window.location.href = targetUrl;
     }
   };

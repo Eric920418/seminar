@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
+// 從環境變數取得上傳目錄，如果沒有設定則使用預設值
+const UPLOAD_DIR =
+  process.env.UPLOAD_DIR || path.join(process.cwd(), "..", "uploads");
+
 export async function POST(request: Request) {
   try {
-    // 設定上傳目錄：專案根目錄下的 /public/image
-    const uploadDir = path.join(process.cwd(), "public", "image");
+    // 確保上傳目錄存在
+    const uploadDir = path.join(UPLOAD_DIR, "images");
     await fs.mkdir(uploadDir, { recursive: true });
 
     // 使用內建的 formData() 方法取得表單資料
@@ -30,10 +34,10 @@ export async function POST(request: Request) {
     // 寫入檔案到指定目錄
     await fs.writeFile(filePath, fileBuffer);
 
-    // 回傳成功訊息以及檔案可存取的 URL（public 資料夾下的檔案可直接透過 /image/ 來存取）
+    // 回傳成功訊息以及檔案的完整路徑
     return NextResponse.json({
       message: "上傳成功",
-      fileUrl: `/image/${fileName}`,
+      fileUrl: `/api/images/${fileName}`,
     });
   } catch (error) {
     console.error("上傳錯誤：", error);

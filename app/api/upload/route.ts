@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
+// 從環境變數取得上傳目錄
+const UPLOAD_DIR =
+  process.env.UPLOAD_DIR || path.join(process.cwd(), "..", "uploads");
+
 export async function POST(request: Request) {
   try {
-    // 設定上傳目錄（請確保 public/uploads 資料夾存在，或讓程式自動建立）
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    // 設定 PDF 上傳目錄
+    const uploadDir = path.join(UPLOAD_DIR, "pdfs");
     await fs.mkdir(uploadDir, { recursive: true });
 
     // 使用內建的 formData() 方法取得表單資料
@@ -17,18 +21,37 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "找不到 PDF 檔案" }, { status: 400 });
     }
 
+    // 檢查檔案類型
+    if (fileField.type !== "application/pdf") {
+      return NextResponse.json({ error: "只接受 PDF 檔案" }, { status: 400 });
+    }
+
+    // 檢查檔案大小（例如限制 10MB）
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (fileField.size > maxSize) {
+      return NextResponse.json(
+        { error: "檔案大小不能超過 10MB" },
+        { status: 400 }
+      );
+    }
+
     // 將上傳的檔案轉成 Buffer
     const fileBuffer = Buffer.from(await fileField.arrayBuffer());
-    const fileName = fileField.name; // 這裡可以依需求改成自定義檔名
+
+    // 自訂檔名：timestamp + 原始檔名（移除空白）
+    const timestamp = Date.now();
+    const originalName = fileField.name;
+    const safeName = originalName.replace(/\s+/g, "-");
+    const fileName = `${timestamp}-${safeName}`;
     const filePath = path.join(uploadDir, fileName);
 
     // 寫入檔案到指定目錄
     await fs.writeFile(filePath, fileBuffer);
 
-    // 回傳成功訊息以及檔案可存取的 URL（public 資料夾下的檔案可直接透過 /uploads/ 來存取）
+    // 回傳成功訊息以及檔案存取路徑
     return NextResponse.json({
       message: "上傳成功",
-      fileUrl: `/uploads/${fileName}`,
+      fileUrl: `/api/pdfs/${fileName}`, // 使用 API 路由來存取 PDF
     });
   } catch (error) {
     console.error("上傳錯誤：", error);

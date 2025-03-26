@@ -3,6 +3,17 @@ import { useEffect, useState } from "react";
 import { ConferenceVisionButton } from "@/components/Button/ConferenceVisionButton";
 import Image from "next/image";
 
+interface HomePageData {
+  homePage: [
+    {
+      section4: {
+        images: string;
+        manualDownloadUrl: string;
+      };
+    }
+  ];
+}
+
 const query = `
   query homePage {
     homePage {
@@ -12,8 +23,8 @@ const query = `
 `;
 
 export const ConferenceVision = () => {
-  const [data, setData] = useState(null);
-  const [imgUrl, setImgUrl] = useState(null);
+  const [data, setData] = useState<HomePageData | null>(null);
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,7 +36,10 @@ export const ConferenceVision = () => {
       const json = await res.json();
       setData(json.data);
 
-      setImgUrl(json.data.homePage[0].section4.images);
+      // 從完整路徑中取得檔名
+      const fullPath = json.data.homePage[0].section4.images;
+      const fileName = fullPath.split("/").pop();
+      setImgUrl(`/api/images/${fileName}`);
     }
     fetchData();
   }, []);

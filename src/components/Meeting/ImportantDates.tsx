@@ -36,7 +36,7 @@ export const ImportantDates = () => {
         <div className="text-black text-48M  relative z-10">重要時程</div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
-      <div className="mt-[64px] flex flex-col justify-center    desktop:flex-wrap   desktop:justify-start gap-[32px]">
+      <div className="mt-[64px] flex flex-col  desktop:flex-row desktop:flex-wrap justify-center  desktop:justify-start gap-[32px]">
         <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
           <div className="w-[48px] h-[48px] rounded-[40px] bg-primary flex justify-center items-center">
             <div className="text-[#FFFFFF] text-20M ">1</div>
