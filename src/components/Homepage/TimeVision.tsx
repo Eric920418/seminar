@@ -128,7 +128,7 @@ export const TimeVision = () => {
                 bgColor="bg-[#FFFFFF]"
                 padding="p-[16px_24px_16px_24px]"
                 src="/icons/24icon/arrow_right_2.svg"
-                url="/meeting"
+                url="/meeting/4"
               />
             </div>
           </div>
