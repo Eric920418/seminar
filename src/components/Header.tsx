@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+import Link from "next/link";
 const query = `
   query logo {
     logo {
@@ -197,7 +197,7 @@ export const Header = () => {
       <div className="hidden laptop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
         <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
           <div className="h-[45px] w-[200px] ">
-            <a href="/">
+            <Link href="/">
               {editorMapImage && (
                 <Image
                   src={editorMapImage}
@@ -212,7 +212,7 @@ export const Header = () => {
                   className="w-full h-full object-cover"
                 />
               )}
-            </a>
+            </Link>
           </div>
         </div>
 
