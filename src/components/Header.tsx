@@ -304,7 +304,13 @@ export const Header = () => {
           </button>
         </div>
         {mobileMenuOpen && (
-          <div className="border-t border-gray-200">
+          <div
+            className="border-t border-gray-200"
+            style={{
+              height: "calc(100vh)",
+              overflowY: "auto",
+            }}
+          >
             {nav.map((navItem, navIndex) => (
               <div key={navIndex} className="border-b border-gray-200">
                 <div className="flex justify-between items-center p-4">

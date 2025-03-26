@@ -25,7 +25,9 @@ export const Button: React.FC<ButtonProps> = ({
       className={`w-fit ${bgColor} flex items-center gap-2 ${padding} rounded-[100px] cursor-pointer`}
       onClick={onClick}
     >
-      <span className={`${textColor} ${textSize} w-[150px] text-nowrap`}>
+      <span
+        className={`${textColor} ${textSize} w-[100px] desktop:w-[150px] text-nowrap`}
+      >
         {text}
       </span>
       <Image src={src} alt="Example" width={32} height={32} />

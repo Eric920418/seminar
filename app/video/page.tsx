@@ -6,6 +6,30 @@ import { Button } from "@/components/Button";
 import { VideoPlayer } from "@/components/Video/VideoPlayer";
 import { useModalContext } from "@/components/ModalContext";
 
+// 添加全局樣式
+const modalStyles: Modal.Styles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  content: {
+    position: "relative",
+    top: "auto",
+    left: "auto",
+    right: "auto",
+    bottom: "auto",
+    maxWidth: "1152px",
+    width: "100%",
+    padding: "32px",
+    borderRadius: "40px",
+    backgroundColor: "white",
+    maxHeight: "90vh",
+    overflow: "auto",
+  },
+};
+
 const query = `
   query videoPage {
     videoPage {
@@ -226,33 +250,32 @@ export default function Page() {
                       isOpen={isOpen}
                       onRequestClose={closeModal}
                       contentLabel="Video Player"
-                      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-                      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+                      style={modalStyles}
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
-                        <div className="w-fit ms-auto pe-[24px] ">
-                          <button onClick={closeModal}>×</button>
+                      <div className="w-fit ms-auto pe-[24px]">
+                        <button className="text-[20px]" onClick={closeModal}>
+                          ×
+                        </button>
+                      </div>
+                      <div className="mt-[16px]">
+                        <div className="max-h-[648px] max-w-[1152px]">
+                          {currentVideo && (
+                            <VideoPlayer src={currentVideo.src} />
+                          )}
                         </div>
-                        <div className="mt-[16px]">
-                          <div className="max-h-[648px] max-w-[1152px]">
-                            {currentVideo && (
-                              <VideoPlayer src={currentVideo.src} />
-                            )}
+                        <div className="p-[24px] mt-[28px] ">
+                          <div className="text-black text-20M">
+                            {currentVideo.title}
                           </div>
-                          <div className="p-[24px] mt-[28px] ">
-                            <div className="text-black text-20M">
-                              {currentVideo.title}
-                            </div>
-                            <div
-                              className="mt-[8px] text-[#252F3880] text-[12px]"
-                              dangerouslySetInnerHTML={{
-                                __html: currentVideo.content.replace(
-                                  /\n/g,
-                                  "<br>"
-                                ),
-                              }}
-                            ></div>
-                          </div>
+                          <div
+                            className="mt-[8px] text-[#252F3880] text-[12px]"
+                            dangerouslySetInnerHTML={{
+                              __html: currentVideo.content.replace(
+                                /\n/g,
+                                "<br>"
+                              ),
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </Modal>
@@ -306,33 +329,32 @@ export default function Page() {
                       isOpen={isOpen}
                       onRequestClose={closeModal}
                       contentLabel="Video Player"
-                      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-                      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+                      style={modalStyles}
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
-                        <div className="w-fit ms-auto pe-[24px]">
-                          <button onClick={closeModal}>×</button>
+                      <div className="w-fit ms-auto pe-[24px]">
+                        <button className="text-[20px]" onClick={closeModal}>
+                          ×
+                        </button>
+                      </div>
+                      <div className="mt-[16px]">
+                        <div className="max-h-[648px] max-w-[1152px]">
+                          {currentVideo && (
+                            <VideoPlayer src={currentVideo.src} />
+                          )}
                         </div>
-                        <div className="mt-[16px]">
-                          <div className="max-h-[648px] max-w-[1152px]">
-                            {currentVideo && (
-                              <VideoPlayer src={currentVideo.src} />
-                            )}
+                        <div className="p-[24px] mt-[28px]">
+                          <div className="text-black text-20M">
+                            {currentVideo.title}
                           </div>
-                          <div className="p-[24px] mt-[28px]">
-                            <div className="text-black text-20M">
-                              {currentVideo.title}
-                            </div>
-                            <div
-                              className="mt-[8px] text-[#252F3880] text-[12px]"
-                              dangerouslySetInnerHTML={{
-                                __html: currentVideo.content.replace(
-                                  /\n/g,
-                                  "<br>"
-                                ),
-                              }}
-                            ></div>
-                          </div>
+                          <div
+                            className="mt-[8px] text-[#252F3880] text-[12px]"
+                            dangerouslySetInnerHTML={{
+                              __html: currentVideo.content.replace(
+                                /\n/g,
+                                "<br>"
+                              ),
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </Modal>
@@ -428,33 +450,32 @@ export default function Page() {
                       isOpen={isOpen}
                       onRequestClose={closeModal}
                       contentLabel="Video Player"
-                      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-                      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+                      style={modalStyles}
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
-                        <div className="w-fit ms-auto pe-[24px]">
-                          <button onClick={closeModal}>×</button>
+                      <div className="w-fit ms-auto pe-[24px]">
+                        <button className="text-[20px]" onClick={closeModal}>
+                          ×
+                        </button>
+                      </div>
+                      <div className="mt-[16px]">
+                        <div className="max-h-[648px] max-w-[1152px]">
+                          {currentVideo && (
+                            <VideoPlayer src={currentVideo.src} />
+                          )}
                         </div>
-                        <div className="mt-[16px]">
-                          <div className="max-h-[648px] max-w-[1152px]">
-                            {currentVideo && (
-                              <VideoPlayer src={currentVideo.src} />
-                            )}
+                        <div className="p-[24px] mt-[28px]">
+                          <div className="text-black text-20M">
+                            {currentVideo.title}
                           </div>
-                          <div className="p-[24px] mt-[28px]">
-                            <div className="text-black text-20M">
-                              {currentVideo.title}
-                            </div>
-                            <div
-                              className="mt-[8px] text-[#252F3880] text-[12px]"
-                              dangerouslySetInnerHTML={{
-                                __html: currentVideo.content.replace(
-                                  /\n/g,
-                                  "<br>"
-                                ),
-                              }}
-                            ></div>
-                          </div>
+                          <div
+                            className="mt-[8px] text-[#252F3880] text-[12px]"
+                            dangerouslySetInnerHTML={{
+                              __html: currentVideo.content.replace(
+                                /\n/g,
+                                "<br>"
+                              ),
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </Modal>
@@ -508,33 +529,32 @@ export default function Page() {
                       isOpen={isOpen}
                       onRequestClose={closeModal}
                       contentLabel="Video Player"
-                      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-                      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+                      style={modalStyles}
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
-                        <div className="w-fit ms-auto pe-[24px]">
-                          <button onClick={closeModal}>×</button>
+                      <div className="w-fit ms-auto pe-[24px]">
+                        <button className="text-[20px]" onClick={closeModal}>
+                          ×
+                        </button>
+                      </div>
+                      <div className="mt-[16px]">
+                        <div className="max-h-[648px] max-w-[1152px]">
+                          {currentVideo && (
+                            <VideoPlayer src={currentVideo.src} />
+                          )}
                         </div>
-                        <div className="mt-[16px]">
-                          <div className="max-h-[648px] max-w-[1152px]">
-                            {currentVideo && (
-                              <VideoPlayer src={currentVideo.src} />
-                            )}
+                        <div className="p-[24px] mt-[28px] ">
+                          <div className="text-black text-20M">
+                            {currentVideo.title}
                           </div>
-                          <div className="p-[24px] mt-[28px] ">
-                            <div className="text-black text-20M">
-                              {currentVideo.title}
-                            </div>
-                            <div
-                              className="mt-[8px] text-[#252F3880] text-[12px]"
-                              dangerouslySetInnerHTML={{
-                                __html: currentVideo.content.replace(
-                                  /\n/g,
-                                  "<br>"
-                                ),
-                              }}
-                            ></div>
-                          </div>
+                          <div
+                            className="mt-[8px] text-[#252F3880] text-[12px]"
+                            dangerouslySetInnerHTML={{
+                              __html: currentVideo.content.replace(
+                                /\n/g,
+                                "<br>"
+                              ),
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </Modal>
