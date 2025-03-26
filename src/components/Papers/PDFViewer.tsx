@@ -19,10 +19,7 @@ export const PDFViewer = ({ src }) => {
       {/* Worker 直接載入，不需要 dynamic */}
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js" />
 
-      <DynamicViewer
-        fileUrl={`/uploads/${src}.pdf`}
-        plugins={[defaultLayoutPluginInstance]}
-      />
+      <DynamicViewer fileUrl={src} plugins={[defaultLayoutPluginInstance]} />
     </div>
   );
 };

@@ -58,9 +58,13 @@ import "ckeditor5/ckeditor5.css";
 
 interface CustomEditorProps {
   onContentChange: (value: string) => void;
+  height?: string | number;
 }
 
-export default function CustomEditor({ onContentChange }: CustomEditorProps) {
+export default function CustomEditor({
+  onContentChange,
+  height = "200px",
+}: CustomEditorProps) {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
@@ -273,6 +277,12 @@ export default function CustomEditor({ onContentChange }: CustomEditorProps) {
 
   return (
     <div className="editor-wrapper">
+      <style>{`
+        .ck-editor__editable_inline {
+          min-height: ${typeof height === "number" ? `${height}px` : height};
+          max-height: ${typeof height === "number" ? `${height}px` : height};
+        }
+      `}</style>
       <div className="editor-container" ref={editorContainerRef}>
         <div className="editor-container__editor" ref={editorRef}>
           {isReady && (

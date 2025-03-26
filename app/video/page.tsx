@@ -31,6 +31,7 @@ export default function Page() {
   const [card2, setCard2] = useState<CardItem[]>([]);
   const [data, setData] = useState("");
   const [data2, setData2] = useState("");
+  const [displayCount, setDisplayCount] = useState(3); // 新增：控制顯示數量
 
   useEffect(() => {
     async function fetchData() {
@@ -106,7 +107,12 @@ export default function Page() {
     setFadeIn(false);
     setTimeout(() => setFadeIn(true), 100);
     setSelectedTab2(index);
+    setDisplayCount(3); // 重置顯示數量
     console.log(index);
+  };
+
+  const handleShowMore = () => {
+    setDisplayCount((prev) => prev + 3); // 每次增加3個影片
   };
 
   return (
@@ -188,7 +194,7 @@ export default function Page() {
                   <>
                     {/* 主題演講 */}
                     <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
-                      {card.map((item, index) => (
+                      {card.slice(0, displayCount).map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
@@ -223,17 +229,17 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full p-[32px] rounded-[40px]">
-                        <div className="w-fit ms-auto">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                        <div className="w-fit ms-auto pe-[24px] ">
                           <button onClick={closeModal}>×</button>
                         </div>
                         <div className="mt-[32px]">
-                          <div className="h-[648px]">
+                          <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
-                          <div className="p-[24px]">
+                          <div className="p-[24px] mt-[28px] ">
                             <div className="text-black text-20M">
                               {currentVideo.title}
                             </div>
@@ -250,22 +256,25 @@ export default function Page() {
                         </div>
                       </div>
                     </Modal>
-                    <div className="mt-[64px] mx-auto w-fit">
-                      <Button
-                        text="查看更多"
-                        textColor="text-white"
-                        textSize="text-20M"
-                        bgColor="bg-third"
-                        padding="p-[24px_32px_24px_32px]"
-                        src="/icons/24icon/arrow_down_2.svg"
-                      />
-                    </div>
+                    {displayCount < card.length && (
+                      <div className="mt-[64px] mx-auto w-fit">
+                        <Button
+                          text="查看更多"
+                          textColor="text-white"
+                          textSize="text-20M"
+                          bgColor="bg-third"
+                          padding="p-[24px_32px_24px_32px]"
+                          src="/icons/24icon/arrow_down_2.svg"
+                          onClick={handleShowMore}
+                        />
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
                     {/* 圓桌論壇 */}
                     <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
-                      {card2.map((item, index) => (
+                      {card2.slice(0, displayCount).map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
@@ -300,17 +309,17 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full p-[32px] rounded-[40px]">
-                        <div className="w-fit ms-auto">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                        <div className="w-fit ms-auto pe-[24px]">
                           <button onClick={closeModal}>×</button>
                         </div>
                         <div className="mt-[32px]">
-                          <div className="h-[648px]">
+                          <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
-                          <div className="p-[24px]">
+                          <div className="p-[24px] mt-[28px]">
                             <div className="text-black text-20M">
                               {currentVideo.title}
                             </div>
@@ -327,16 +336,19 @@ export default function Page() {
                         </div>
                       </div>
                     </Modal>
-                    <div className="mt-[64px] mx-auto w-fit">
-                      <Button
-                        text="查看更多"
-                        textColor="text-white"
-                        textSize="text-20M"
-                        bgColor="bg-third"
-                        padding="p-[24px_32px_24px_32px]"
-                        src="/icons/24icon/arrow_down_2.svg"
-                      />
-                    </div>
+                    {displayCount < card2.length && (
+                      <div className="mt-[64px] mx-auto w-fit">
+                        <Button
+                          text="查看更多"
+                          textColor="text-white"
+                          textSize="text-20M"
+                          bgColor="bg-third"
+                          padding="p-[24px_32px_24px_32px]"
+                          src="/icons/24icon/arrow_down_2.svg"
+                          onClick={handleShowMore}
+                        />
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -384,7 +396,7 @@ export default function Page() {
                   <>
                     {/* 主題演講 */}
                     <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
-                      {card.map((item, index) => (
+                      {card.slice(0, displayCount).map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
@@ -419,17 +431,17 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full p-[32px] rounded-[40px]">
-                        <div className="w-fit ms-auto">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                        <div className="w-fit ms-auto pe-[24px]">
                           <button onClick={closeModal}>×</button>
                         </div>
                         <div className="mt-[32px]">
-                          <div className="h-[648px]">
+                          <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
-                          <div className="p-[24px]">
+                          <div className="p-[24px] mt-[28px]">
                             <div className="text-black text-20M">
                               {currentVideo.title}
                             </div>
@@ -446,22 +458,25 @@ export default function Page() {
                         </div>
                       </div>
                     </Modal>
-                    <div className="mt-[64px] mx-auto w-fit">
-                      <Button
-                        text="查看更多"
-                        textColor="text-white"
-                        textSize="text-20M"
-                        bgColor="bg-third"
-                        padding="p-[24px_32px_24px_32px]"
-                        src="/icons/24icon/arrow_down_2.svg"
-                      />
-                    </div>
+                    {displayCount < card.length && (
+                      <div className="mt-[64px] mx-auto w-fit">
+                        <Button
+                          text="查看更多"
+                          textColor="text-white"
+                          textSize="text-20M"
+                          bgColor="bg-third"
+                          padding="p-[24px_32px_24px_32px]"
+                          src="/icons/24icon/arrow_down_2.svg"
+                          onClick={handleShowMore}
+                        />
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
                     {/* 圓桌論壇 */}
                     <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
-                      {card2.map((item, index) => (
+                      {card2.slice(0, displayCount).map((item, index) => (
                         <div key={index}>
                           <div
                             className="bg-black rounded-[40px] h-[213px] cursor-pointer"
@@ -496,17 +511,17 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full p-[32px] rounded-[40px]">
-                        <div className="w-fit ms-auto">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                        <div className="w-fit ms-auto pe-[24px]">
                           <button onClick={closeModal}>×</button>
                         </div>
                         <div className="mt-[32px]">
-                          <div className="h-[648px]">
+                          <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
-                          <div className="p-[24px]">
+                          <div className="p-[24px] mt-[28px] ">
                             <div className="text-black text-20M">
                               {currentVideo.title}
                             </div>
@@ -523,16 +538,19 @@ export default function Page() {
                         </div>
                       </div>
                     </Modal>
-                    <div className="mt-[64px] mx-auto w-fit">
-                      <Button
-                        text="查看更多"
-                        textColor="text-white"
-                        textSize="text-20M"
-                        bgColor="bg-third"
-                        padding="p-[24px_32px_24px_32px]"
-                        src="/icons/24icon/arrow_down_2.svg"
-                      />
-                    </div>
+                    {displayCount < card2.length && (
+                      <div className="mt-[64px] mx-auto w-fit">
+                        <Button
+                          text="查看更多"
+                          textColor="text-white"
+                          textSize="text-20M"
+                          bgColor="bg-third"
+                          padding="p-[24px_32px_24px_32px]"
+                          src="/icons/24icon/arrow_down_2.svg"
+                          onClick={handleShowMore}
+                        />
+                      </div>
+                    )}
                   </>
                 )}
               </div>

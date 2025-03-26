@@ -23,6 +23,7 @@ export const Oral = () => {
   const [card, setCard] = useState([]);
   const [focus, setFocus] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
 
   useEffect(() => {
     setFocus(Array(card.length).fill(false));
@@ -44,6 +45,7 @@ export const Oral = () => {
   useEffect(() => {
     async function fetchData() {
       const index = focus.findIndex((f) => f === true);
+      setSelectedCardIndex(index);
       if (index !== -1 && card.length > index) {
         const selectedCardId = card[index].id;
         try {
@@ -105,7 +107,9 @@ export const Oral = () => {
       </div>
       <PeopleCard card={selectedCard} />
       <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD]">
-        <PDFViewer src="口頭發表" />
+        {selectedCardIndex !== null && card[selectedCardIndex] && (
+          <PDFViewer src={card[selectedCardIndex].pdf} />
+        )}
       </div>
     </div>
   );

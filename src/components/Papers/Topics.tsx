@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { QRCodeCanvas } from "qrcode.react";
-import Link from "next/link";
 const query = `
   query paperPage {
     paperPage {
@@ -16,20 +15,13 @@ export const Topics = () => {
     editor2: "",
     editor3: "",
     editor4: "",
-    editor5: "",
-    editor6: "",
+
     editor7: "",
     editor8: "",
-    editor9: "",
+
     editor10: "",
     editor11: "",
-    editor12: "",
-    editor13: "",
-    editor14: "",
-    editor15: "",
-    editor16: "",
-    editor17: "",
-    editor18: "",
+
     editor19: "",
     editor20: "",
   });
@@ -47,20 +39,13 @@ export const Topics = () => {
         editor2: data.paperPage[0].section2.dataText2,
         editor3: data.paperPage[0].section2.dataText3,
         editor4: data.paperPage[0].section2.dataLink1,
-        editor5: data.paperPage[0].section2.dataLink2,
-        editor6: data.paperPage[0].section2.dataLink3,
+
         editor7: data.paperPage[0].section2.dataQrCode,
         editor8: data.paperPage[0].section2.dataCKEdit,
-        editor9: data.paperPage[0].section2.dataDate,
+
         editor10: data.paperPage[0].section2.dataA,
         editor11: data.paperPage[0].section2.dataArea,
-        editor12: data.paperPage[0].section2.content1,
-        editor13: data.paperPage[0].section2.content2,
-        editor14: data.paperPage[0].section2.content3,
-        editor15: data.paperPage[0].section2.content4,
-        editor16: data.paperPage[0].section2.content5,
-        editor17: data.paperPage[0].section2.content6,
-        editor18: data.paperPage[0].section2.content7,
+
         editor19: data.paperPage[0].section2.content8,
         editor20: data.paperPage[0].section2.text1,
       });
@@ -102,43 +87,13 @@ export const Topics = () => {
           </div>
           <div className="bg-white p-[32px] rounded-[24px] flex-1">
             <div className="text-secondary text-20M ">投稿方式</div>
-            <div className="mt-[24px] flex space-x-[16px]">
-              <div className="text-black text-15R ">
-                填妥
-                <span>
-                  <Link
-                    href={editorContents.editor4}
-                    className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    投稿者基本資料表（點此下載附件1）
-                  </Link>
-                </span>
-                及
-                <span>
-                  <Link
-                    href={editorContents.editor5}
-                    className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    論文摘要格式（點此下載附件2）
-                  </Link>
-                </span>
-                後，上傳至
-                <span>
-                  <Link
-                    href={editorContents.editor6}
-                    className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    https://reurl.cc/lgmjKQ
-                  </Link>
-                </span>
-                ，亦可掃描投稿QRcode上傳。
-              </div>
+            <div className="mt-[24px] flex justify-between space-x-[16px]">
+              <div
+                className="text-black text-15R "
+                dangerouslySetInnerHTML={{
+                  __html: editorContents.editor4,
+                }}
+              ></div>
               <div>
                 <QRCodeCanvas value={editorContents.editor7} size={110} />
               </div>
@@ -157,20 +112,12 @@ export const Topics = () => {
           </div>
           <div className="bg-white p-[32px] rounded-[24px]">
             <div className="text-secondary text-20M ">審查結果通知日期</div>
-            <div className="mt-[24px] text-black text-15R  ">
-              {editorContents.editor8}
-              <span>
-                <Link
-                  href={editorContents.editor9}
-                  className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {editorContents.editor9}
-                </Link>
-              </span>
-              ）
-            </div>
+            <div
+              className="mt-[24px] text-black text-15R "
+              dangerouslySetInnerHTML={{
+                __html: editorContents.editor8,
+              }}
+            ></div>
           </div>
           <div className="bg-white p-[32px] rounded-[24px] flex-1">
             <div className="text-secondary text-20M ">投稿形式：論文摘要</div>
@@ -187,45 +134,11 @@ export const Topics = () => {
         <div className="bg-white p-[32px] rounded-[24px]">
           <div className="text-secondary text-20M ">入選稿件之注意事項</div>
           <div className="mt-[24px] text-black text-[12px] desktop:text-15R  ">
-            <span>{editorContents.editor11}</span>
-            <br />
-            <span>{editorContents.editor12}</span>
-            <span>
-              <Link
-                href={editorContents.editor13}
-                className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                附件3。
-              </Link>
-            </span>
-            <br />
-            <span>{editorContents.editor14}</span>
-            <span>
-              <Link
-                href={editorContents.editor15}
-                className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                附件4。
-              </Link>
-            </span>
-            <br />
-            <span>{editorContents.editor16}</span>
-            <span>
-              <Link
-                href={editorContents.editor17}
-                className="text-blue-500 underline text-16R  break-all mt-[4px]"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                附件5。
-              </Link>
-            </span>
-            <br />
-            <span>{editorContents.editor18}</span>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: editorContents.editor11,
+              }}
+            />
           </div>
         </div>
       </div>

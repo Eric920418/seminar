@@ -137,7 +137,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
       </div>
       <div
         ref={contentRef}
-        className="overflow-hidden transition-all duration-500 ease-in-out"
+        className="overflow-hidden transition-all duration-500 ease-in-out overflow-y-auto"
         style={{ maxHeight: card.isOpen ? `${contentHeight}px` : "0px" }}
       >
         {/* 卡片內容範例 */}
@@ -223,14 +223,14 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
           <div className="flex py-2 space-x-3">
             <input
               type="text"
-              placeholder="標題"
+              placeholder="活動類型"
               value={card.title}
               onChange={(e) => onCardChange(index, "title", e.target.value)}
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             />
             <input
               type="text"
-              placeholder="標題2"
+              placeholder="標題"
               value={card.title2}
               onChange={(e) => onCardChange(index, "title2", e.target.value)}
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
@@ -238,7 +238,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
           </div>
           <input
             type="text"
-            placeholder="內容"
+            placeholder="標題二"
             value={card.content}
             onChange={(e) => onCardChange(index, "content", e.target.value)}
             className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"

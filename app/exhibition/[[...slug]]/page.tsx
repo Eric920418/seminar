@@ -3,7 +3,6 @@
 import { useState, useEffect, type ReactNode } from "react";
 
 import { Project } from "@/components/Exhibition/Project";
-import { Excellence } from "@/components/Exhibition/Excellence";
 
 import { useParams } from "next/navigation";
 function FadeIn({ children }: { children: ReactNode }) {
@@ -27,10 +26,7 @@ function FadeIn({ children }: { children: ReactNode }) {
 export default function Page() {
   const params = useParams();
   const { slug } = params;
-  const nav = [
-    { title: "作品展示​​", component: <Project /> },
-    { title: "卓越的學習與教學​短講​流程", component: <Excellence /> },
-  ];
+  const nav = [{ title: "作品展示​​", component: <Project /> }];
 
   const [focus, setFocus] = useState(nav.map((_, i) => i === 0));
   const toggle = (navIndex: number) => {

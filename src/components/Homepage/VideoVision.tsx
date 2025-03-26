@@ -52,11 +52,7 @@ export const VideoVision = () => {
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               ></iframe>
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-secondary text-20M">敬請期待</div>
-              </div>
-            )}
+            ) : null}
           </div>
           <div className="mt-[16px]">
             <div className="w-fit ms-auto px-[24px]">

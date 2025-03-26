@@ -87,14 +87,14 @@ export const Results = () => {
             fadeIn ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="text-black text-32M ">口頭​論文發</div>
+          <div className="text-black text-32M ">海報論文發表錄取</div>
           <div className="mt-[8px] text-[#252F3880] text-20M ">
-            Oral presentation Acceptance List
+            Poster presentation Acceptance List
           </div>
           <div className="mt-[32px] grid desktop:grid-cols-3 gap-[32px]">
             {card2.map((item, index) => (
               <div key={index} className="rounded-[24px] p-[32px] bg-white">
-                <div className="text-secondary text-20M ">{item.title}</div>
+                <div className="text-[#DD6B00] text-20M ">{item.title}</div>
                 <div className="mt-[24px]">
                   <div className="text-black text-16R ">{item.content}</div>
                   <div className="mt-[8px] text-black text-16R ">

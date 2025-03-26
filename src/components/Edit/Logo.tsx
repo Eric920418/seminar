@@ -122,7 +122,7 @@ export const Logo = () => {
               <input
                 type="text"
                 value={editorFooter.editor2}
-                placeholder="Footer"
+                placeholder="FB"
                 onChange={(e) => handleEditorChange2("editor2", e.target.value)}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
@@ -130,7 +130,7 @@ export const Logo = () => {
               <input
                 type="text"
                 value={editorFooter.editor3}
-                placeholder="Footer"
+                placeholder="IG"
                 onChange={(e) => handleEditorChange2("editor3", e.target.value)}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
@@ -138,7 +138,7 @@ export const Logo = () => {
               <input
                 type="text"
                 value={editorFooter.editor4}
-                placeholder="Footer"
+                placeholder="YT"
                 onChange={(e) => handleEditorChange2("editor4", e.target.value)}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />

@@ -53,12 +53,9 @@ export const Header = () => {
       inSelect: [],
     },
     {
-      title: "教學教具展​​​",
+      title: "教材教具展​​​",
       path: "/exhibition",
-      inSelect: [
-        { title: "作品展示", path: "/exhibition", index: 0 },
-        { title: "卓越的學習與教學​短講​流程", path: "/exhibition", index: 1 },
-      ],
+      inSelect: [{ title: "作品展示", path: "/exhibition", index: 0 }],
     },
     {
       title: "ICTE論文",
@@ -202,8 +199,8 @@ export const Header = () => {
                 <Image
                   src={editorMapImage}
                   alt="logo"
-                  width={269}
-                  height={90}
+                  width={1920}
+                  height={1080}
                   style={{
                     objectFit: "contain",
                     width: "100%",

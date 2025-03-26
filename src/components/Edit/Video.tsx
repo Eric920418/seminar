@@ -37,13 +37,13 @@ export const Video = () => {
     if (contentRef1.current) {
       setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
     }
-  }, [isOpen1, editorVideoURL, editorCards]);
+  }, [isOpen1, editorVideoURL, editorCards, editorVideoURL2, editorCards2]);
 
   useEffect(() => {
     if (contentRef2.current) {
       setHeight2(isOpen2 ? contentRef2.current.scrollHeight : 0);
     }
-  }, [isOpen2, editorVideoURL2, editorCards2]);
+  }, [isOpen2, editorVideoURL2, editorCards2, editorVideoURL, editorCards]);
 
   useEffect(() => {
     const fetchData = async () => {

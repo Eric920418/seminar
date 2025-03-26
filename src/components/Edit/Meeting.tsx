@@ -808,17 +808,17 @@ export const Meeting = () => {
                 placeholder="線上報名規則"
                 value={editorOnline.editor1}
                 onChange={(e) => handleEditorChange4("editor1", e.target.value)}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 h-[50px]"
               />
-              <div className="flex space-x-[32px] ">
-                <div className="w-1/2">
+              <div className="flex space-x-[32px] min-h-[250px]">
+                <div className="w-1/2 h-full">
                   <CustomEditor
                     onContentChange={(content) =>
                       handleEditorChange4("editor2", content)
                     }
                   />
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 h-full">
                   <CustomEditor
                     onContentChange={(content) =>
                       handleEditorChange4("editor3", content)
@@ -1095,7 +1095,21 @@ export const Meeting = () => {
             style={{ maxHeight: `${height7}px` }}
           >
             <div className="flex flex-col gap-3 mt-5">
-              <div>{editorMapImage}</div>
+              <div className="w-[300px] h-[300px]">
+                {editorMapImage && (
+                  <Image
+                    src={editorMapImage}
+                    alt="logo"
+                    width={1920}
+                    height={1080}
+                    style={{
+                      objectFit: "contain",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                )}
+              </div>
               <ImageUploader
                 onImageUpload={(filename) =>
                   handleImageUpload3({ fileUrl: filename })
