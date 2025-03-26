@@ -229,11 +229,11 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
                         <div className="w-fit ms-auto pe-[24px] ">
                           <button onClick={closeModal}>×</button>
                         </div>
-                        <div className="mt-[32px]">
+                        <div className="mt-[16px]">
                           <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
@@ -309,11 +309,11 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
                         <div className="w-fit ms-auto pe-[24px]">
                           <button onClick={closeModal}>×</button>
                         </div>
-                        <div className="mt-[32px]">
+                        <div className="mt-[16px]">
                           <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
@@ -431,11 +431,11 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
                         <div className="w-fit ms-auto pe-[24px]">
                           <button onClick={closeModal}>×</button>
                         </div>
-                        <div className="mt-[32px]">
+                        <div className="mt-[16px]">
                           <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
@@ -511,11 +511,11 @@ export default function Page() {
                       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
                       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
                     >
-                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px]">
+                      <div className="bg-white max-w-[1152px] w-full  rounded-[40px] p-[32px] overflow-y-scroll">
                         <div className="w-fit ms-auto pe-[24px]">
                           <button onClick={closeModal}>×</button>
                         </div>
-                        <div className="mt-[32px]">
+                        <div className="mt-[16px]">
                           <div className="max-h-[648px] max-w-[1152px]">
                             {currentVideo && (
                               <VideoPlayer src={currentVideo.src} />
