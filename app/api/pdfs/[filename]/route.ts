@@ -61,6 +61,7 @@ export async function GET(
       return NextResponse.json({ error: "建立回應失敗" }, { status: 500 });
     }
   } catch (error) {
+    console.error("處理請求時發生錯誤：", error);
     return NextResponse.json({ error: "處理請求失敗" }, { status: 500 });
   }
 }

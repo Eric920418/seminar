@@ -50,6 +50,7 @@ export async function GET(
       },
     });
   } catch (error) {
+    console.error("讀取圖片錯誤：", error);
     return new NextResponse(null, { status: 500 }); // 回傳 500 錯誤而不是 JSON
   }
 }
