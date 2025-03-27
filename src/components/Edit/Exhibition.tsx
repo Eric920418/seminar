@@ -1,6 +1,6 @@
 "use client";
 import { gql } from "graphql-tag";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
 
@@ -19,19 +19,6 @@ const query = `
     }
   }
 `;
-
-const query2 = `
-  query event {
-    event {
-      section1
-    }
-  }
-`;
-
-interface SelectEvent {
-  title: string;
-  id: string;
-}
 
 interface ExhibitionCard {
   id: string;
@@ -52,7 +39,6 @@ export const Exhibition = () => {
   const [editorCards, setEditorCards] = useState<ExhibitionCard[]>([]);
 
   const [isFinish, setIsFinish] = useState(true);
-  const [selectEvent, setSelectEvent] = useState<SelectEvent[]>([]);
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -74,36 +60,6 @@ export const Exhibition = () => {
 
     fetchData();
   }, []);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: query2,
-        }),
-      });
-      const { data } = await res.json();
-      setSelectEvent((prevEvents) => {
-        // 取得前一次的狀態，然後新增新的資料
-        const events = [...prevEvents];
-        data.event[0].section1.editorCards.forEach((card) => {
-          events.push({
-            title: card.title2,
-            id: card.id,
-          });
-        });
-        return events;
-      });
-    } catch (error) {
-      console.error("Fetch error: ", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   const handleCardChange = (
     index: number,
