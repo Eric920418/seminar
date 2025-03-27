@@ -74,58 +74,62 @@ export const Topics = () => {
             {editorContents.editor1}
           </div>
         </div>
-        <div className="mt-[32px] grid desktop:grid-cols-2 gap-[32px] ">
-          <div className="flex flex-col gap-[32px] ">
-            <div className="bg-white p-[32px] rounded-[24px]">
-              <div className="text-secondary text-20M ">徵稿主題</div>
-              <div className="mt-[24px] text-black text-15R  ">
+        <div className="mt-[32px] grid desktop:grid-cols-2 gap-[16px] desktop:gap-[32px]">
+          <div className="flex flex-col gap-[16px] desktop:gap-[32px]">
+            <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px]">
+              <div className="text-secondary text-20M">徵稿主題</div>
+              <div className="mt-[24px] text-black text-15R break-words">
                 {editorContents.editor2}
               </div>
               <div
-                className="mt-[16px] text-black text-[12px] desktop:text-15R  "
+                className="mt-[16px] text-black text-[12px] desktop:text-15R break-words"
                 dangerouslySetInnerHTML={{
                   __html: editorContents.editor3.replace(/\n/g, "<br>"),
                 }}
               ></div>
             </div>
-            <div className="bg-white p-[32px] rounded-[24px] flex-1">
-              <div className="text-secondary text-20M ">投稿方式</div>
-              <div className="mt-[24px] flex justify-between space-x-[16px]">
+            <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px] flex-1">
+              <div className="text-secondary text-20M">投稿方式</div>
+              <div className="mt-[24px] flex flex-col desktop:flex-row justify-between desktop:space-x-[16px] space-y-[16px] desktop:space-y-0">
                 <div
-                  className="text-black text-15R "
+                  className="text-black text-15R break-words"
                   dangerouslySetInnerHTML={{
                     __html: editorContents.editor4,
                   }}
                 ></div>
-                <div>
-                  <QRCodeCanvas value={editorContents.editor7} size={110} />
+                <div className="flex justify-center">
+                  <QRCodeCanvas
+                    value={editorContents.editor7}
+                    size={90}
+                    className="desktop:w-[110px] desktop:h-[110px]"
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-[32px] ">
-            <div className="bg-white p-[32px] rounded-[24px]">
-              <div className="text-secondary text-20M ">徵稿對象</div>
+          <div className="flex flex-col gap-[16px] desktop:gap-[32px]">
+            <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px]">
+              <div className="text-secondary text-20M">徵稿對象</div>
               <div
-                className="mt-[24px] text-black text-15R"
+                className="mt-[24px] text-black text-15R break-words"
                 dangerouslySetInnerHTML={{
                   __html: editorContents.editor19.replace(/\n/g, "<br>"),
                 }}
               ></div>
             </div>
-            <div className="bg-white p-[32px] rounded-[24px]">
-              <div className="text-secondary text-20M ">審查結果通知日期</div>
+            <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px]">
+              <div className="text-secondary text-20M">審查結果通知日期</div>
               <div
-                className="mt-[24px] text-black text-15R "
+                className="mt-[24px] text-black text-15R break-words"
                 dangerouslySetInnerHTML={{
                   __html: editorContents.editor8,
                 }}
               ></div>
             </div>
-            <div className="bg-white p-[32px] rounded-[24px] flex-1">
-              <div className="text-secondary text-20M ">投稿形式：論文摘要</div>
+            <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px] flex-1">
+              <div className="text-secondary text-20M">投稿形式：論文摘要</div>
               <div
-                className="mt-[24px] text-black text-15R  "
+                className="mt-[24px] text-black text-15R break-words"
                 dangerouslySetInnerHTML={{
                   __html: editorContents.editor10.replace(/\n/g, "<br>"),
                 }}
@@ -134,9 +138,9 @@ export const Topics = () => {
           </div>
         </div>
         <div className="mt-[16px]">
-          <div className="bg-white p-[32px] rounded-[24px]">
-            <div className="text-secondary text-20M ">入選稿件之注意事項</div>
-            <div className="mt-[24px] text-black text-[12px] desktop:text-15R  ">
+          <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px]">
+            <div className="text-secondary text-20M">入選稿件之注意事項</div>
+            <div className="mt-[24px] text-black text-[12px] desktop:text-15R break-words">
               <span
                 dangerouslySetInnerHTML={{
                   __html: editorContents.editor11,
@@ -146,10 +150,10 @@ export const Topics = () => {
           </div>
         </div>
         <div className="mt-[16px]">
-          <div className="bg-white p-[32px] rounded-[24px]">
-            <div className="text-secondary text-20M ">聯絡窗口</div>
+          <div className="bg-white p-[16px] desktop:p-[32px] rounded-[24px]">
+            <div className="text-secondary text-20M">聯絡窗口</div>
             <div
-              className="mt-[24px] text-black text-15R "
+              className="mt-[24px] text-black text-15R break-words"
               dangerouslySetInnerHTML={{
                 __html: editorContents.editor20.replace(/\n/g, "<br>"),
               }}
