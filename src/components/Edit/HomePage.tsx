@@ -86,7 +86,10 @@ export const HomePage = () => {
     editor10: "",
   });
   const [editorURL, serEditorURL] = useState<string | null>("");
-  const [editorVideoURL, serEditorVideoURL] = useState<string | null>("");
+  const [editorVideoURL, serEditorVideoURL] = useState({
+    video1: "",
+    year: "",
+  });
   const [editorOrganizers, serEditorOrganizers] = useState({
     editor1: "",
     editor2: "",
@@ -246,8 +249,11 @@ export const HomePage = () => {
     serEditorURL(event.target.value);
   };
 
-  const handleEditorChange4 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    serEditorVideoURL(event.target.value);
+  const handleEditorChange4 = (id: string, content: string) => {
+    serEditorVideoURL((prev) => ({
+      ...prev,
+      [id]: content,
+    }));
   };
 
   const handleEditorChange5 = (id: string, content: string) => {
@@ -772,7 +778,13 @@ export const HomePage = () => {
               <input
                 type="text"
                 placeholder="ytube影片網址 ?v={這段}"
-                onChange={handleEditorChange4}
+                onChange={(e) => handleEditorChange4("video1", e.target.value)}
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              />
+              <input
+                type="text"
+                placeholder="年份"
+                onChange={(e) => handleEditorChange4("year", e.target.value)}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
             </div>
