@@ -66,6 +66,7 @@ export const ConferenceVision = () => {
               src={imgUrl}
               width={258}
               height={365}
+              loading="lazy"
               alt="Conference Vision"
             />
           </div>

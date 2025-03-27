@@ -4,15 +4,25 @@
 @font-face {
   font-family: "Barlow";
   src: url("/Barlow-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
   font-family: "Barlow-bold";
   src: url("/Barlow-Bold.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
 }
+
 @font-face {
   font-family: "NotoSansTC";
   src: url("/NotoSansTC-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
 }
 
 @theme {
@@ -88,6 +98,14 @@
   --font-sans: var(--font-NotoSansTC);
 }
 
+/* 優化文字渲染 */
+body {
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .text-primary {
   color: var(--color-primary);
 }
@@ -123,6 +141,30 @@
   background-color: var(--color-white);
 }
 
-body {
-  font-family: var(--font-sans);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* 延遲動畫 */
+.animate-fadeIn:nth-child(1) {
+  animation-delay: 0.4s;
+}
+
+.animate-fadeIn:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.animate-fadeIn:nth-child(3) {
+  animation-delay: 0.6s;
 }

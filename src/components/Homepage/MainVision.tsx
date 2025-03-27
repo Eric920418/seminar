@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { MainVisionButton } from "@/components/Button/MainVisionButton";
+import Image from "next/image";
+
+const BLUR_DATA_URL =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRseHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/2wBDAR4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=";
 
 const query = `
   query homePage {
@@ -11,18 +15,43 @@ const query = `
   }
 `;
 
+interface HomePageData {
+  homePage: [
+    {
+      section1: {
+        image: string;
+        title: {
+          left: string;
+          right: string;
+        };
+        content: string;
+        subTitle: string[];
+        location: string;
+      };
+    }
+  ];
+}
+
 export const MainVision = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<HomePageData | null>(null);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const result = await res.json();
-      setData(result.data);
+      try {
+        const res = await fetch("/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+          next: { revalidate: 3600 }, // 每小時重新驗證一次
+        });
+        if (!res.ok) throw new Error("Failed to fetch data");
+        const result = await res.json();
+        setData(result.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // 在生產環境中使用適當的錯誤處理
+      }
     };
 
     fetchData();
@@ -31,26 +60,34 @@ export const MainVision = () => {
   if (!data) return <div>Loading...</div>;
 
   return (
-    <div
-      className="h-screen w-screen"
-      style={{
-        backgroundImage: `url('${data.homePage[0].section1.image}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="h-full flex justify-center flex-col mx-[6%]">
+    <div className="relative h-screen w-screen">
+      <div className="absolute inset-0">
+        <Image
+          src={`${data.homePage[0].section1.image}`}
+          alt="首頁背景"
+          width={1920}
+          height={1080}
+          priority
+          quality={75}
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
+          onLoadingComplete={() => setIsImageLoading(false)}
+          className={`h-full w-full object-cover transition-opacity duration-500 ${
+            isImageLoading ? "opacity-0" : "opacity-100"
+          }`}
+        />
+      </div>
+      <div className="absolute inset-0 flex justify-center flex-col mx-[6%] z-10">
         <div className="flex">
-          <div className="text-[#009982] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8">
+          <div className="text-[#009982] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8 opacity-0 animate-fadeIn">
             {data.homePage[0].section1.title.left}
           </div>
-          <div className="text-[#FFFFFF] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title">
+          <div className="text-[#FFFFFF] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title opacity-0 animate-fadeIn">
             {data.homePage[0].section1.title.right}
           </div>
         </div>
         <div
-          className="text-black text-[24px] laptop:text-[36px] desktop:text-[48px] leading-[144%] mt-[-14px]"
+          className="text-black text-[24px] laptop:text-[36px] desktop:text-[48px] leading-[144%] mt-[-14px] opacity-0 animate-fadeIn"
           dangerouslySetInnerHTML={{
             __html: data.homePage[0].section1.content.replace(/\n/g, "<br>"),
           }}

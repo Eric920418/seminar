@@ -138,6 +138,7 @@ export const TimeVision = () => {
               alt="Example"
               width={1920}
               height={1080}
+              loading="lazy"
               style={{
                 objectFit: "contain",
                 borderRadius: "40px",

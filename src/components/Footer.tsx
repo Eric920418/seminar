@@ -158,6 +158,7 @@ export const Footer = () => {
             href={editorFooter.editor2}
             target="_blank"
             rel="noopener noreferrer"
+            className="w-[40px] h-[40px] flex items-center justify-center"
           >
             <Image
               className="text-white"
@@ -165,6 +166,8 @@ export const Footer = () => {
               width={40}
               height={40}
               alt="Facebook"
+              style={{ width: "40px", height: "40px" }}
+              priority
             />
           </a>
 
@@ -172,26 +175,32 @@ export const Footer = () => {
             href={editorFooter.editor3}
             target="_blank"
             rel="noopener noreferrer"
+            className="w-[40px] h-[40px] flex items-center justify-center"
           >
             <Image
               className="text-white"
               src="/icons/24icon/ig.svg"
               width={40}
               height={40}
-              alt="fb"
+              alt="Instagram"
+              style={{ width: "40px", height: "40px" }}
+              priority
             />
           </a>
           <a
             href={editorFooter.editor4}
             target="_blank"
             rel="noopener noreferrer"
+            className="w-[40px] h-[40px] flex items-center justify-center"
           >
             <Image
               className="text-white"
               src="/icons/24icon/yt.svg"
               width={40}
               height={40}
-              alt="fb"
+              alt="YouTube"
+              style={{ width: "40px", height: "40px" }}
+              priority
             />
           </a>
         </div>

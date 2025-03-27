@@ -85,6 +85,7 @@ export const NewVision = () => {
                 alt="arrow"
                 width={16}
                 height={16}
+                loading="lazy"
               />
             </div>
             {/* 頁碼 */}
@@ -119,6 +120,7 @@ export const NewVision = () => {
                 alt="arrow"
                 width={16}
                 height={16}
+                loading="lazy"
               />
             </div>
           </div>

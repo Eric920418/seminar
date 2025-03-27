@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://your-domain.com/sitemap.xml
+
+# 禁止訪問的路徑
+Disallow: /api/
+Disallow: /admin/
