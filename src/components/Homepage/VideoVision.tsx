@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+interface VideoData {
+  video1: string;
+  year: string;
+}
+
 const query = `
   query homePage {
     homePage {
@@ -11,17 +16,26 @@ const query = `
 `;
 
 export const VideoVision = () => {
-  const [videoUrl, setVideoUrl] = useState(null);
+  const [videoUrl, setVideoUrl] = useState<VideoData | null>({
+    video1: "",
+    year: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const { data } = await res.json();
-      setVideoUrl(data.homePage[0].section5.videoUrl);
+      try {
+        const res = await fetch("/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+        const { data } = await res.json();
+        if (data?.homePage?.[0]?.section5) {
+          setVideoUrl(data.homePage[0].section5.videoUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching video data:", error);
+      }
     };
 
     fetchData();
@@ -39,7 +53,7 @@ export const VideoVision = () => {
         </div>
         <div>
           <div className="rounded-[40px] laptop:w-[540px] desktop:w-[640px] h-[360px]">
-            {videoUrl.video1 ? (
+            {videoUrl?.video1 ? (
               <iframe
                 width="100%"
                 height="100%"
@@ -58,7 +72,7 @@ export const VideoVision = () => {
           </div>
           <div className="mt-[16px]">
             <div className="w-fit ms-auto px-[24px]">
-              <div className="text-secondary text-20M">{videoUrl.year}</div>
+              <div className="text-secondary text-20M">{videoUrl?.year}</div>
             </div>
           </div>
         </div>
