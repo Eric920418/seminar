@@ -8,7 +8,6 @@ const UPDATE_PAGE = gql`
   mutation UpdateExhibitionPage($input: UpdateExhibitionPageInput!) {
     updateExhibitionPage(input: $input) {
       section1
-      section2
     }
   }
 `;
@@ -17,7 +16,6 @@ const query = `
   query exhibitionPage {
     exhibitionPage {
       section1
-      section2
     }
   }
 `;
@@ -51,12 +49,7 @@ export const Exhibition = () => {
   const [height1, setHeight1] = useState(0);
   const contentRef1 = useRef<HTMLDivElement>(null);
 
-  const [isOpen2, setIsOpen2] = useState(false);
-  const [height2, setHeight2] = useState(0);
-  const contentRef2 = useRef<HTMLDivElement>(null);
-
   const [editorCards, setEditorCards] = useState<ExhibitionCard[]>([]);
-  const [editorCards2, setEditorCards2] = useState<ExhibitionCard[]>([]);
 
   const [isFinish, setIsFinish] = useState(true);
   const [selectEvent, setSelectEvent] = useState<SelectEvent[]>([]);
@@ -68,12 +61,6 @@ export const Exhibition = () => {
   }, [isOpen1, editorCards]);
 
   useEffect(() => {
-    if (contentRef2.current) {
-      setHeight2(isOpen2 ? contentRef2.current.scrollHeight : 0);
-    }
-  }, [isOpen2, editorCards2]);
-
-  useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/graphql", {
         method: "POST",
@@ -83,7 +70,6 @@ export const Exhibition = () => {
       const { data } = await res.json();
 
       setEditorCards(data.exhibitionPage[0].section1.card);
-      setEditorCards2(data.exhibitionPage[0].section2.card);
     };
 
     fetchData();
@@ -151,28 +137,6 @@ export const Exhibition = () => {
     setEditorCards(newCards);
   };
 
-  const handleCardChange2 = (
-    index: number,
-    field: string,
-    value: string | string[]
-  ) => {
-    const newCards = [...editorCards2];
-    newCards[index] = {
-      ...newCards[index],
-      [field]: value,
-    };
-    setEditorCards2(newCards);
-  };
-
-  const addCard2 = () => {
-    setEditorCards2([...editorCards2, { date: "", id: "" }]);
-  };
-
-  const DeleteCard2 = (index: number) => {
-    const newCards = editorCards2.filter((_, idx) => idx !== index);
-    setEditorCards2(newCards);
-  };
-
   const handleImageUpload = (data) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
@@ -209,9 +173,6 @@ export const Exhibition = () => {
     const input = {
       section1: {
         card: editorCards,
-      },
-      section2: {
-        card: editorCards2,
       },
     };
 
@@ -354,82 +315,6 @@ export const Exhibition = () => {
                     <button
                       className="bg-red-500 text-white px-3 py-1 rounded"
                       onClick={() => DeleteCard(index)}
-                    >
-                      刪除
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        {/* 區塊二 */}
-        <div className="relative bg-gray-200 w-full p-3">
-          <div className="flex justify-between items-center">
-            <div>卓越的學習與教學​短講​流程 活動區域</div>
-            <div className="flex items-center gap-2">
-              <Image
-                src="/icons/24icon/arrow_right.svg"
-                className={`cursor-pointer transition-transform duration-300 ${
-                  isOpen2 ? "rotate-90" : ""
-                }`}
-                width={24}
-                height={24}
-                alt="arrow"
-                onClick={() => setIsOpen2(!isOpen2)}
-              />
-            </div>
-          </div>
-          <div
-            ref={contentRef2}
-            className="overflow-hidden transition-all duration-500 ease-in-out"
-            style={{ maxHeight: `${height2}px` }}
-          >
-            <div className="my-3 flex justify-between">
-              <button
-                className="bg-blue-500 text-white px-3 py-1 rounded"
-                onClick={addCard2}
-              >
-                新增卡片
-              </button>
-              <div>Select 按住 Ctrl 複選 </div>
-            </div>
-            <div>
-              {editorCards2.map((card, index) => (
-                <div key={index} className="my-3">
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      placeholder="日期 （格式：3.10)"
-                      value={card.date}
-                      onChange={(e) =>
-                        handleCardChange2(index, "date", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-                    <div>
-                      <div>{card.id}</div>
-                      <select
-                        multiple
-                        onChange={(e) => {
-                          const selectedValues = Array.from(
-                            e.target.selectedOptions,
-                            (option) => option.value
-                          );
-                          handleCardChange2(index, "id", selectedValues);
-                        }}
-                        className="block  rounded-md bg-white px-6 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                      >
-                        {selectEvent.map((event, idx) => (
-                          <option key={idx} value={event.id}>
-                            {event.id} - {event.title}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <button
-                      className="bg-red-500 text-white px-3 py-1 rounded"
-                      onClick={() => DeleteCard2(index)}
                     >
                       刪除
                     </button>

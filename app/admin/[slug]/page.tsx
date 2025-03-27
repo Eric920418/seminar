@@ -60,7 +60,7 @@ export default function Page() {
   };
 
   const handLoginButton = () => {
-    if (username === "admin" && password === "admin") {
+    if (username === "ictesite" && password === "icteadmin_62139") {
       setFadeOut(true);
       setTimeout(() => {
         setLogin(true);
