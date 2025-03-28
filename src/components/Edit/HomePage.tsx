@@ -686,7 +686,7 @@ export const HomePage = () => {
                   </div>
                 </div>
                 <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-                  <div className="text-black text-20M">晚宴</div>
+                  <div className="text-black text-20M">會議主會場</div>
                   <div className="text-black text-16M">
                     {editorTimes.editor10}
                     <input
@@ -779,12 +779,6 @@ export const HomePage = () => {
                 type="text"
                 placeholder="ytube影片網址 ?v={這段}"
                 onChange={(e) => handleEditorChange4("video1", e.target.value)}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-              />
-              <input
-                type="text"
-                placeholder="年份"
-                onChange={(e) => handleEditorChange4("year", e.target.value)}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
             </div>

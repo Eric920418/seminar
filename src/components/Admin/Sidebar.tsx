@@ -54,7 +54,7 @@ export const Sidebar = () => {
               href="/admin/exhibition"
               className="block px-4 py-2 hover:bg-gray-700"
             >
-              教學教具展​​​
+              教材教具展​​​
             </Link>
             <Link
               href="/admin/papers"

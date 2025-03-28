@@ -70,11 +70,6 @@ export const VideoVision = () => {
               </div>
             )}
           </div>
-          <div className="mt-[16px]">
-            <div className="w-fit ms-auto px-[24px]">
-              <div className="text-secondary text-20M">{videoUrl?.year}</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

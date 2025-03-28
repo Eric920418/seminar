@@ -61,7 +61,7 @@ export const ConferenceVision = () => {
           </div>
         </div>
         <div className="bg-[#F0F3F8] rounded-[40px] py-[64px]">
-          <div className="desktop:w-[258px] h-[365px] desktop:mx-[191px]">
+          <div className="desktop:w-[258px] h-[365px] desktop:mx-[191px] p-3 desktop:p-0">
             <Image
               src={imgUrl}
               width={258}

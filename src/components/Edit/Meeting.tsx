@@ -405,7 +405,13 @@ export const Meeting = () => {
                   key={index}
                   className="p-[16px] border border-gray-300 rounded"
                 >
-                  <div className="space-y-2">
+                  <button
+                    className="bg-red-500 text-white px-3 py-1 rounded my-2"
+                    onClick={() => DeleteCard(index)}
+                  >
+                    刪除卡片
+                  </button>
+                  <div className="space-y-1">
                     <input
                       type="text"
                       placeholder="日期"
@@ -416,18 +422,20 @@ export const Meeting = () => {
                       className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                     />
                   </div>
-                  <button
-                    className="bg-red-500 text-white px-3 py-1 rounded mt-2"
-                    onClick={() => DeleteCard(index)}
-                  >
-                    刪除卡片
-                  </button>
-                  <div className="my-[32px] flex items-center bg-white">
-                    <div className=" text-black text-20R">
+
+                  <div className="my-[15px]   bg-white space-y-1">
+                    <div className=" text-black text-20R ">
                       <span
                         dangerouslySetInnerHTML={{ __html: card.content }}
                       />
                     </div>
+                  </div>
+                  <div className="mt-[15px]">
+                    <CustomEditor
+                      onContentChange={(content) =>
+                        handleCardChange(index, "content", content)
+                      }
+                    />
                   </div>
                 </div>
               ))}
@@ -530,7 +538,7 @@ export const Meeting = () => {
                   </div>
                 </div>
                 <div className="w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-                  <div className="text-black text-20M">晚宴</div>
+                  <div className="text-black text-20M">會議主會場</div>
                   <div className="text-black text-16M">
                     {editorTimes.editor10}
                     <input

@@ -158,11 +158,11 @@ export default function Page() {
       <div className="mx-auto w-fit pt-[128px] pb-[160px] max-w-[1200px]  px-3 desktop:px-0">
         <div>
           <div className="text-16M text-primary text-center">
-            Abstract Review Results
+            International Conference on Teacher Education
           </div>
           <div className="relative w-fit mx-auto">
             <div className="text-black text-20M desktop:text-48M relative z-10">
-              第十二屆師資培育國際學術研討會
+              師資培育國際學術研討會
             </div>
             <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
           </div>
@@ -257,7 +257,7 @@ export default function Page() {
                           ×
                         </button>
                       </div>
-                      <div className="mt-[16px]">
+                      <div className="desktop:mt-[16px]">
                         <div className="max-h-[648px] max-w-[1152px]">
                           {currentVideo && (
                             <VideoPlayer src={currentVideo.src} />
@@ -336,7 +336,7 @@ export default function Page() {
                           ×
                         </button>
                       </div>
-                      <div className="mt-[16px]">
+                      <div className="desktop:mt-[16px]">
                         <div className="max-h-[648px] max-w-[1152px]">
                           {currentVideo && (
                             <VideoPlayer src={currentVideo.src} />
@@ -457,7 +457,7 @@ export default function Page() {
                           ×
                         </button>
                       </div>
-                      <div className="mt-[16px]">
+                      <div className="desktop:mt-[16px]">
                         <div className="max-h-[648px] max-w-[1152px]">
                           {currentVideo && (
                             <VideoPlayer src={currentVideo.src} />
@@ -536,7 +536,7 @@ export default function Page() {
                           ×
                         </button>
                       </div>
-                      <div className="mt-[16px]">
+                      <div className="desktop:mt-[16px]">
                         <div className="max-h-[648px] max-w-[1152px]">
                           {currentVideo && (
                             <VideoPlayer src={currentVideo.src} />
