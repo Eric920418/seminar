@@ -19,16 +19,18 @@ export const VideoPlayer = ({ src, small }: VideoPlayerProps) => {
           ></iframe>
         </div>
       ) : (
-        <iframe
-          width="100%"
-          height="100%"
-          style={{ width: "100%", height: "675px", borderRadius: "40px" }}
-          src={`https://www.youtube.com/embed/${src}?si=YEACs7k0u1_CezFi`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></iframe>
+        <div className="h-[500px] laptop:h-[675px]">
+          <iframe
+            width="100%"
+            height="100%"
+            style={{ width: "100%", borderRadius: "40px" }}
+            src={`https://www.youtube.com/embed/${src}?si=YEACs7k0u1_CezFi`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
       )}
     </div>
   );

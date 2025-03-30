@@ -27,13 +27,14 @@ const modalStyles: Modal.Styles = {
     bottom: "auto",
     maxWidth: "1152px",
     width: "100%",
-    padding: "32px",
+    padding: "40px",
     borderRadius: "40px",
     backgroundColor: "white",
     maxHeight: "90vh",
     overflow: "auto",
     scrollbarWidth: "thin",
     scrollbarColor: "#888 #f1f1f1",
+    overflowY: "scroll",
   },
 };
 
