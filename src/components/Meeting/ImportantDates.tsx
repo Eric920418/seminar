@@ -111,7 +111,7 @@ export const ImportantDates = () => {
               <div className="text-black text-16M ">{data.meeting}</div>
             </div>
             <div className="desktop:w-[240px] bg-[#FFEFB0] p-[16px] flex flex-col gap-[4px] rounded-[20px]">
-              <div className="text-black text-20M ">晚宴</div>
+              <div className="text-black text-20M ">會議主會場</div>
               <div className="text-black text-16M ">{data.dinner}</div>
             </div>
           </div>

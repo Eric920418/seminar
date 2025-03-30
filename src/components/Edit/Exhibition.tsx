@@ -102,7 +102,6 @@ export const Exhibition = () => {
   };
 
   const handleImageUpload2 = (data) => {
-    console.log(data);
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
       newCards[data.index] = {
