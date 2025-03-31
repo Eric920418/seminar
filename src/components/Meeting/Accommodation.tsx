@@ -33,8 +33,7 @@ export const Accommodation = () => {
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
 
-      <div className="mt-[64px] text-secondary text-20M ">飯店資訊​​</div>
-      <div className="mt-[64px] flex flex-col gap-6 desktop:flex-row space-x-[32px]">
+      <div className="mt-[64px] grid grid-cols-1 desktop:grid-cols-3 gap-6  space-x-[32px]">
         {accommodations.map((item, index) => (
           <div key={index} className="bg-white rounded-[24px] w-full">
             {item.image ? (
