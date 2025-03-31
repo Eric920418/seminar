@@ -19,7 +19,13 @@ export const PDFViewer = ({ src }) => {
       {/* Worker 直接載入，不需要 dynamic */}
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js" />
 
-      <DynamicViewer fileUrl={src} plugins={[defaultLayoutPluginInstance]} />
+      {src ? (
+        <DynamicViewer fileUrl={src} plugins={[defaultLayoutPluginInstance]} />
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <div className="text-16M text-secondary">尚未公布</div>
+        </div>
+      )}
     </div>
   );
 };

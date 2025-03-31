@@ -94,7 +94,7 @@ export const Poster = () => {
       </div>
 
       {selectedIndex === null && (
-        <div className="mt-[64px] grid grid-cols-4 gap-[32px]">
+        <div className="mt-[64px] grid grid-cols-2 desktop:grid-cols-4 gap-[32px]">
           {card.map((item, index) => {
             const isAnimating = animatingIndex === index;
             return (
@@ -142,7 +142,13 @@ export const Poster = () => {
 
       {selectedIndex !== null && (
         <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD] desktop:w-[976px]">
-          <PDFViewer src={card[selectedIndex].id} />
+          {card[selectedIndex].id ? (
+            <PDFViewer src={card[selectedIndex].id} />
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              <div className="text-16M text-secondary">尚未公布</div>
+            </div>
+          )}
         </div>
       )}
     </div>

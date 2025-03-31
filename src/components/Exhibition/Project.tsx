@@ -118,13 +118,19 @@ export const Project = () => {
               className="relative rounded-[40px] w-[220px] h-[318px] p-[24px] cursor-pointer"
               onClick={() => change(index)}
             >
-              <Image
-                src={item.imageSrc}
-                fill
-                className="rounded-[40px]"
-                style={{ objectFit: "cover" }}
-                alt="背景圖片"
-              />
+              {item.imageSrc ? (
+                <Image
+                  src={item.imageSrc}
+                  fill
+                  className="rounded-[40px]"
+                  style={{ objectFit: "cover" }}
+                  alt="背景圖片"
+                />
+              ) : (
+                <div className="flex justify-center items-center h-full">
+                  <div className="text-16M text-secondary">尚未公布</div>
+                </div>
+              )}
               <div className="absolute inset-0 bg-[#0DC7AB] opacity-20 rounded-[40px]"></div>
               <div className="absolute inset-0 bg-[#252F38] opacity-50 rounded-[40px]"></div>
               <div className="absolute transform top-55 translate-y-[50%] text-center text-16M text-white">

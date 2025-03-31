@@ -77,7 +77,7 @@ export const Oral = () => {
         <div className="text-black text-48M relative z-10">口頭發表場次</div>
         <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
       </div>
-      <div className="mt-[64px] grid grid-cols-4 gap-[32px]">
+      <div className="mt-[64px] grid grid-cols-2 desktop:grid-cols-4 gap-[32px]">
         {card.map((item, index) => (
           <div
             key={index}
@@ -107,9 +107,11 @@ export const Oral = () => {
       </div>
       <PeopleCard card={selectedCard} />
       <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD]">
-        {selectedCardIndex !== null && card[selectedCardIndex] && (
-          <PDFViewer src={card[selectedCardIndex].pdf} />
-        )}
+        {selectedCardIndex !== null &&
+          card[selectedCardIndex] &&
+          card[selectedCardIndex].id && (
+            <PDFViewer src={card[selectedCardIndex].pdf} />
+          )}
       </div>
     </div>
   );
