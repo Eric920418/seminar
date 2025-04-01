@@ -56,7 +56,7 @@ const Card = ({
   }, [card.isOpen]);
 
   return (
-    <div className="bg-gray-200 p-6 rounded-xl">
+    <div className="bg-gray-200 p-6 rounded-xl w-full">
       <div className="flex justify-between mb-2">
         <div className="text-20M">{card.name}</div>
         <Image
@@ -344,11 +344,10 @@ export const Host = () => {
           新增主持人
         </button>
       </div>
-      <div className="flex flex-col gap-[16px] mt-3">
+      <div className="flex flex-col  gap-[16px] mt-3">
         {editorCards.map((card, index) => (
-          <>
+          <div className="flex space-x-6 w-full" key={index}>
             <Card
-              key={index}
               card={card}
               index={index}
               onToggle={handleToggle}
@@ -361,7 +360,7 @@ export const Host = () => {
             >
               刪除
             </button>
-          </>
+          </div>
         ))}
       </div>
       <div className="mt-6">
