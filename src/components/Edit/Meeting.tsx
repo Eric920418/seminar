@@ -432,6 +432,7 @@ export const Meeting = () => {
                   </div>
                   <div className="mt-[15px]">
                     <CustomEditor
+                      placeholder="議程"
                       onContentChange={(content) =>
                         handleCardChange(index, "content", content)
                       }
@@ -476,6 +477,7 @@ export const Meeting = () => {
               </div>
               <div className="flex space-x-1">
                 <CustomEditor
+                  placeholder="徵稿日期"
                   onContentChange={(content) =>
                     handleEditorChange2("editor1", content)
                   }
@@ -821,6 +823,7 @@ export const Meeting = () => {
               <div className="flex space-x-[32px] min-h-[250px]">
                 <div className="w-1/2 h-full">
                   <CustomEditor
+                    placeholder="線上報名表單"
                     onContentChange={(content) =>
                       handleEditorChange4("editor2", content)
                     }
@@ -828,6 +831,7 @@ export const Meeting = () => {
                 </div>
                 <div className="w-1/2 h-full">
                   <CustomEditor
+                    placeholder="報名成功名單"
                     onContentChange={(content) =>
                       handleEditorChange4("editor3", content)
                     }
@@ -886,6 +890,7 @@ export const Meeting = () => {
                 }}
               />
               <CustomEditor
+                placeholder="會議主會場"
                 onContentChange={(content) => setEditorTransportation(content)}
               />
             </div>

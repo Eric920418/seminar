@@ -573,6 +573,7 @@ export const HomePage = () => {
                       className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                     />
                     <CustomEditor
+                      placeholder="最新消息"
                       onContentChange={(content) =>
                         handleCardChange(index, "content", content)
                       }
@@ -623,6 +624,7 @@ export const HomePage = () => {
               </div>
               <div className="flex space-x-1">
                 <CustomEditor
+                  placeholder="徵稿日期"
                   onContentChange={(content) =>
                     handleEditorChange2("editor1", content)
                   }

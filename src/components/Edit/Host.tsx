@@ -286,6 +286,11 @@ export const Host = () => {
     setEditorCards([...editorCards, newCard]);
   };
 
+  const DeleteCard = (index: number) => {
+    const newCards = editorCards.filter((_, idx) => idx !== index);
+    setEditorCards(newCards);
+  };
+
   // 圖片上傳處理
   const handleImageUpload = (data: {
     fileUrl: { fileUrl: string };
@@ -341,14 +346,22 @@ export const Host = () => {
       </div>
       <div className="flex flex-col gap-[16px] mt-3">
         {editorCards.map((card, index) => (
-          <Card
-            key={index}
-            card={card}
-            index={index}
-            onToggle={handleToggle}
-            onCardChange={handleCardChange}
-            handleImageUpload={handleImageUpload}
-          />
+          <>
+            <Card
+              key={index}
+              card={card}
+              index={index}
+              onToggle={handleToggle}
+              onCardChange={handleCardChange}
+              handleImageUpload={handleImageUpload}
+            />
+            <button
+              className="bg-red-500 text-white px-3 py-1 rounded"
+              onClick={() => DeleteCard(index)}
+            >
+              刪除
+            </button>
+          </>
         ))}
       </div>
       <div className="mt-6">

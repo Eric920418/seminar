@@ -46,7 +46,7 @@ export const Footer = () => {
       inSelect: [],
     },
     {
-      title: "工作坊",
+      title: "微型工作坊",
       path: "/work",
       inSelect: [],
     },

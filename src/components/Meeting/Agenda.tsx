@@ -54,7 +54,7 @@ export const Agenda = () => {
         }`}
       >
         {useData && useData.length > 0 ? (
-          <div className="w-screen desktop:w-[976px] h-[1157px] px-3 desktop:px-0">
+          <div className="w-screen desktop:w-[976px] h-auto px-3 desktop:px-0">
             <span
               dangerouslySetInnerHTML={{
                 __html: useData[selectedTab].content,

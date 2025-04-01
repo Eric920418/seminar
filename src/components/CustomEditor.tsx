@@ -59,9 +59,11 @@ import "ckeditor5/ckeditor5.css";
 interface CustomEditorProps {
   onContentChange: (value: string) => void;
   height?: string | number;
+  placeholder?: string;
 }
 
 export default function CustomEditor({
+  placeholder,
   onContentChange,
   height = "200px",
 }: CustomEditorProps) {
@@ -254,7 +256,7 @@ export default function CustomEditor({
           },
         ],
       },
-      placeholder: "在此輸入或貼上您的內容！",
+      placeholder: placeholder || "在此輸入或貼上您的內容！",
       table: {
         contentToolbar: [
           "tableColumn",

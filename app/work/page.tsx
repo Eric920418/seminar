@@ -101,7 +101,7 @@ export default function Page() {
       >
         <div className="text-center">
           <div className="text-third text-16M ">Workshop​​​</div>
-          <div className="text-black text-48M ">工作坊​​</div>
+          <div className="text-black text-48M ">微型工作坊​​</div>
         </div>
       </div>
 

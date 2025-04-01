@@ -563,7 +563,7 @@ export const Papers = () => {
                   <div className="bg-white p-[32px] rounded-[24px] flex-1">
                     <div className="text-secondary text-20M ">投稿方式</div>
                     <div className="mt-[24px] flex space-x-[16px] justify-between">
-                      <div className="text-black text-15R ">
+                      <div className="text-black text-15R overflow-auto">
                         <span
                           dangerouslySetInnerHTML={{
                             __html: editorContents.editor4,
@@ -673,6 +673,7 @@ export const Papers = () => {
               <div className="grid grid-cols-2 w-full my-3 space-x-3">
                 <div className="">
                   <CustomEditor
+                    placeholder="投稿方式"
                     onContentChange={(e) => handleEditorChange("editor4", e)}
                   />
                 </div>
@@ -692,6 +693,7 @@ export const Papers = () => {
               <div className="flex w-full my-3 space-x-3">
                 <div className="flex-1">
                   <CustomEditor
+                    placeholder="投稿形式：論文摘要"
                     onContentChange={(e) => handleEditorChange("editor8", e)}
                   />
                 </div>
@@ -704,10 +706,12 @@ export const Papers = () => {
               />
               <div className="my-3">
                 <CustomEditor
+                  placeholder="入選稿件之注意事項"
                   onContentChange={(e) => handleEditorChange("editor11", e)}
                 />
               </div>
               <CustomEditor
+                placeholder="徵稿對象"
                 onContentChange={(e) => handleEditorChange("editor19", e)}
               />
               <textarea

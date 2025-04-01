@@ -171,7 +171,7 @@ export const Work = () => {
 
   return (
     <div>
-      <div className="text-32M mb-6">工作坊​​​</div>
+      <div className="text-32M mb-6">微型工作坊​​​</div>
       <div className="flex flex-col gap-[16px]">
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">

@@ -48,7 +48,7 @@ export const Header = () => {
       inSelect: [],
     },
     {
-      title: "工作坊",
+      title: "微型工作坊",
       path: "/work",
       inSelect: [],
     },
@@ -191,7 +191,7 @@ export const Header = () => {
   return (
     <>
       {/* 電腦版 Header */}
-      <div className="hidden laptop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
+      <div className="hidden laptop:hidden desktop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
         <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
           <div className="h-[45px] w-[200px] ">
             <Link href="/">
@@ -282,8 +282,8 @@ export const Header = () => {
       </div>
 
       {/* 手機版 Header */}
-      <div className="laptop:hidden fixed top-0 left-0 w-full z-[30] bg-yellow-50 shadow-md">
-        <div className="flex items-center justify-between p-4">
+      <div className="desktop:hidden laptop:block fixed top-0 left-0 w-full z-[30] bg-yellow-50 shadow-md">
+        <div className="flex w-full items-center justify-between p-4">
           <div className="h-[45px] w-[200px]">
             {editorMapImage && (
               <Image
