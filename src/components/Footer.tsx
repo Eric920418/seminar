@@ -59,8 +59,12 @@ export const Footer = () => {
       title: "ICTE論文",
       path: "/papers",
       inSelect: [
-        { title: "論文摘要審查結果公告", path: "/papers", index: 0 },
-        { title: "徵文主題與論文格式", path: "/papers", index: 1 },
+        { title: "徵文主題與論文格式", path: "/papers", index: 0 },
+        {
+          title: "論文摘要審查結果公告",
+          path: "/papers",
+          index: 1,
+        },
         { title: "口頭發表場次", path: "/papers", index: 2 },
         { title: "海報發表場次", path: "/papers", index: 3 },
       ],

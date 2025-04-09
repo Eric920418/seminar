@@ -61,8 +61,12 @@ export const Header = () => {
       title: "ICTE論文",
       path: "/papers",
       inSelect: [
-        { title: "論文摘要審查結果公告", path: "/papers", index: 0 },
-        { title: "徵文主題與論文格式", path: "/papers", index: 1 },
+        { title: "徵文主題與論文格式", path: "/papers", index: 0 },
+        {
+          title: "論文摘要審查結果公告",
+          path: "/papers",
+          index: 1,
+        },
         { title: "口頭發表場次", path: "/papers", index: 2 },
         { title: "海報發表場次", path: "/papers", index: 3 },
       ],
@@ -193,7 +197,7 @@ export const Header = () => {
       {/* 電腦版 Header */}
       <div className="hidden laptop:hidden desktop:flex p-[32px] absolute top-0 w-full justify-between z-[20]">
         <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
-          <div>
+          <div className="max-w-[200px] ">
             <Link href="/">
               {editorMapImage && (
                 <Image
