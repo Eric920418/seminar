@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ModalProvider } from "@/components/ModalContext";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
+import { Noto_Sans_TC } from "next/font/google";
+
+// 設定字體
+const notoSansTC = Noto_Sans_TC({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-noto-sans-tc",
+});
 
 export const metadata: Metadata = {
   title: "師資培育國際學術研討會",
@@ -41,29 +50,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-TW" suppressHydrationWarning>
+    <html lang="zh-TW" suppressHydrationWarning className={notoSansTC.variable}>
       <head>
-        {/* 預加載關鍵字體 */}
-        <link
-          rel="preload"
-          href="/NotoSansTC-Regular.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-
-        {/* DNS 預解析 */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-
-        {/* 預連接 */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-
         {/* 預加載關鍵圖片 */}
         <link rel="preload" as="image" href="/banner/Group.png" />
       </head>

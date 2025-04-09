@@ -95,7 +95,7 @@
   --color-black: #252f38;
   --color-white: #ffffff;
   --color-warning: #ff6231;
-  --font-sans: var(--font-NotoSansTC);
+  --font-sans: var(--font-noto-sans-tc), var(--font-NotoSansTC);
 }
 
 /* 優化文字渲染 */

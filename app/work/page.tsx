@@ -25,13 +25,13 @@ type CardType = {
   date: string;
 };
 
-type EditorType = {
-  dateLabel1: string;
-  dateLabel2: string;
-};
+// type EditorType = {
+//   dateLabel1: string;
+//   dateLabel2: string;
+// };
 
 export default function Page() {
-  const [editor, setEditor] = useState<EditorType | null>(null);
+  // const [editor, setEditor] = useState<EditorType | null>(null);
   const [useData, setUseData] = useState<CardType[]>([]);
   const [event, setEvent] = useState<CardType[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -46,7 +46,7 @@ export default function Page() {
       });
       const { data } = await res.json();
 
-      setEditor(data.workShopPage[0].section1);
+      // setEditor(data.workShopPage[0].section1);
       setUseData(data.workShopPage[0].section2.card);
     }
     fetchData();

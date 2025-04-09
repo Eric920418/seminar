@@ -26,11 +26,7 @@ export default function Page() {
     date: string;
   };
 
-  interface EditorType {
-    dateLabel1: string;
-    dateLabel2: string;
-  }
-  const [editor, setEditor] = useState<EditorType | null>(null);
+  // const [editor, setEditor] = useState<EditorType | null>(null);
   const [useData, setUseData] = useState<CardType[]>([]);
   const [event, setEvent] = useState([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -45,7 +41,7 @@ export default function Page() {
       });
       const { data } = await res.json();
 
-      setEditor(data.forumPage[0].section1);
+      // setEditor(data.forumPage[0].section1);
       setUseData(data.forumPage[0].section2.card);
     }
     fetchData();

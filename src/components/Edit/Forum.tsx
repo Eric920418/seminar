@@ -30,9 +30,9 @@ const query2 = `
 `;
 
 export const Forum = () => {
-  const [isOpen1, setIsOpen1] = useState(false);
-  const [height1, setHeight1] = useState(0);
-  const contentRef1 = useRef<HTMLDivElement>(null);
+  // const [isOpen1, setIsOpen1] = useState(false);
+  // const [height1, setHeight1] = useState(0);
+  // const contentRef1 = useRef<HTMLDivElement>(null);
 
   const [isOpen2, setIsOpen2] = useState(false);
   const [height2, setHeight2] = useState(0);
@@ -46,11 +46,11 @@ export const Forum = () => {
 
   const [isFinish, setIsFinish] = useState(true);
   const [selectEvent, setSelectEvent] = useState([]);
-  useEffect(() => {
-    if (contentRef1.current) {
-      setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
-    }
-  }, [isOpen1]);
+  // useEffect(() => {
+  //   if (contentRef1.current) {
+  //     setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
+  //   }
+  // }, [isOpen1]);
 
   useEffect(() => {
     if (contentRef2.current) {
@@ -107,12 +107,12 @@ export const Forum = () => {
     fetchData();
   }, [fetchData]);
 
-  const handleEditorChange = (id: string, content: string) => {
-    setEditorContents((prev) => ({
-      ...prev,
-      [id]: content,
-    }));
-  };
+  // const handleEditorChange = (id: string, content: string) => {
+  //   setEditorContents((prev) => ({
+  //     ...prev,
+  //     [id]: content,
+  //   }));
+  // };
 
   const handleCardChange2 = (
     index: number,

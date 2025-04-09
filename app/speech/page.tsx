@@ -25,12 +25,12 @@ export default function Page() {
     id: string;
     date: string;
   };
-  interface EditorType {
-    dateLabel1: string;
-    dateLabel2: string;
-  }
+  // interface EditorType {
+  //   dateLabel1: string;
+  //   dateLabel2: string;
+  // }
 
-  const [editor, setEditor] = useState<EditorType | null>(null);
+  // const [editor, setEditor] = useState<EditorType | null>(null);
   const [useData, setUseData] = useState<CardType[]>([]);
   const [event, setEvent] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -45,7 +45,7 @@ export default function Page() {
       });
       const { data } = await res.json();
 
-      setEditor(data.speechPage[0].section1);
+      // setEditor(data.speechPage[0].section1);
       setUseData(data.speechPage[0].section2.card);
     }
     fetchData();
