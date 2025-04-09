@@ -400,7 +400,7 @@ export const Papers = () => {
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>論文摘要審查結果公告</div>
+            <div>徵文主題與論文格式</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -522,7 +522,7 @@ export const Papers = () => {
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>徵文主題與論文格式</div>
+            <div>論文摘要審查結果公告</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
