@@ -637,10 +637,7 @@ export const Meeting = () => {
                   ></div>
                 </div>
                 <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-                  <div className="text-secondary text-20M ">
-                    Excell﻿ence in Teaching Talk（EIT Talk）
-                  </div>
-                  <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
+                  <div className=" text-black text-[15px] leading-[28px] font-[500] ">
                     {editorRule.editor9}
                   </div>
                   <div
@@ -795,10 +792,7 @@ export const Meeting = () => {
                   </div>
                 </div>
                 <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-                  <div className="text-secondary text-36R ">
-                    一般與會者 <br />
-                    報名成功名單
-                  </div>
+                  <div className="text-secondary text-36R ">報名注意事項</div>
                   <div className="mt-[32px] h-[90px]">
                     <span
                       dangerouslySetInnerHTML={{

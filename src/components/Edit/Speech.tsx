@@ -174,7 +174,7 @@ export const Speech = () => {
       <div className="text-32M mb-6">主​題演講​​​</div>
       <div className="flex flex-col gap-[16px]">
         {/* 區塊一 */}
-        <div className="relative bg-gray-200 w-full p-3">
+        {/* <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
             <div>文字區塊</div>
             <Image
@@ -240,7 +240,7 @@ export const Speech = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">

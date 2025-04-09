@@ -76,7 +76,7 @@ export const TimeVision = () => {
             </div>
             <div className="mt-[32px] w-[240px] ">
               <TimeVisionButton
-                text="論文格式與規則"
+                text="論文摘要格式"
                 textColor="text-white"
                 textSize="text-16M"
                 bgColor="bg-third"
@@ -94,7 +94,7 @@ export const TimeVision = () => {
             <div className="mt-[32px] w-[240px] h-[117px]">
               <div className=" text-primary text-20M ">{data.time8}</div>
             </div>
-            <div className="mt-[32px] w-[240px] ">
+            {/* <div className="mt-[32px] w-[240px] ">
               <TimeVisionButton
                 text="報名費用與規則"
                 textColor="text-white"
@@ -104,7 +104,7 @@ export const TimeVision = () => {
                 src="/button/arrow_right_2.svg"
                 url="/meeting/3"
               />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="mt-[32px] flex flex-col desktop:flex-row gap-[32px]">

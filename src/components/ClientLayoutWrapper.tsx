@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useModalContext } from "@/components/ModalContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { MoveToTop } from "@/components/MoveToTop";
 
 const query = `
   query color {
@@ -81,6 +82,7 @@ export default function ClientLayoutWrapper({
       {!isAdminPage && !isModalOpen && <Header />}
       {children}
       {!isAdminPage && !isModalOpen && <Footer />}
+      {!isAdminPage && !isModalOpen && <MoveToTop />}
     </>
   );
 }

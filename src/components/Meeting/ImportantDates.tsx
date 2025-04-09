@@ -73,7 +73,7 @@ export const ImportantDates = () => {
           </div>
           <div className="mt-[32px] w-[240px] ">
             <TimeVisionButton
-              text="論文格式與規則"
+              text="論文摘要格式"
               textColor="text-white"
               textSize="text-16M"
               bgColor="bg-third"

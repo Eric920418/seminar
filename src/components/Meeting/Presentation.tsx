@@ -115,10 +115,7 @@ export const Presentation = () => {
             ></div>
           </div>
           <div className="bg-white p-3 desktop:p-[32px] rounded-[24px] flex-1 min-w-0">
-            <div className="text-secondary text-[15px] desktop:text-20M">
-              Excell﻿ence in Teaching Talk（EIT Talk）
-            </div>
-            <div className="mt-[24px] text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
+            <div className=" text-black text-[10px] desktop:text-[15px] leading-[28px] font-[500] ">
               {editorRule.editor9}
             </div>
             <div

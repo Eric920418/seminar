@@ -51,7 +51,9 @@ export default function Page() {
       >
         <div className="text-center">
           <div className="text-third text-16M ">Project Showcase</div>
-          <div className="text-black text-48M ">​作品展示​</div>
+          <div className="text-black text-48M ">
+            創新教材教具展-預見未來的學習​​
+          </div>
         </div>
       </div>
       <div className="pb-[64px] desktop:pb-[160px] pt-[64px] desktop:pt-[128px] mx-auto w-fit">

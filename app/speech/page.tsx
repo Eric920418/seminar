@@ -104,7 +104,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex flex-col desktop:flex-row h-[496px] ">
+      {/* <div className="flex flex-col desktop:flex-row h-[496px] ">
         <div
           className="flex desktop:justify-end items-center flex-1 desktop:pe-[128px] px-3 desktop:px-0"
           style={{
@@ -127,7 +127,7 @@ export default function Page() {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
 
       <div className=" pt-[64px] pb-[64px] desktop:pt-[128px] desktop:pb-[160px] mx-auto  px-3 desktop:px-0">
         <Tab titles={titles} dates={dates} onChange={handleTabChange} />

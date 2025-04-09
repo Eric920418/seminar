@@ -212,7 +212,7 @@ export default function Page() {
                   }`}
                 >
                   <div className="text-secondary text-36M">
-                    ICTE ​活動現場直播
+                    開幕式+主題演講直播
                   </div>
                   <div className="mt-[8px] text-[#00878580] text-20M text-center">
                     Live Seminar Broadcast
@@ -226,19 +226,19 @@ export default function Page() {
                   <VideoPlayer src={data} />
                 </div>
                 <div className="text-16M text-primary text-center mt-[128px]">
-                  EIT TALK​
+                  ＥＬＴ
                 </div>
                 {!isOpen && (
                   <div className="relative w-fit mx-auto">
                     <div className="text-black text-48M relative z-10">
-                      卓越的學習與教學短講​​
+                      研討會主題演講影片總列表
                     </div>
                     <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                   </div>
                 )}
                 <div className="mt-[128px]">
                   <Tab
-                    titles={["主題演講​", "圓桌論壇"]}
+                    titles={["主題演講​", "領域教材教法教學實踐計畫"]}
                     color="text-[#DD6B00] border-b-6 border-[#DD6B00]"
                     onChange={handleTabChange2}
                   />
@@ -426,19 +426,19 @@ export default function Page() {
                   <VideoPlayer src={data2} />
                 </div>
                 <div className="text-16M text-primary text-center mt-[128px]">
-                  EIT TALK​
+                  ＥＬＴ
                 </div>
                 {!isOpen && (
                   <div className="relative w-fit mx-auto">
                     <div className="text-black text-48M relative z-10">
-                      卓越的學習與教學短講​​
+                      研討會主題演講影片總列表
                     </div>
                     <div className="transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                   </div>
                 )}
                 <div className="mt-[128px]">
                   <Tab
-                    titles={["主題演講​", "圓桌論壇"]}
+                    titles={["主題演講​", "領域教材教法教學實踐計畫"]}
                     color="text-[#DD6B00] border-b-6 border-[#DD6B00]"
                     onChange={handleTabChange2}
                   />

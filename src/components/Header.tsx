@@ -53,7 +53,7 @@ export const Header = () => {
       inSelect: [],
     },
     {
-      title: "教材教具展​​​",
+      title: "創新教材教具展​",
       path: "/exhibition",
       inSelect: [{ title: "作品展示", path: "/exhibition", index: 0 }],
     },
@@ -191,9 +191,9 @@ export const Header = () => {
   return (
     <>
       {/* 電腦版 Header */}
-      <div className="hidden laptop:hidden desktop:flex p-[32px] fixed top-0 w-screen justify-between z-[20]">
-        <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[200px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
-          <div className="h-[45px] w-[200px] ">
+      <div className="hidden laptop:hidden desktop:flex p-[32px] absolute top-0 w-full justify-between z-[20]">
+        <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
+          <div>
             <Link href="/">
               {editorMapImage && (
                 <Image
@@ -203,7 +203,7 @@ export const Header = () => {
                   height={1080}
                   style={{
                     objectFit: "contain",
-                    width: "100%",
+                    width: "200px",
                     height: "100%",
                   }}
                   className="w-full h-full object-cover"
@@ -213,7 +213,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="bg-[#FFFFFF80] rounded-[40px] flex items-center space-x-[64px] px-[64px]">
+        <div className="bg-[#FFFFFF80] rounded-[40px] flex items-center space-x-[64px] px-[64px] ">
           {nav.map((navItem, navIndex) => (
             <div
               key={navIndex}
@@ -223,7 +223,7 @@ export const Header = () => {
             >
               <div className="relative">
                 <div
-                  className="text-16M text-black text-nowrap cursor-pointer"
+                  className="text-16M text-black text-nowrap cursor-pointer "
                   onClick={() => handleNavigation(navItem.path)}
                   onMouseEnter={() => toggleMenu(navIndex)}
                 >
@@ -247,7 +247,7 @@ export const Header = () => {
                         }}
                         onClick={() => handleNavigation2(item)}
                       >
-                        <div className="text-16M text-black text-nowrap text-center cursor-pointer">
+                        <div className="text-16M text-[#252F3866] text-nowrap text-center cursor-pointer hover:text-black">
                           {item.title}
                         </div>
                         {item.smSelect && item.smSelect.length > 0 && (

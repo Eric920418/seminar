@@ -51,12 +51,9 @@ export const Footer = () => {
       inSelect: [],
     },
     {
-      title: "教學教具展​​​",
+      title: "創新教材教具展​",
       path: "/exhibition",
-      inSelect: [
-        { title: "作品展示", path: "/exhibition", index: 0 },
-        { title: "卓越的學習與教學​短講​流程", path: "/exhibition", index: 1 },
-      ],
+      inSelect: [{ title: "作品展示", path: "/exhibition", index: 0 }],
     },
     {
       title: "ICTE論文",
