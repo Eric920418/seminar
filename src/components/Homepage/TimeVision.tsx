@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { TimeVisionButton } from "@/components/Button/TimeVisionButton";
-import Image from "next/image";
 
 const query = `
   query homePage {
@@ -13,7 +12,6 @@ const query = `
 
 export const TimeVision = () => {
   const [data, setData] = useState(null);
-  const [imgUrl, setImgUrl] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,8 +22,6 @@ export const TimeVision = () => {
       });
       const { data } = await res.json();
       setData(data.homePage[0].section3.times);
-
-      setImgUrl(data.homePage[0].section3.times.image);
     }
     fetchData();
   }, []);
@@ -82,7 +78,7 @@ export const TimeVision = () => {
                 bgColor="bg-third"
                 padding="p-[16px_24px_16px_24px]"
                 src="/button/arrow_right_2.svg"
-                url="/meeting/2"
+                url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
               />
             </div>
           </div>
@@ -132,7 +128,7 @@ export const TimeVision = () => {
               />
             </div>
           </div>
-          <div className="flex-1  h-[446px]  rounded-[40px]">
+          {/* <div className="flex-1  h-[446px]  rounded-[40px]">
             <Image
               src={imgUrl}
               alt="Example"
@@ -146,7 +142,7 @@ export const TimeVision = () => {
                 height: "100%",
               }}
             ></Image>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

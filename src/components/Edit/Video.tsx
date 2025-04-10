@@ -32,6 +32,7 @@ export const Video = () => {
   const [editorVideoURL2, setEditorVideoURL2] = useState("");
   const [editorCards, setEditorCards] = useState([]);
   const [editorCards2, setEditorCards2] = useState([]);
+  const [editorCards3, setEditorCards3] = useState([]);
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -43,7 +44,14 @@ export const Video = () => {
     if (contentRef2.current) {
       setHeight2(isOpen2 ? contentRef2.current.scrollHeight : 0);
     }
-  }, [isOpen2, editorVideoURL2, editorCards2, editorVideoURL, editorCards]);
+  }, [
+    isOpen2,
+    editorVideoURL2,
+    editorCards2,
+    editorVideoURL,
+    editorCards,
+    editorCards3,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +67,7 @@ export const Video = () => {
       if (data.videoPage[0].section1) {
         setEditorCards(data.videoPage[0].section1.tab[0].card);
         setEditorCards2(data.videoPage[0].section1.tab[1].card);
+        setEditorCards3(data.videoPage[0].section1.tab[2].card);
         setEditorVideoURL(data.videoPage[0].section1.tab[0].video);
         setEditorVideoURL2(data.videoPage[0].section1.tab[1].video);
       }
@@ -120,6 +129,28 @@ export const Video = () => {
     setEditorCards2(newCards);
   };
 
+  const addCard3 = () => {
+    setEditorCards3([...editorCards3, { title: "", content: "", videos: "" }]);
+  };
+
+  const DeleteCard3 = (index: number) => {
+    const newCards = editorCards3.filter((_, idx) => idx !== index);
+    setEditorCards3(newCards);
+  };
+
+  const handleCardChange3 = (
+    index: number,
+    field: string,
+    value: string | string[]
+  ) => {
+    const newCards = [...editorCards3];
+    newCards[index] = {
+      ...newCards[index],
+      [field]: value,
+    };
+    setEditorCards3(newCards);
+  };
+
   const handleUpdate = async () => {
     const input = {
       section1: {
@@ -131,6 +162,9 @@ export const Video = () => {
           {
             video: editorVideoURL2,
             card: editorCards2,
+          },
+          {
+            card: editorCards3,
           },
         ],
       },
@@ -275,7 +309,7 @@ export const Video = () => {
               ))}
             </div>
             <div className="my-3 flex space-x-6">
-              <div>圓桌論壇​</div>
+              <div>領域教材教法教 學實踐計畫​</div>
               <button
                 className="bg-blue-500 text-white px-3 py-1 rounded"
                 onClick={addCard2}
@@ -317,6 +351,55 @@ export const Video = () => {
                     <button
                       className="bg-red-500 text-white px-3 py-1 rounded"
                       onClick={() => DeleteCard2(index)}
+                    >
+                      刪除
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="my-3 flex space-x-6">
+              <div>領域教材教法獲獎論文發表​</div>
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded"
+                onClick={addCard3}
+              >
+                新增卡片
+              </button>
+            </div>
+            <div>
+              {editorCards3.map((card, index) => (
+                <div key={index} className="my-3">
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      placeholder="標題"
+                      value={card.title}
+                      onChange={(e) =>
+                        handleCardChange3(index, "title", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <textarea
+                      placeholder="內文"
+                      value={card.content}
+                      onChange={(e) =>
+                        handleCardChange3(index, "content", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <input
+                      type="text"
+                      placeholder="ytube影片網址 ?v={這段}"
+                      value={card.videos}
+                      onChange={(e) =>
+                        handleCardChange3(index, "videos", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <button
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                      onClick={() => DeleteCard3(index)}
                     >
                       刪除
                     </button>

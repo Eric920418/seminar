@@ -8,6 +8,9 @@ import { Online } from "@/components/Meeting/Online";
 import { Transportation } from "@/components/Meeting/Transportation";
 import { Accommodation } from "@/components/Meeting/Accommodation";
 import { Map } from "@/components/Meeting/Map";
+import { Origin } from "@/components/Meeting/Origin";
+import { Purpose } from "@/components/Meeting/Purpose";
+import { Activity } from "@/components/Meeting/Activity";
 
 import { useParams } from "next/navigation";
 
@@ -32,6 +35,9 @@ function FadeIn({ children }: { children: React.ReactNode }) {
 
 export default function Page() {
   const nav = [
+    { title: "緣起", component: <Origin /> },
+    { title: "目的", component: <Purpose /> },
+    { title: "活動類型", component: <Activity /> },
     { title: "會議議程", component: <Agenda /> },
     { title: "重要時程", component: <ImportantDates /> },
     { title: "發表規則", component: <Presentation /> },
@@ -75,8 +81,10 @@ export default function Page() {
             {nav.map((item, index) => (
               <div
                 key={index}
-                className={`text-20R  ${
-                  focus[index] ? "text-secondary" : "text-[#252F3866]"
+                className={`text-20R cursor-pointer transition-colors duration-200 ${
+                  focus[index]
+                    ? "text-[#008785]"
+                    : "text-[#252F3866] hover:text-[#008785]"
                 }`}
                 onClick={() => toggle(index)}
               >

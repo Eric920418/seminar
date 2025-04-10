@@ -71,13 +71,20 @@ export const Poster = () => {
       }`}
     >
       {selectedIndex !== null && (
-        <div className=" text-16M text-[#252F3866]">
-          <span onClick={goBack}>海報發表場次&nbsp;&nbsp;&gt;</span>
-          <span className="text-secondary">
-            &nbsp;&nbsp;
-            {(selectedIndex + 1).toString().padStart(2, "0")}.{" "}
-            {card[selectedIndex].title}
-          </span>
+        <div className=" text-16M text-[#252F3866] flex space-x-6">
+          <div className="">
+            <button onClick={goBack} className="">
+              上一頁
+            </button>
+          </div>
+          <div>
+            <span onClick={goBack}>海報發表場次&nbsp;&nbsp;&gt;</span>
+            <span className="text-secondary">
+              &nbsp;&nbsp;
+              {(selectedIndex + 1).toString().padStart(2, "0")}.{" "}
+              {card[selectedIndex].title}
+            </span>
+          </div>
         </div>
       )}
 

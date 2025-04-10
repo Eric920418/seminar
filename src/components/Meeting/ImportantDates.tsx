@@ -79,7 +79,7 @@ export const ImportantDates = () => {
               bgColor="bg-third"
               padding="p-[16px_24px_16px_24px]"
               src="/button/arrow_right_2.svg"
-              url="/meeting/2"
+              url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
             />
           </div>
         </div>

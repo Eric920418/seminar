@@ -74,7 +74,7 @@ export const HomePage = () => {
     editor9: "",
   });
   const [editorCards, setEditorCards] = useState([]);
-  const [uploadImage, setUploadImage] = useState();
+  // const [uploadImage, setUploadImage] = useState();
   const [uploadImage2, setUploadImage2] = useState();
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
@@ -130,7 +130,7 @@ export const HomePage = () => {
           editor10: data.homePage[0].section3?.times?.dinner || "",
         });
 
-        setUploadImage(data.homePage[0].section3.times.image || null);
+        // setUploadImage(data.homePage[0].section3.times.image || null);
         setUploadImage2(data.homePage[0].section4?.images || null);
         serEditorURL(data.homePage[0].section4?.manualDownloadUrl || null);
 
@@ -263,9 +263,9 @@ export const HomePage = () => {
     }));
   };
 
-  const handleImageUpload = (data) => {
-    setUploadImage(data.fileUrl.fileUrl);
-  };
+  // const handleImageUpload = (data) => {
+  //   setUploadImage(data.fileUrl.fileUrl);
+  // };
   const handleImageUpload2 = (data) => {
     setUploadImage2(data.fileUrl.fileUrl);
   };
@@ -300,7 +300,7 @@ export const HomePage = () => {
           time8: editorTimes.editor8,
           meeting: editorTimes.editor9,
           dinner: editorTimes.editor10,
-          image: uploadImage,
+          // image: uploadImage,
         },
       },
       section4: {
@@ -702,13 +702,6 @@ export const HomePage = () => {
                     />
                   </div>
                 </div>
-              </div>
-              <div>
-                <ImageUploader
-                  onImageUpload={(filename) =>
-                    handleImageUpload({ fileUrl: filename })
-                  }
-                />
               </div>
             </div>
           </div>

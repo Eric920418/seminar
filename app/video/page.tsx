@@ -79,6 +79,7 @@ export default function Page() {
 
   const [card, setCard] = useState<CardItem[]>([]);
   const [card2, setCard2] = useState<CardItem[]>([]);
+  const [card3, setCard3] = useState<CardItem[]>([]); // 新增第三個Tab的資料狀態
   const [data, setData] = useState("");
   const [data2, setData2] = useState("");
   const [displayCount, setDisplayCount] = useState(3); // 新增：控制顯示數量
@@ -94,6 +95,7 @@ export default function Page() {
 
       setCard(data.videoPage[0].section1.tab[0].card);
       setCard2(data.videoPage[0].section1.tab[1].card);
+      setCard3(data.videoPage[0].section1.tab[2].card); // 新增第三個Tab的資料獲取
       setData(data.videoPage[0].section1.tab[0].video);
       setData2(data.videoPage[0].section1.tab[1].video);
     }
@@ -238,7 +240,11 @@ export default function Page() {
                 )}
                 <div className="mt-[128px]">
                   <Tab
-                    titles={["主題演講​", "領域教材教法教學實踐計畫"]}
+                    titles={[
+                      "主題演講​",
+                      "領域教材教法教學實踐計畫",
+                      "領域教材教法獲獎論文發表",
+                    ]}
                     color="text-[#DD6B00] border-b-6 border-[#DD6B00]"
                     onChange={handleTabChange2}
                   />
@@ -321,9 +327,9 @@ export default function Page() {
                         </div>
                       )}
                     </>
-                  ) : (
+                  ) : selectedTab2 === 1 ? (
                     <>
-                      {/* 圓桌論壇 */}
+                      {/* 領域教材教法教學實踐計畫 */}
                       <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
                         {card2.slice(0, displayCount).map((item, index) => (
                           <div key={index}>
@@ -387,6 +393,85 @@ export default function Page() {
                         </div>
                       </Modal>
                       {displayCount < card2.length && (
+                        <div className="mt-[64px] mx-auto w-fit">
+                          <Button
+                            text="查看更多"
+                            textColor="text-white"
+                            textSize="text-20M"
+                            bgColor="bg-third"
+                            padding="p-[24px_32px_24px_32px]"
+                            src="/icons/24icon/arrow_down_2.svg"
+                            onClick={handleShowMore}
+                          />
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {/* 領域教材教法獲獎論文發表 */}
+                      <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
+                        {card3.slice(0, displayCount).map((item, index) => (
+                          <div key={index}>
+                            <div
+                              className="bg-black rounded-[40px] h-[213px] cursor-pointer"
+                              onClick={() =>
+                                openModal({
+                                  src: item.videos,
+                                  title: item.title,
+                                  content: item.content,
+                                })
+                              }
+                            >
+                              <VideoPlayer src={item.videos} small />
+                            </div>
+                            <div className="p-[8px]">
+                              <div className="text-black text-16M">
+                                {item.title}
+                              </div>
+                              <div
+                                className="mt-[8px] text-[#252F3880] text-[12px]"
+                                dangerouslySetInnerHTML={{
+                                  __html: item.content.replace(/\n/g, "<br>"),
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <Modal
+                        isOpen={isOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="Video Player"
+                        style={modalStyles}
+                      >
+                        <div className="w-fit ms-auto pe-[24px]">
+                          <button className="text-[20px]" onClick={closeModal}>
+                            ×
+                          </button>
+                        </div>
+                        <div className="desktop:mt-[16px]">
+                          <div className="max-h-[648px] max-w-[1152px]">
+                            {currentVideo && (
+                              <VideoPlayer src={currentVideo.src} />
+                            )}
+                          </div>
+                          <div className="p-[24px] mt-[28px]">
+                            <div className="text-black text-20M">
+                              {currentVideo.title}
+                            </div>
+                            <div
+                              className="mt-[8px] text-[#252F3880] text-[12px]"
+                              dangerouslySetInnerHTML={{
+                                __html: currentVideo.content.replace(
+                                  /\n/g,
+                                  "<br>"
+                                ),
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      </Modal>
+                      {displayCount < card3.length && (
                         <div className="mt-[64px] mx-auto w-fit">
                           <Button
                             text="查看更多"
@@ -438,7 +523,11 @@ export default function Page() {
                 )}
                 <div className="mt-[128px]">
                   <Tab
-                    titles={["主題演講​", "領域教材教法教學實踐計畫"]}
+                    titles={[
+                      "主題演講​",
+                      "領域教材教法教學實踐計畫",
+                      "領域教材教法獲獎論文發表",
+                    ]}
                     color="text-[#DD6B00] border-b-6 border-[#DD6B00]"
                     onChange={handleTabChange2}
                   />
@@ -521,9 +610,9 @@ export default function Page() {
                         </div>
                       )}
                     </>
-                  ) : (
+                  ) : selectedTab2 === 1 ? (
                     <>
-                      {/* 圓桌論壇 */}
+                      {/* 領域教材教法教學實踐計畫 */}
                       <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
                         {card2.slice(0, displayCount).map((item, index) => (
                           <div key={index}>
@@ -570,7 +659,7 @@ export default function Page() {
                               <VideoPlayer src={currentVideo.src} />
                             )}
                           </div>
-                          <div className="p-[24px] mt-[28px] ">
+                          <div className="p-[24px] mt-[28px]">
                             <div className="text-black text-20M">
                               {currentVideo.title}
                             </div>
@@ -587,6 +676,85 @@ export default function Page() {
                         </div>
                       </Modal>
                       {displayCount < card2.length && (
+                        <div className="mt-[64px] mx-auto w-fit">
+                          <Button
+                            text="查看更多"
+                            textColor="text-white"
+                            textSize="text-20M"
+                            bgColor="bg-third"
+                            padding="p-[24px_32px_24px_32px]"
+                            src="/icons/24icon/arrow_down_2.svg"
+                            onClick={handleShowMore}
+                          />
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {/* 領域教材教法獲獎論文發表 */}
+                      <div className="mt-[64px] grid desktop:grid-cols-3 gap-[32px]">
+                        {card3.slice(0, displayCount).map((item, index) => (
+                          <div key={index}>
+                            <div
+                              className="bg-black rounded-[40px] h-[213px] cursor-pointer"
+                              onClick={() =>
+                                openModal({
+                                  src: item.videos,
+                                  title: item.title,
+                                  content: item.content,
+                                })
+                              }
+                            >
+                              <VideoPlayer src={item.videos} small />
+                            </div>
+                            <div className="p-[8px]">
+                              <div className="text-black text-16M">
+                                {item.title}
+                              </div>
+                              <div
+                                className="mt-[8px] text-[#252F3880] text-[12px]"
+                                dangerouslySetInnerHTML={{
+                                  __html: item.content.replace(/\n/g, "<br>"),
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <Modal
+                        isOpen={isOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="Video Player"
+                        style={modalStyles}
+                      >
+                        <div className="w-fit ms-auto pe-[24px]">
+                          <button className="text-[20px]" onClick={closeModal}>
+                            ×
+                          </button>
+                        </div>
+                        <div className="desktop:mt-[16px]">
+                          <div className="max-h-[648px] max-w-[1152px]">
+                            {currentVideo && (
+                              <VideoPlayer src={currentVideo.src} />
+                            )}
+                          </div>
+                          <div className="p-[24px] mt-[28px]">
+                            <div className="text-black text-20M">
+                              {currentVideo.title}
+                            </div>
+                            <div
+                              className="mt-[8px] text-[#252F3880] text-[12px]"
+                              dangerouslySetInnerHTML={{
+                                __html: currentVideo.content.replace(
+                                  /\n/g,
+                                  "<br>"
+                                ),
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      </Modal>
+                      {displayCount < card3.length && (
                         <div className="mt-[64px] mx-auto w-fit">
                           <Button
                             text="查看更多"

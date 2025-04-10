@@ -69,8 +69,10 @@ export default function Page() {
             {nav.map((item, index) => (
               <div
                 key={index}
-                className={`text-20R font-NotoSansTC ${
-                  focus[index] ? "text-secondary" : "text-[#252F3866]"
+                className={`text-20R font-NotoSansTC cursor-pointer transition-colors duration-200 ${
+                  focus[index]
+                    ? "text-[#008785]"
+                    : "text-[#252F3866] hover:text-[#008785]"
                 }`}
                 onClick={() => toggle(index)}
               >

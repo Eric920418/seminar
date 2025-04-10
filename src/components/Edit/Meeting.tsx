@@ -66,6 +66,18 @@ export const Meeting = () => {
   const [height7, setHeight7] = useState(0);
   const contentRef7 = useRef<HTMLDivElement>(null);
 
+  const [isOpen8, setIsOpen8] = useState(false);
+  const [height8, setHeight8] = useState(0);
+  const contentRef8 = useRef<HTMLDivElement>(null);
+
+  const [isOpen9, setIsOpen9] = useState(false);
+  const [height9, setHeight9] = useState(0);
+  const contentRef9 = useRef<HTMLDivElement>(null);
+
+  const [isOpen10, setIsOpen10] = useState(false);
+  const [height10, setHeight10] = useState(0);
+  const contentRef10 = useRef<HTMLDivElement>(null);
+
   const [editorCards, setEditorCards] = useState([]);
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
@@ -86,8 +98,6 @@ export const Meeting = () => {
     editor6: "",
     editor7: "",
     editor8: "",
-    editor9: "",
-    editor10: "",
   });
 
   const [editorOnline, setEditorOnline] = useState({
@@ -104,6 +114,12 @@ export const Meeting = () => {
 
   const [editorMapImage, setEditorMapImage] = useState("");
 
+  const [editorOrigin, setEditorOrigin] = useState("");
+
+  const [editorPurpose, setEditorPurpose] = useState("");
+
+  const [editorActivity, setEditorActivity] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/graphql", {
@@ -112,7 +128,6 @@ export const Meeting = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-
       setEditorCards(data.meetingPage[0].section1.list);
 
       setEditorTimes({
@@ -134,8 +149,6 @@ export const Meeting = () => {
         editor6: data.meetingPage[0].section3?.time3 || "",
         editor7: data.meetingPage[0].section3?.content4 || "",
         editor8: data.meetingPage[0].section3?.time4 || "",
-        editor9: data.meetingPage[0].section3?.content5 || "",
-        editor10: data.meetingPage[0].section3?.time5 || "",
       });
 
       setEditorOnline({
@@ -151,6 +164,9 @@ export const Meeting = () => {
       setAccommodations(data.meetingPage[0].section6);
 
       setEditorMapImage(data.meetingPage[0].section7?.MapUrl);
+      setEditorOrigin(data.meetingPage[0].section7?.content);
+      setEditorPurpose(data.meetingPage[0].section7?.content2);
+      setEditorActivity(data.meetingPage[0].section7?.content3);
     };
 
     fetchData();
@@ -191,8 +207,6 @@ export const Meeting = () => {
     editorRule.editor6,
     editorRule.editor7,
     editorRule.editor8,
-    editorRule.editor9,
-    editorRule.editor10,
   ]);
 
   useEffect(() => {
@@ -225,6 +239,24 @@ export const Meeting = () => {
       setHeight7(isOpen7 ? contentRef7.current.scrollHeight : 0);
     }
   }, [isOpen7, editorMapImage]);
+
+  useEffect(() => {
+    if (contentRef8.current) {
+      setHeight8(isOpen8 ? contentRef8.current.scrollHeight : 0);
+    }
+  }, [isOpen8, editorOrigin]);
+
+  useEffect(() => {
+    if (contentRef9.current) {
+      setHeight9(isOpen9 ? contentRef9.current.scrollHeight : 0);
+    }
+  }, [isOpen9, editorPurpose]);
+
+  useEffect(() => {
+    if (contentRef10.current) {
+      setHeight10(isOpen10 ? contentRef10.current.scrollHeight : 0);
+    }
+  }, [isOpen10, editorActivity]);
 
   const handleCardChange = (index: number, field: string, value: string) => {
     const newCards = [...editorCards];
@@ -303,6 +335,18 @@ export const Meeting = () => {
     setEditorMapImage(data.fileUrl.fileUrl);
   };
 
+  const handleEditorOrigin = (content: string) => {
+    setEditorOrigin(content);
+  };
+
+  const handleEditorPurpose = (content: string) => {
+    setEditorPurpose(content);
+  };
+
+  const handleEditorActivity = (content: string) => {
+    setEditorActivity(content);
+  };
+
   const handleUpdate = async () => {
     const input = {
       section1: {
@@ -344,6 +388,9 @@ export const Meeting = () => {
       section6: accommodations,
       section7: {
         MapUrl: editorMapImage,
+        content: editorOrigin,
+        content2: editorPurpose,
+        content3: editorActivity,
       },
     };
 
@@ -371,10 +418,115 @@ export const Meeting = () => {
     <div>
       <div className="text-32M mb-6">ICTE會議資訊</div>
       <div className="flex flex-col gap-[16px]">
+        {/* 區塊八 */}
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between items-center">
+            <div>緣起</div>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icons/24icon/arrow_right.svg"
+                className={`cursor-pointer transition-transform duration-300 ${
+                  isOpen8 ? "rotate-90" : ""
+                }`}
+                width={24}
+                height={24}
+                alt="arrow"
+                onClick={() => setIsOpen8(!isOpen8)}
+              />
+            </div>
+          </div>
+          <div
+            ref={contentRef8}
+            className=" overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height8}px` }}
+          >
+            <div className="w-full">
+              <div className="text-black text-20M">
+                <span dangerouslySetInnerHTML={{ __html: editorOrigin }} />
+              </div>
+            </div>
+            <div className="w-full">
+              <CustomEditor
+                placeholder="緣起"
+                onContentChange={(content) => handleEditorOrigin(content)}
+              />
+            </div>
+          </div>
+        </div>
+        {/* 區塊九 */}
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between items-center">
+            <div>目的</div>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icons/24icon/arrow_right.svg"
+                className={`cursor-pointer transition-transform duration-300 ${
+                  isOpen9 ? "rotate-90" : ""
+                }`}
+                width={24}
+                height={24}
+                alt="arrow"
+                onClick={() => setIsOpen9(!isOpen9)}
+              />
+            </div>
+          </div>
+          <div
+            ref={contentRef9}
+            className=" overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height9}px` }}
+          >
+            <div className="w-full">
+              <div className="text-black text-20M">
+                <span dangerouslySetInnerHTML={{ __html: editorPurpose }} />
+              </div>
+            </div>
+            <div className="w-full">
+              <CustomEditor
+                placeholder="目的"
+                onContentChange={(content) => handleEditorPurpose(content)}
+              />
+            </div>
+          </div>
+        </div>
+        {/* 區塊十 */}
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between items-center">
+            <div>活動類型</div>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icons/24icon/arrow_right.svg"
+                className={`cursor-pointer transition-transform duration-300 ${
+                  isOpen10 ? "rotate-90" : ""
+                }`}
+                width={24}
+                height={24}
+                alt="arrow"
+                onClick={() => setIsOpen10(!isOpen10)}
+              />
+            </div>
+          </div>
+          <div
+            ref={contentRef10}
+            className=" overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height10}px` }}
+          >
+            <div className="w-full">
+              <div className="text-black text-20M">
+                <span dangerouslySetInnerHTML={{ __html: editorActivity }} />
+              </div>
+            </div>
+            <div className="w-full">
+              <CustomEditor
+                placeholder="活動類型"
+                onContentChange={(content) => handleEditorActivity(content)}
+              />
+            </div>
+          </div>
+        </div>
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊一 會議議程</div>
+            <div>會議議程</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -446,7 +598,7 @@ export const Meeting = () => {
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊二 重要時程</div>
+            <div>重要時程</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -561,7 +713,7 @@ export const Meeting = () => {
         {/* 區塊三*/}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊三 發表規則</div>
+            <div>發表規則</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -636,17 +788,6 @@ export const Meeting = () => {
                     }}
                   ></div>
                 </div>
-                <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-                  <div className=" text-black text-[15px] leading-[28px] font-[500] ">
-                    {editorRule.editor9}
-                  </div>
-                  <div
-                    className=" mt-[16px] text-black text-[15px] leading-[28px] font-[400] "
-                    dangerouslySetInnerHTML={{
-                      __html: editorRule.editor10.replace(/\n/g, "<br>"),
-                    }}
-                  ></div>
-                </div>
               </div>
             </div>
             <div className="flex flex-col gap-3 mt-8">
@@ -714,15 +855,6 @@ export const Meeting = () => {
                   }
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                 />
-                <input
-                  type="text"
-                  placeholder="各場次"
-                  value={editorRule.editor9}
-                  onChange={(e) =>
-                    handleEditorChange3("editor9", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
               </div>
               <div className="flex space-x-[32px] ">
                 <textarea
@@ -734,15 +866,6 @@ export const Meeting = () => {
                   }
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
                 />
-                <textarea
-                  type="text"
-                  placeholder=""
-                  value={editorRule.editor10}
-                  onChange={(e) =>
-                    handleEditorChange3("editor10", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
-                />
               </div>
             </div>
           </div>
@@ -750,7 +873,7 @@ export const Meeting = () => {
         {/* 區塊四 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊四 線上報名與規則</div>
+            <div>線上報名與規則</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -1078,7 +1201,6 @@ export const Meeting = () => {
             </div>
           </div>
         </div>
-
         {/* 區塊七 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
