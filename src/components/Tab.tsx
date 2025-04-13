@@ -27,8 +27,8 @@ export const Tab = ({
   };
 
   return (
-    <div className="flex justify-center overflow-x-auto">
-      <div className="flex border-b border-[#252F380D]">
+    <div className="flex justify-center overflow-x-auto touch-pan-x [-webkit-overflow-scrolling:touch] w-full">
+      <div className="flex border-b border-[#252F380D] whitespace-nowrap min-w-full">
         {titles.map((title, index) => (
           <button
             key={index}
