@@ -27,7 +27,7 @@ export const Tab = ({
   };
 
   return (
-    <div className=" w-full mx-auto overflow-x-auto">
+    <div className=" w-fit mx-auto overflow-x-auto">
       <div className="flex border-b border-[#252F380D]">
         {titles.map((title, index) => (
           <button
