@@ -64,7 +64,7 @@ export const Online = () => {
         <div className="bg-white p-[32px] rounded-[24px] flex-1 desktop:min-w-0">
           <div className="text-secondary text-36R ">報名注意事項</div>
           <div
-            className="mt-[32px] h-[90px]"
+            className="mt-[32px] max-w-[408px] h-[142px]"
             dangerouslySetInnerHTML={{ __html: editorOnline.editor3 }}
           ></div>
           <div className=" mt-[32px] text-[#252F3880] text-16R ">

@@ -3,7 +3,10 @@ type VideoPlayerProps = {
   small?: boolean; // 改成可選屬性
 };
 export const VideoPlayer = ({ src, small }: VideoPlayerProps) => {
-  if (!src) return null;
+  if (!src)
+    return (
+      <div className="flex justify-center items-center h-full">敬請期待</div>
+    );
   return (
     <div>
       {small ? (

@@ -1046,7 +1046,11 @@ export const Meeting = () => {
                         alt={`image${index}`}
                         width={304}
                         height={200}
-                        style={{ objectFit: "cover", width: "100%" }}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "200px",
+                        }}
                         className="rounded-t-[24px]"
                       />
                     </div>

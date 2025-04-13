@@ -40,7 +40,7 @@ export const Accommodation = () => {
               <Image
                 className="rounded-t-[24px]"
                 src={item.image}
-                style={{ objectFit: "cover", width: "100%" }}
+                style={{ objectFit: "cover", width: "100%", height: "200px" }}
                 width={1920}
                 height={1080}
                 alt={item.title}

@@ -111,7 +111,7 @@ export const MainVision = () => {
           {data.homePage[0].section1.location}
         </div>
         <div className="mt-[72px]">
-          <MainVisionButton url="/meeting" />
+          <MainVisionButton url="/meeting/3" />
         </div>
       </div>
     </div>

@@ -766,9 +766,10 @@ export const HomePage = () => {
           </div>
           <div
             ref={contentRef5}
-            className="grid grid-cols-4 overflow-hidden transition-all duration-500 ease-in-out"
+            className=" overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height5}px` }}
           >
+            <div>{editorVideoURL.video1}</div>
             <div className="my-3">
               <input
                 type="text"
