@@ -314,7 +314,7 @@ export const Header = () => {
           <div
             className="border-t border-gray-200 "
             style={{
-              height: "calc(100vh - 100px)",
+              height: "calc(100vh - 200px)",
               overflowY: "auto",
             }}
           >
