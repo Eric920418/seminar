@@ -196,7 +196,7 @@ export default function Page() {
               </div>
               <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
             </div>
-            <div className="mt-[64px] desktop:mt-[128px]">
+            <div className="mt-[32px] desktop:mt-[128px]">
               <Tab
                 titles={["ICTE直播", "ICTE宣傳短片"]}
                 color="text-[#DD6B00] border-b-6 border-[#DD6B00]"
@@ -238,7 +238,7 @@ export default function Page() {
                     <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                   </div>
                 )}
-                <div className="mt-[128px]">
+                <div className="mt-[32px] desktop:mt-[128px]">
                   <Tab
                     titles={[
                       "研討會主題演講​",
@@ -521,7 +521,7 @@ export default function Page() {
                     <div className="transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                   </div>
                 )}
-                <div className="mt-[128px]">
+                <div className="mt-[32px] desktop:mt-[128px]">
                   <Tab
                     titles={[
                       "研討會主題演講​",
