@@ -191,7 +191,7 @@ export default function Page() {
               International Conference on Teacher Education
             </div>
             <div className="relative w-fit  mx-auto">
-              <div className="text-black text-20M desktop:text-48M relative z-10">
+              <div className="text-black desktop:text-48M text-20M relative z-10">
                 師資培育國際學術研討會
               </div>
               <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
@@ -232,7 +232,7 @@ export default function Page() {
                 </div>
                 {!isOpen && (
                   <div className="relative w-fit mx-auto">
-                    <div className="text-black text-48M relative z-10">
+                    <div className="text-black desktop:text-48M text-20M relative z-10">
                       卓越的學習與教學短講
                     </div>
                     <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
@@ -515,7 +515,7 @@ export default function Page() {
                 </div>
                 {!isOpen && (
                   <div className="relative w-fit mx-auto">
-                    <div className="text-black text-48M relative z-10">
+                    <div className="text-black desktop:text-48M text-20M relative z-10">
                       卓越的學習與教學短講
                     </div>
                     <div className="transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />

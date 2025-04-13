@@ -197,7 +197,9 @@ export const Video = () => {
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>師資培育國際學術研討會</div>
+            <div className="desktop:text-48M text-20M">
+              師資培育國際學術研討會
+            </div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -239,7 +241,9 @@ export const Video = () => {
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>卓越的學習與教學短講</div>
+            <div className="desktop:text-48M text-20M">
+              卓越的學習與教學短講
+            </div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
