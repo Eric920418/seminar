@@ -28,8 +28,8 @@ function FadeIn({ children }: { children: React.ReactNode }) {
 
 export default function Page() {
   const nav = [
-    { title: "徵文主題與論文格式", component: <Results /> },
-    { title: "論文摘要審查結果公告", component: <Topics /> },
+    { title: "徵文主題與論文格式", component: <Topics /> },
+    { title: "論文摘要審查結果公告", component: <Results /> },
     { title: "口頭發表場次", component: <Oral /> },
     { title: "海報發表場次", component: <Poster /> },
   ];

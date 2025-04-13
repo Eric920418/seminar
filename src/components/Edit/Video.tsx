@@ -197,7 +197,7 @@ export const Video = () => {
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>區塊一</div>
+            <div>師資培育國際學術研討會</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -239,7 +239,7 @@ export const Video = () => {
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div>區塊二</div>
+            <div>卓越的學習與教學短講</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"
@@ -259,7 +259,7 @@ export const Video = () => {
             style={{ maxHeight: `${height2}px` }}
           >
             <div className="my-3 flex space-x-6">
-              <div>主題演講​</div>
+              <div>研討會主題演講​</div>
               <button
                 className="bg-blue-500 text-white px-3 py-1 rounded"
                 onClick={addCard}

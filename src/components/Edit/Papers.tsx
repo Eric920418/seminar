@@ -397,132 +397,10 @@ export const Papers = () => {
     <div>
       <div className="text-32M mb-6">ICTE論文</div>
       <div className="flex flex-col gap-[16px]">
-        {/* 區塊一 */}
-        <div className="relative bg-gray-200 w-full p-3">
-          <div className="flex justify-between">
-            <div>徵文主題與論文格式</div>
-            <Image
-              src="/icons/24icon/arrow_right.svg"
-              className={`cursor-pointer transition-transform duration-300 ${
-                isOpen1 ? "rotate-90" : ""
-              }`}
-              width={24}
-              height={24}
-              alt="arrow"
-              onClick={() => setIsOpen1(!isOpen1)}
-            />
-          </div>
-          <div
-            ref={contentRef1}
-            className="overflow-hidden transition-all duration-500 ease-in-out"
-            style={{ maxHeight: `${height1}px` }}
-          >
-            <div className="my-3 flex space-x-3">
-              <div>口頭​論文​</div>
-              <button
-                className="bg-blue-500 text-white px-3 py-1 rounded"
-                onClick={addCard}
-              >
-                新增卡片
-              </button>
-            </div>
-            <div>
-              {editorCards.map((card, index) => (
-                <div key={index} className="my-3">
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      placeholder="標題"
-                      value={card.title}
-                      onChange={(e) =>
-                        handleCardChange(index, "title", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-
-                    <textarea
-                      placeholder="內文"
-                      value={card.content}
-                      onChange={(e) =>
-                        handleCardChange(index, "content", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-                    <input
-                      type="text"
-                      placeholder="內文"
-                      value={card.EnContent}
-                      onChange={(e) =>
-                        handleCardChange(index, "EnContent", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-                    <button
-                      className="bg-red-500 text-white px-3 py-1 rounded"
-                      onClick={() => DeleteCard(index)}
-                    >
-                      刪除
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="my-3 flex space-x-3">
-              <div>海報論文​</div>
-              <button
-                className="bg-blue-500 text-white px-3 py-1 rounded"
-                onClick={addCard2}
-              >
-                新增卡片
-              </button>
-            </div>
-            <div>
-              {editorCards2.map((card, index) => (
-                <div key={index} className="my-3">
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      placeholder="標題"
-                      value={card.title}
-                      onChange={(e) =>
-                        handleCardChange2(index, "title", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-
-                    <textarea
-                      placeholder="內文"
-                      value={card.content}
-                      onChange={(e) =>
-                        handleCardChange2(index, "content", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-                    <input
-                      type="text"
-                      placeholder="影片網址"
-                      value={card.EnContent}
-                      onChange={(e) =>
-                        handleCardChange2(index, "EnContent", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-                    <button
-                      className="bg-red-500 text-white px-3 py-1 rounded"
-                      onClick={() => DeleteCard2(index)}
-                    >
-                      刪除
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>論文摘要審查結果公告</div>
+            <div>徵文主題與論文格式</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -723,6 +601,129 @@ export const Papers = () => {
             </div>
           </div>
         </div>
+        {/* 區塊一 */}
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between">
+            <div>論文摘要審查結果公告</div>
+            <Image
+              src="/icons/24icon/arrow_right.svg"
+              className={`cursor-pointer transition-transform duration-300 ${
+                isOpen1 ? "rotate-90" : ""
+              }`}
+              width={24}
+              height={24}
+              alt="arrow"
+              onClick={() => setIsOpen1(!isOpen1)}
+            />
+          </div>
+          <div
+            ref={contentRef1}
+            className="overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height1}px` }}
+          >
+            <div className="my-3 flex space-x-3">
+              <div>口頭​論文​</div>
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded"
+                onClick={addCard}
+              >
+                新增卡片
+              </button>
+            </div>
+            <div>
+              {editorCards.map((card, index) => (
+                <div key={index} className="my-3">
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      placeholder="標題"
+                      value={card.title}
+                      onChange={(e) =>
+                        handleCardChange(index, "title", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+
+                    <textarea
+                      placeholder="內文"
+                      value={card.content}
+                      onChange={(e) =>
+                        handleCardChange(index, "content", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <input
+                      type="text"
+                      placeholder="內文"
+                      value={card.EnContent}
+                      onChange={(e) =>
+                        handleCardChange(index, "EnContent", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <button
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                      onClick={() => DeleteCard(index)}
+                    >
+                      刪除
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="my-3 flex space-x-3">
+              <div>海報論文​</div>
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded"
+                onClick={addCard2}
+              >
+                新增卡片
+              </button>
+            </div>
+            <div>
+              {editorCards2.map((card, index) => (
+                <div key={index} className="my-3">
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      placeholder="標題"
+                      value={card.title}
+                      onChange={(e) =>
+                        handleCardChange2(index, "title", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+
+                    <textarea
+                      placeholder="內文"
+                      value={card.content}
+                      onChange={(e) =>
+                        handleCardChange2(index, "content", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <input
+                      type="text"
+                      placeholder="影片網址"
+                      value={card.EnContent}
+                      onChange={(e) =>
+                        handleCardChange2(index, "EnContent", e.target.value)
+                      }
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    />
+                    <button
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                      onClick={() => DeleteCard2(index)}
+                    >
+                      刪除
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* 區塊三 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">

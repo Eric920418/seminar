@@ -45,11 +45,22 @@ export const TimeVision = () => {
             </div>
             <div className="text-black text-36M mt-[16px] ">徵稿</div>
             <div className="mt-[32px] w-[240px] h-[204px]">
-              <div className="flex">
+              <div className="flex flex-col justify-between h-full">
                 <div
                   className="text-primary text-20M me-1"
                   dangerouslySetInnerHTML={{ __html: data.time1 }}
                 ></div>
+                <div className="w-[240px] ">
+                  <TimeVisionButton
+                    text="論文摘要格式"
+                    textColor="text-white"
+                    textSize="text-16M"
+                    bgColor="bg-third"
+                    padding="p-[16px_24px_16px_24px]"
+                    src="/button/arrow_right_2.svg"
+                    url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -69,17 +80,6 @@ export const TimeVision = () => {
             <div className="text-black text-36M mt-[16px] ">論文定稿</div>
             <div className="mt-[32px] w-[240px] h-[117px]">
               <div className=" text-primary text-20M ">{data.time7}</div>
-            </div>
-            <div className="mt-[32px] w-[240px] ">
-              <TimeVisionButton
-                text="論文摘要格式"
-                textColor="text-white"
-                textSize="text-16M"
-                bgColor="bg-third"
-                padding="p-[16px_24px_16px_24px]"
-                src="/button/arrow_right_2.svg"
-                url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
-              />
             </div>
           </div>
           <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
@@ -124,7 +124,7 @@ export const TimeVision = () => {
                 bgColor="bg-[#FFFFFF]"
                 padding="p-[16px_24px_16px_24px]"
                 src="/icons/24icon/arrow_right_2.svg"
-                url="/meeting/4"
+                url="/meeting/7"
               />
             </div>
           </div>

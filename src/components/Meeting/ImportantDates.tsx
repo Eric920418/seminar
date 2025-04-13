@@ -43,12 +43,23 @@ export const ImportantDates = () => {
           </div>
           <div className="text-black text-36M mt-[16px] ">徵稿</div>
           <div className="mt-[32px] w-[240px] h-[204px]">
-            <div className="flex">
+            <div className="flex flex-col justify-between h-full">
               <div className="text-primary text-20M me-1">
                 <span
                   dangerouslySetInnerHTML={{
                     __html: data.time1,
                   }}
+                />
+              </div>
+              <div className="w-[240px] ">
+                <TimeVisionButton
+                  text="論文摘要格式"
+                  textColor="text-white"
+                  textSize="text-16M"
+                  bgColor="bg-third"
+                  padding="p-[16px_24px_16px_24px]"
+                  src="/button/arrow_right_2.svg"
+                  url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
                 />
               </div>
             </div>
@@ -71,17 +82,6 @@ export const ImportantDates = () => {
           <div className="mt-[32px] w-[240px] h-[117px]">
             <div className=" text-primary text-20M ">{data.time7}</div>
           </div>
-          <div className="mt-[32px] w-[240px] ">
-            <TimeVisionButton
-              text="論文摘要格式"
-              textColor="text-white"
-              textSize="text-16M"
-              bgColor="bg-third"
-              padding="p-[16px_24px_16px_24px]"
-              src="/button/arrow_right_2.svg"
-              url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
-            />
-          </div>
         </div>
         <div className="bg-[#FFFFFF] p-[32px] rounded-[40px]">
           <div className="w-[48px] h-[48px] rounded-[40px] bg-primary flex justify-center items-center">
@@ -91,7 +91,7 @@ export const ImportantDates = () => {
           <div className="mt-[32px] w-[240px] h-[117px]">
             <div className=" text-primary text-20M ">{data.time8}</div>
           </div>
-          <div className="mt-[32px] w-[240px] ">
+          {/* <div className="mt-[32px] w-[240px] ">
             <TimeVisionButton
               text="報名費用與規則"
               textColor="text-white"
@@ -101,7 +101,7 @@ export const ImportantDates = () => {
               src="/button/arrow_right_2.svg"
               url="/meeting/3"
             />
-          </div>
+          </div> */}
         </div>
         <div className="bg-[#FFF8DC] p-[32px] rounded-[40px]">
           <div className="text-black text-36M ">會議舉辦日期</div>
@@ -123,7 +123,7 @@ export const ImportantDates = () => {
               bgColor="bg-[#FFFFFF]"
               padding="p-[16px_24px_16px_24px]"
               src="/icons/24icon/arrow_right_2.svg"
-              url="/meeting/4"
+              url="/meeting/7"
             />
           </div>
         </div>

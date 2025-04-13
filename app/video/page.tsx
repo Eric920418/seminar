@@ -233,7 +233,7 @@ export default function Page() {
                 {!isOpen && (
                   <div className="relative w-fit mx-auto">
                     <div className="text-black text-48M relative z-10">
-                      研討會主題演講影片總列表
+                      卓越的學習與教學短講
                     </div>
                     <div className="z-0 transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                   </div>
@@ -241,7 +241,7 @@ export default function Page() {
                 <div className="mt-[128px]">
                   <Tab
                     titles={[
-                      "主題演講​",
+                      "研討會主題演講​",
                       "領域教材教法教學實踐計畫",
                       "領域教材教法獲獎論文發表",
                     ]}
@@ -516,7 +516,7 @@ export default function Page() {
                 {!isOpen && (
                   <div className="relative w-fit mx-auto">
                     <div className="text-black text-48M relative z-10">
-                      研討會主題演講影片總列表
+                      卓越的學習與教學短講
                     </div>
                     <div className="transform translate-y-[-20px] w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
                   </div>
@@ -524,7 +524,7 @@ export default function Page() {
                 <div className="mt-[128px]">
                   <Tab
                     titles={[
-                      "主題演講​",
+                      "研討會主題演講​",
                       "領域教材教法教學實踐計畫",
                       "領域教材教法獲獎論文發表",
                     ]}
