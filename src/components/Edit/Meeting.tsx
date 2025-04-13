@@ -777,7 +777,7 @@ export const Meeting = () => {
               </div>
               <div className="mt-[32px] flex space-x-[32px] ">
                 <div className="bg-white p-[32px] rounded-[24px] flex-1 min-w-0">
-                  <div className="text-secondary text-20M ">工作坊</div>
+                  <div className="text-secondary text-20M ">微型工作坊</div>
                   <div className="mt-[24px] text-black text-[15px] leading-[28px] font-[500] ">
                     {editorRule.editor7}
                   </div>

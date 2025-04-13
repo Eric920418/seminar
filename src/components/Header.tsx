@@ -289,7 +289,7 @@ export const Header = () => {
       </div>
 
       {/* 手機版 Header */}
-      <div className="desktop:hidden laptop:block fixed top-0 left-0 w-full z-[30] bg-yellow-50 shadow-md">
+      <div className="desktop:hidden laptop:block fixed top-0 left-0 w-full z-[30] bg-yellow-50 shadow-md ">
         <div className="flex w-full items-center justify-between p-4">
           <div className="h-[45px] w-[200px]">
             {editorMapImage && (
@@ -312,9 +312,9 @@ export const Header = () => {
         </div>
         {mobileMenuOpen && (
           <div
-            className="border-t border-gray-200"
+            className="border-t border-gray-200 "
             style={{
-              height: "calc(100vh)",
+              height: "calc(100vh + 300px)",
               overflowY: "auto",
             }}
           >

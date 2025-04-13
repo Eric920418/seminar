@@ -185,12 +185,12 @@ export default function Page() {
             <div className="text-black text-48M">影片專區​​​</div>
           </div>
         </div>
-        <div className="mx-auto w-fit pt-[128px] pb-[160px] max-w-[1200px]  px-3 desktop:px-0">
+        <div className="mx-auto  pt-[128px] pb-[160px] max-w-[1200px]  px-3 desktop:px-0">
           <div>
             <div className="text-16M text-primary text-center">
               International Conference on Teacher Education
             </div>
-            <div className="relative w-fit mx-auto">
+            <div className="relative w-fit  mx-auto">
               <div className="text-black text-20M desktop:text-48M relative z-10">
                 師資培育國際學術研討會
               </div>
@@ -286,7 +286,7 @@ export default function Page() {
                         contentLabel="Video Player"
                         style={modalStyles}
                       >
-                        <div className="w-fit ms-auto pe-[24px]">
+                        <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
                             ×
                           </button>
@@ -365,7 +365,7 @@ export default function Page() {
                         contentLabel="Video Player"
                         style={modalStyles}
                       >
-                        <div className="w-fit ms-auto pe-[24px]">
+                        <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
                             ×
                           </button>
@@ -444,7 +444,7 @@ export default function Page() {
                         contentLabel="Video Player"
                         style={modalStyles}
                       >
-                        <div className="w-fit ms-auto pe-[24px]">
+                        <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
                             ×
                           </button>
@@ -569,7 +569,7 @@ export default function Page() {
                         contentLabel="Video Player"
                         style={modalStyles}
                       >
-                        <div className="w-fit ms-auto pe-[24px]">
+                        <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
                             ×
                           </button>
@@ -648,7 +648,7 @@ export default function Page() {
                         contentLabel="Video Player"
                         style={modalStyles}
                       >
-                        <div className="w-fit ms-auto pe-[24px]">
+                        <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
                             ×
                           </button>
@@ -727,7 +727,7 @@ export default function Page() {
                         contentLabel="Video Player"
                         style={modalStyles}
                       >
-                        <div className="w-fit ms-auto pe-[24px]">
+                        <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
                             ×
                           </button>

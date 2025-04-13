@@ -27,12 +27,12 @@ export const Tab = ({
   };
 
   return (
-    <div className="w-fit mx-auto">
+    <div className=" w-full mx-auto overflow-x-auto">
       <div className="flex border-b border-[#252F380D]">
         {titles.map((title, index) => (
           <button
             key={index}
-            className={`flex-1 text-center pb-[8px] px-[32px] text-16M text-nowrap ${
+            className={`text-center pb-[8px] px-[32px] text-16M text-nowrap ${
               activeTab === index
                 ? // 若要對第 0 個標籤做額外樣式處理
                   index === 0
