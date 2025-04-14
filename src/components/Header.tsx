@@ -199,7 +199,10 @@ export const Header = () => {
     <>
       {/* 電腦版 Header */}
       <div className="hidden laptop:hidden desktop:flex p-[32px] absolute top-0 w-full justify-between z-[20]">
-        <div className="bg-[#FFFFFF80] w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center">
+        <div
+          className="bg-[#FFFFFF90] w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center"
+          style={{ background: "rgba(255, 255, 255, 0.75)" }}
+        >
           <div className="max-w-[200px] ">
             <Link href="/">
               {editorMapImage && (
@@ -220,7 +223,12 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="bg-[#FFFFFF80] rounded-[40px] flex items-center space-x-[64px] px-[64px] ">
+        <div
+          className=" rounded-[40px] flex items-center space-x-[64px] px-[64px] "
+          style={{
+            background: "rgba(255, 255, 255, 0.75)",
+          }}
+        >
           {nav.map((navItem, navIndex) => (
             <div
               key={navIndex}
@@ -238,11 +246,15 @@ export const Header = () => {
                 </div>
                 {navItem.inSelect && navItem.inSelect.length > 0 && (
                   <div
-                    className={`absolute left-1/2 transform -translate-x-1/2 top-16 w-fit bg-[#FFFFFFB2] rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
+                    className={`absolute left-1/2 transform -translate-x-1/2 top-16 w-fit  rounded-[16px] p-[24px] flex flex-col gap-[16px] transition-all duration-300 ease-in-out ${
                       openStates[navIndex]
                         ? "opacity-100 scale-100"
                         : "opacity-0 scale-95 pointer-events-none"
                     }`}
+                    style={{
+                      background: "rgba(255, 255, 255, 0.8)",
+                      zIndex: 100,
+                    }}
                   >
                     {navItem.inSelect.map((item, inSelectIndex) => (
                       <div
