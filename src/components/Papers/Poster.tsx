@@ -102,7 +102,7 @@ export const Poster = () => {
             return (
               <div
                 key={index}
-                className={`p-[24px] rounded-[24px] w-[220px] cursor-pointer ${
+                className={`p-[24px] rounded-[24px] desktop:w-[220px] w-[150px] cursor-pointer ${
                   isAnimating ? "bg-third" : "bg-[#F4F7FD]"
                 }`}
                 onClick={() => change(index)}

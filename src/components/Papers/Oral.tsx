@@ -81,7 +81,7 @@ export const Oral = () => {
         {card.map((item, index) => (
           <div
             key={index}
-            className={`p-[24px] rounded-[24px] w-[220px] transition-all ease-in-out duration-500 ${
+            className={`p-[24px] rounded-[24px] desktop:w-[220px] w-[150px] transition-all ease-in-out duration-500 ${
               focus[index] ? "bg-third" : "bg-[#F4F7FD]"
             }`}
             onClick={() =>
