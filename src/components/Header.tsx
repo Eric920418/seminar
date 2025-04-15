@@ -201,7 +201,7 @@ export const Header = () => {
       <div className="hidden laptop:hidden desktop:flex p-[32px] absolute top-0 w-full justify-between z-[20]">
         <div
           className="bg-[#FFFFFF90] w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center"
-          style={{ background: "rgba(255, 255, 255, 0.75)" }}
+          style={{ background: "#FAEEC8" }}
         >
           <div className="max-w-[200px] ">
             <Link href="/">
@@ -226,7 +226,7 @@ export const Header = () => {
         <div
           className=" rounded-[40px] flex items-center space-x-[64px] px-[64px] "
           style={{
-            background: "rgba(255, 255, 255, 0.75)",
+            background: "#FAEEC8",
           }}
         >
           {nav.map((navItem, navIndex) => (
@@ -252,7 +252,7 @@ export const Header = () => {
                         : "opacity-0 scale-95 pointer-events-none"
                     }`}
                     style={{
-                      background: "rgba(255, 255, 255, 0.8)",
+                      background: "#FAEEC8",
                       zIndex: 100,
                     }}
                   >
@@ -266,7 +266,7 @@ export const Header = () => {
                         }}
                         onClick={() => handleNavigation2(item)}
                       >
-                        <div className="text-16M text-[#252F3866] text-nowrap text-center cursor-pointer hover:text-black">
+                        <div className="text-16M text-[#75808A] text-nowrap text-center cursor-pointer hover:text-[#252F38]">
                           {item.title}
                         </div>
                         {item.smSelect && item.smSelect.length > 0 && (
