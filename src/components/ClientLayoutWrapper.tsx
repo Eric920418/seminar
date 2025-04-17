@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import { usePathname } from "next/navigation";
 import { useModalContext } from "@/components/ModalContext";
 import { Header } from "@/components/Header";
@@ -25,10 +26,14 @@ export default function ClientLayoutWrapper({
     editor3: "",
     editor4: "",
     editor5: "",
+    editor6: "",
   });
+  const [favicon, setFavicon] = useState<string | null>(null);
   const { isModalOpen } = useModalContext();
   const pathname = usePathname();
+  const isAdminPage = pathname.startsWith("/admin");
 
+  // 1. 取得顏色設定
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/graphql", {
@@ -46,39 +51,29 @@ export default function ClientLayoutWrapper({
         editor5: data.color[0].section1?.white,
         editor6: data.color[0].section1?.warning,
       });
+
+      setFavicon(data.color[0].section1?.favicon);
     };
 
     fetchData();
   }, []);
 
+  // 3. 套用 CSS 變數
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--color-primary",
-      editorColor.editor1
-    );
-    document.documentElement.style.setProperty(
-      "--color-secondary",
-      editorColor.editor2
-    );
-    document.documentElement.style.setProperty(
-      "--color-third",
-      editorColor.editor3
-    );
-    document.documentElement.style.setProperty(
-      "--color-black",
-      editorColor.editor4
-    );
-    document.documentElement.style.setProperty(
-      "--color-white",
-      editorColor.editor5
-    );
-    document.documentElement.style.setProperty("--color-warning", "#ff6231");
+    const root = document.documentElement.style;
+    root.setProperty("--color-primary", editorColor.editor1);
+    root.setProperty("--color-secondary", editorColor.editor2);
+    root.setProperty("--color-third", editorColor.editor3);
+    root.setProperty("--color-black", editorColor.editor4);
+    root.setProperty("--color-white", editorColor.editor5);
+    root.setProperty("--color-warning", editorColor.editor6 || "#ff6231");
   }, [editorColor]);
-  // 判斷是否為 admin 路由
-  const isAdminPage = pathname.startsWith("/admin");
 
   return (
     <>
+      {/* 動態管理 head，Next.js 會自動替你移除舊的 <link> */}
+      <Head>{favicon && <link key="favicon" rel="icon" href={favicon} />}</Head>
+
       {!isAdminPage && !isModalOpen && <Header />}
       {children}
       {!isAdminPage && !isModalOpen && <Footer />}

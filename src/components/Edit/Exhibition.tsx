@@ -37,8 +37,7 @@ export const Exhibition = () => {
   const contentRef1 = useRef<HTMLDivElement>(null);
 
   const [editorCards, setEditorCards] = useState<ExhibitionCard[]>([]);
-
-  const [isFinish, setIsFinish] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -124,7 +123,7 @@ export const Exhibition = () => {
   };
 
   const handleUpdate = async () => {
-    setIsFinish(false);
+    setIsLoading(true);
     const input = {
       section1: {
         card: editorCards,
@@ -143,17 +142,26 @@ export const Exhibition = () => {
       const result = await response.json();
       if (result.errors) {
         console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
-      } else {
-        setIsFinish(true);
-        alert("更新成功");
       }
     } catch (err) {
       console.error("更新失敗:", err);
+    } finally {
+      alert("更新成功");
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-5 rounded-lg flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin mb-3"></div>
+            <p className="text-gray-700">資料處理中，請稍候...</p>
+          </div>
+        </div>
+      )}
+
       <div className="text-32M mb-6">創新教材教具展​</div>
       <div className="flex flex-col gap-[16px]">
         {/* 區塊一 */}
@@ -283,9 +291,7 @@ export const Exhibition = () => {
       <div className="mt-6">
         <button
           onClick={handleUpdate}
-          className={`bg-green-500 text-white px-4 py-2 rounded ${
-            isFinish ? "" : "disabled bg-green-700"
-          }`}
+          className={`bg-green-500 text-white px-4 py-2 rounded`}
         >
           更新資料
         </button>

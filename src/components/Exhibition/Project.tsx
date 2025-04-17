@@ -165,8 +165,8 @@ export const Project = () => {
                   <Image
                     src={card[selectedIndex].images[selectedImageIndex]}
                     alt={`圖片 ${selectedImageIndex + 1}`}
-                    width={800}
-                    height={450}
+                    width={1920}
+                    height={1080}
                     className="object-contain object-center rounded-[40px]"
                   />
                 </div>

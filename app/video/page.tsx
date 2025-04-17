@@ -124,25 +124,29 @@ export default function Page() {
       document.body.style.overflow = "";
       setModalOpen(false);
     }
+    // 確保在組件卸載時清理
     return () => {
       document.body.style.overflow = "";
       setModalOpen(false);
     };
   }, [isOpen, setModalOpen]);
 
-  // 這裡傳入的 video 參數必須符合 VideoType，所以進行轉換
   const openModal = (video: VideoType) => {
     setCurrentVideo(video);
     setIsOpen(true);
   };
 
   const closeModal = () => {
-    setIsOpen(false);
+    // 先設置current video為null，避免在Modal關閉時仍然引用DOM
     setCurrentVideo({
       src: "",
       title: "",
       content: "",
     });
+    // 延遲關閉Modal，確保React有時間處理清理
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 0);
   };
 
   const [selectedTab, setSelectedTab] = useState(0);
@@ -285,6 +289,9 @@ export default function Page() {
                         onRequestClose={closeModal}
                         contentLabel="Video Player"
                         style={modalStyles}
+                        ariaHideApp={typeof window !== "undefined"}
+                        shouldCloseOnOverlayClick={true}
+                        shouldCloseOnEsc={true}
                       >
                         <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
@@ -364,6 +371,9 @@ export default function Page() {
                         onRequestClose={closeModal}
                         contentLabel="Video Player"
                         style={modalStyles}
+                        ariaHideApp={typeof window !== "undefined"}
+                        shouldCloseOnOverlayClick={true}
+                        shouldCloseOnEsc={true}
                       >
                         <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
@@ -443,6 +453,9 @@ export default function Page() {
                         onRequestClose={closeModal}
                         contentLabel="Video Player"
                         style={modalStyles}
+                        ariaHideApp={typeof window !== "undefined"}
+                        shouldCloseOnOverlayClick={true}
+                        shouldCloseOnEsc={true}
                       >
                         <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
@@ -568,6 +581,9 @@ export default function Page() {
                         onRequestClose={closeModal}
                         contentLabel="Video Player"
                         style={modalStyles}
+                        ariaHideApp={typeof window !== "undefined"}
+                        shouldCloseOnOverlayClick={true}
+                        shouldCloseOnEsc={true}
                       >
                         <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
@@ -647,6 +663,9 @@ export default function Page() {
                         onRequestClose={closeModal}
                         contentLabel="Video Player"
                         style={modalStyles}
+                        ariaHideApp={typeof window !== "undefined"}
+                        shouldCloseOnOverlayClick={true}
+                        shouldCloseOnEsc={true}
                       >
                         <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>
@@ -726,6 +745,9 @@ export default function Page() {
                         onRequestClose={closeModal}
                         contentLabel="Video Player"
                         style={modalStyles}
+                        ariaHideApp={typeof window !== "undefined"}
+                        shouldCloseOnOverlayClick={true}
+                        shouldCloseOnEsc={true}
                       >
                         <div className=" ms-auto pe-[24px]">
                           <button className="text-[20px]" onClick={closeModal}>

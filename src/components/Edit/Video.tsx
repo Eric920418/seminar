@@ -20,6 +20,7 @@ const query = `
 `;
 
 export const Video = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
   const contentRef1 = useRef<HTMLDivElement>(null);
@@ -152,6 +153,7 @@ export const Video = () => {
   };
 
   const handleUpdate = async () => {
+    setIsLoading(true);
     const input = {
       section1: {
         tab: [
@@ -182,24 +184,31 @@ export const Video = () => {
       const result = await response.json();
       if (result.errors) {
         console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
-      } else {
-        alert("更新成功");
       }
     } catch (err) {
       console.error("更新失敗:", err);
+    } finally {
+      alert("更新成功");
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-5 rounded-lg flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin mb-3"></div>
+            <p className="text-gray-700">資料處理中，請稍候...</p>
+          </div>
+        </div>
+      )}
       <div className="text-32M mb-6">影片專區​​</div>
       <div className="flex flex-col gap-[16px]">
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div className="desktop:text-48M text-20M">
-              師資培育國際學術研討會
-            </div>
+            <div>師資培育國際學術研討會</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -241,9 +250,7 @@ export const Video = () => {
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">
-            <div className="desktop:text-48M text-20M">
-              卓越的學習與教學短講
-            </div>
+            <div>卓越的學習與教學短講</div>
             <div className="flex items-center gap-2">
               <Image
                 src="/icons/24icon/arrow_right.svg"

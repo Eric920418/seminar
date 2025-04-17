@@ -19,6 +19,7 @@ const query = `
 `;
 
 export const Color = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [editorColor, setEditorColor] = useState({
     editor1: "",
     editor2: "",
@@ -42,7 +43,6 @@ export const Color = () => {
         editor3: data.color[0].section1.third,
         editor4: data.color[0].section1?.black,
         editor5: data.color[0].section1?.white,
-        editor6: data.color[0].section1?.warning,
       });
     };
 
@@ -56,6 +56,7 @@ export const Color = () => {
   };
 
   const handleUpdate = async () => {
+    setIsLoading(true);
     const input = {
       section1: {
         primary: editorColor.editor1,
@@ -63,7 +64,6 @@ export const Color = () => {
         third: editorColor.editor3,
         black: editorColor.editor4,
         white: editorColor.editor5,
-        warning: editorColor.editor6,
       },
     };
 
@@ -79,16 +79,25 @@ export const Color = () => {
       const result = await response.json();
       if (result.errors) {
         console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
-      } else {
-        alert("更新成功");
       }
     } catch (err) {
       console.error("更新失敗:", err);
+    } finally {
+      alert("更新成功");
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-5 rounded-lg flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin mb-3"></div>
+            <p className="text-gray-700">資料處理中，請稍候...</p>
+          </div>
+        </div>
+      )}
       <div className="text-32M mb-6">顏色</div>
       <div className="flex flex-col gap-[16px]">
         <div className="relative bg-gray-200 w-full p-3">

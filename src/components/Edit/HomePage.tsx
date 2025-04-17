@@ -36,6 +36,7 @@ const query = `
   }
 `;
 export const HomePage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   // 各區塊狀態定義
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
@@ -272,6 +273,7 @@ export const HomePage = () => {
 
   // 使用 fetch 發送 GraphQL mutation 更新資料
   const handleUpdate = async () => {
+    setIsLoading(true);
     const input = {
       section1: {
         title: {
@@ -329,16 +331,25 @@ export const HomePage = () => {
       const result = await response.json();
       if (result.errors) {
         console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
-      } else {
-        alert("更新成功");
       }
     } catch (err) {
       console.error("更新失敗:", err);
+    } finally {
+      alert("更新成功");
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-5 rounded-lg flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin mb-3"></div>
+            <p className="text-gray-700">資料處理中，請稍候...</p>
+          </div>
+        </div>
+      )}
       <div className="text-32M mb-6">首頁</div>
       <div className="flex flex-col gap-[16px]">
         {/* 區塊一 */}
