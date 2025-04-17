@@ -167,7 +167,7 @@ export const Project = () => {
                     alt={`圖片 ${selectedImageIndex + 1}`}
                     width={1920}
                     height={1080}
-                    className="object-contain object-center rounded-[40px]"
+                    className="object-cover object-center rounded-[40px]"
                   />
                 </div>
               )}
