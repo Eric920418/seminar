@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-
 import { Agenda } from "@/components/Meeting/Agenda";
 import { ImportantDates } from "@/components/Meeting/ImportantDates";
 import { Presentation } from "@/components/Meeting/Presentation";
@@ -33,7 +32,30 @@ function FadeIn({ children }: { children: React.ReactNode }) {
   );
 }
 
+const query = `
+  query meetingPage {
+    meetingPage {
+      section7
+    }
+  }
+`;
+
 export default function Page() {
+  const [editorBackground, setEditorBackground] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setEditorBackground(data.meetingPage[0].section7?.content4);
+    };
+    fetchData();
+  }, []);
+
   const nav = [
     { title: "緣起", component: <Origin /> },
     { title: "目的", component: <Purpose /> },
@@ -64,7 +86,9 @@ export default function Page() {
       <div
         className="h-[640px] flex justify-center items-center"
         style={{
-          backgroundImage: "url('/banner/Group.png')",
+          backgroundImage: editorBackground
+            ? `url(${editorBackground})`
+            : "url('/banner/Group.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

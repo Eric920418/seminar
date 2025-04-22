@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { QRCodeCanvas } from "qrcode.react";
 import dynamic from "next/dynamic";
+import { ImageUploader } from "@/components/Admin/ImageUploader";
 
 const CustomEditor = dynamic(() => import("@/components/CustomEditor"), {
   ssr: false,
@@ -57,6 +58,12 @@ export const Papers = () => {
   const [height4, setHeight4] = useState(0);
   const contentRef4 = useRef<HTMLDivElement>(null);
 
+  const [isOpen5, setIsOpen5] = useState(false);
+  const [height5, setHeight5] = useState(0);
+  const contentRef5 = useRef<HTMLDivElement>(null);
+
+  const [editorBackground, setEditorBackground] = useState("");
+
   const [editorCards, setEditorCards] = useState([]);
   const [editorCards2, setEditorCards2] = useState([]);
 
@@ -107,6 +114,7 @@ export const Papers = () => {
       });
       setEditorCards3(data.paperPage[0].section3.card);
       setEditorCards4(data.paperPage[0].section4.card);
+      setEditorBackground(data.paperPage[0].section4.background);
     };
 
     fetchData();
@@ -136,6 +144,16 @@ export const Papers = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    if (contentRef5.current) {
+      setHeight5(isOpen5 ? contentRef5.current.scrollHeight : 0);
+    }
+  }, [isOpen5, editorBackground]);
+
+  const handleEditorBackground = (data) => {
+    setEditorBackground(data.fileUrl.fileUrl);
+  };
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -372,6 +390,7 @@ export const Papers = () => {
       },
       section4: {
         card: editorCards4,
+        background: editorBackground,
       },
     };
 
@@ -409,6 +428,44 @@ export const Papers = () => {
 
       <div className="text-32M mb-6">ICTE論文</div>
       <div className="flex flex-col gap-[16px]">
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between">
+            <div>背景圖片</div>
+            <Image
+              src="/icons/24icon/arrow_right.svg"
+              className={`cursor-pointer transition-transform duration-300 ${
+                isOpen5 ? "rotate-90" : ""
+              }`}
+              width={24}
+              height={24}
+              alt="arrow"
+              onClick={() => setIsOpen5(!isOpen5)}
+            />
+          </div>
+          <div
+            ref={contentRef5}
+            className="overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height5}px` }}
+          >
+            <div className="w-full">
+              {editorBackground && (
+                <Image
+                  src={editorBackground}
+                  alt="會議背景"
+                  width={100}
+                  height={100}
+                />
+              )}
+            </div>
+            <div className="w-full">
+              <ImageUploader
+                onImageUpload={(filename) =>
+                  handleEditorBackground({ fileUrl: filename })
+                }
+              />
+            </div>
+          </div>
+        </div>
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">

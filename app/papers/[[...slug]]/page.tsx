@@ -26,7 +26,30 @@ function FadeIn({ children }: { children: React.ReactNode }) {
   );
 }
 
+const query = `
+  query paperPage {
+    paperPage {
+      section4
+    }
+  }
+`;
+
 export default function Page() {
+  const [editorBackground, setEditorBackground] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setEditorBackground(data.paperPage[0].section4.background);
+    };
+    fetchData();
+  }, []);
+
   const nav = [
     { title: "徵文主題與論文格式", component: <Topics /> },
     { title: "論文摘要審查結果公告", component: <Results /> },
@@ -52,7 +75,9 @@ export default function Page() {
       <div
         className="h-[640px] flex justify-center items-center"
         style={{
-          backgroundImage: "url('/banner/Group.png')",
+          backgroundImage: editorBackground
+            ? `url(${editorBackground})`
+            : "url('/banner/Group.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

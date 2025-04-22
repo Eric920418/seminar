@@ -2,6 +2,7 @@
 import { gql } from "graphql-tag";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import { ImageUploader } from "@/components/Admin/ImageUploader";
 
 const UPDATE_PAGE = gql`
   mutation UpdateSpeechPage($input: UpdateSpeechPageInput!) {
@@ -30,9 +31,9 @@ const query2 = `
 `;
 
 export const Speech = () => {
-  // const [isOpen1, setIsOpen1] = useState(false);
-  // const [height1, setHeight1] = useState(0);
-  // const contentRef1 = useRef<HTMLDivElement>(null);
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [height1, setHeight1] = useState(0);
+  const contentRef1 = useRef<HTMLDivElement>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -44,13 +45,13 @@ export const Speech = () => {
     editor2: "",
   });
   const [editorCards2, setEditorCards2] = useState([]);
-
+  const [editorBackground, setEditorBackground] = useState("");
   const [selectEvent, setSelectEvent] = useState([]);
-  // useEffect(() => {
-  //   if (contentRef1.current) {
-  //     setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
-  //   }
-  // }, [isOpen1]);
+  useEffect(() => {
+    if (contentRef1.current) {
+      setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
+    }
+  }, [isOpen1, editorBackground]);
 
   useEffect(() => {
     if (contentRef2.current) {
@@ -71,6 +72,7 @@ export const Speech = () => {
         editor1: data.speechPage[0].section1.dateLabel1,
         editor2: data.speechPage[0].section1.dateLabel2,
       });
+      setEditorBackground(data.speechPage[0].section1.background);
       setEditorCards2(data.speechPage[0].section2.card);
     };
 
@@ -107,12 +109,9 @@ export const Speech = () => {
     fetchData();
   }, [fetchData]);
 
-  // const handleEditorChange = (id: string, content: string) => {
-  //   setEditorContents((prev) => ({
-  //     ...prev,
-  //     [id]: content,
-  //   }));
-  // };
+  const handleEditorBackground = (data) => {
+    setEditorBackground(data.fileUrl.fileUrl);
+  };
 
   const handleCardChange2 = (
     index: number,
@@ -142,6 +141,7 @@ export const Speech = () => {
       section1: {
         dateLabel1: editorContents.editor1,
         dateLabel2: editorContents.editor2,
+        background: editorBackground,
       },
       section2: {
         card: editorCards2,
@@ -183,9 +183,9 @@ export const Speech = () => {
       <div className="text-32M mb-6">主​題演講​​​</div>
       <div className="flex flex-col gap-[16px]">
         {/* 區塊一 */}
-        {/* <div className="relative bg-gray-200 w-full p-3">
+        <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">
-            <div>文字區塊</div>
+            <div>背景圖片</div>
             <Image
               src="/icons/24icon/arrow_right.svg"
               className={`cursor-pointer transition-transform duration-300 ${
@@ -202,54 +202,25 @@ export const Speech = () => {
             className="overflow-hidden transition-all duration-500 ease-in-out"
             style={{ maxHeight: `${height1}px` }}
           >
-            <div className="flex h-[696px] my-3">
-              <div
-                className="flex justify-end items-center flex-1 pe-[64px]"
-                style={{
-                  backgroundImage: "url('/banner/Frame 777.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <div className="text-start w-[334px]">
-                  <div className="text-white text-32M ">
-                    {editorContents.editor1}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#B080CA1A] flex-1 p-[64px] flex items-center">
-                <div className="text-[20px] leading-[40px] font-[400]  text-[#252F38B2] ">
-                  {editorContents.editor2}
-                </div>
-              </div>
+            <div className="w-full">
+              {editorBackground && (
+                <Image
+                  src={editorBackground}
+                  alt="會議背景"
+                  width={100}
+                  height={100}
+                />
+              )}
             </div>
-            <div className="flex w-full my-3 space-x-3">
-              <div className="w-1/2">
-                <input
-                  type="text"
-                  value={editorContents.editor1}
-                  placeholder="標題左"
-                  onChange={(e) =>
-                    handleEditorChange("editor1", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
-              <div className="w-1/2">
-                <input
-                  type="text"
-                  value={editorContents.editor2}
-                  placeholder="標題右"
-                  onChange={(e) =>
-                    handleEditorChange("editor2", e.target.value)
-                  }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                />
-              </div>
+            <div className="w-full">
+              <ImageUploader
+                onImageUpload={(filename) =>
+                  handleEditorBackground({ fileUrl: filename })
+                }
+              />
             </div>
           </div>
-        </div> */}
+        </div>
         {/* 區塊二 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">

@@ -200,8 +200,8 @@ export const Header = () => {
       {/* 電腦版 Header */}
       <div className="hidden laptop:hidden desktop:flex p-[32px] absolute top-0 w-full justify-between z-[20]">
         <div
-          className="bg-[#FFFFFF90] w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center"
-          style={{ background: "#FAEEC8" }}
+          className=" w-[0px] h-[70px] laptop:w-[150px] laptop:h-[80px] desktop:w-[269px] desktop:h-[90px] rounded-[40px] flex items-center justify-center"
+          style={{ background: "#FFFFFF" }}
         >
           <div className="max-w-[200px] ">
             <Link href="/">
@@ -226,7 +226,7 @@ export const Header = () => {
         <div
           className=" rounded-[40px] flex items-center space-x-[64px] px-[64px] "
           style={{
-            background: "#FAEEC8",
+            background: "#FFFFFF",
           }}
         >
           {nav.map((navItem, navIndex) => (
@@ -252,7 +252,7 @@ export const Header = () => {
                         : "opacity-0 scale-95 pointer-events-none"
                     }`}
                     style={{
-                      background: "#FAEEC8",
+                      background: "#FFFFFF",
                       zIndex: 100,
                     }}
                   >

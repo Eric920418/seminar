@@ -2,6 +2,7 @@
 import { gql } from "graphql-tag";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { ImageUploader } from "@/components/Admin/ImageUploader";
 
 const UPDATE_PAGE = gql`
   mutation UpdateVideoPage($input: UpdateVideoPageInput!) {
@@ -29,11 +30,23 @@ export const Video = () => {
   const [height2, setHeight2] = useState(0);
   const contentRef2 = useRef<HTMLDivElement>(null);
 
+  const [isOpen3, setIsOpen3] = useState(false);
+  const [height3, setHeight3] = useState(0);
+  const contentRef3 = useRef<HTMLDivElement>(null);
+
+  const [editorBackground, setEditorBackground] = useState("");
+
   const [editorVideoURL, setEditorVideoURL] = useState("");
   const [editorVideoURL2, setEditorVideoURL2] = useState("");
   const [editorCards, setEditorCards] = useState([]);
   const [editorCards2, setEditorCards2] = useState([]);
   const [editorCards3, setEditorCards3] = useState([]);
+
+  useEffect(() => {
+    if (contentRef3.current) {
+      setHeight3(isOpen3 ? contentRef3.current.scrollHeight : 0);
+    }
+  }, [isOpen3, editorBackground]);
 
   useEffect(() => {
     if (contentRef1.current) {
@@ -72,6 +85,7 @@ export const Video = () => {
         setEditorVideoURL(data.videoPage[0].section1.tab[0].video);
         setEditorVideoURL2(data.videoPage[0].section1.tab[1].video);
       }
+      setEditorBackground(data.videoPage[0].section1.background);
     };
 
     fetchData();
@@ -139,6 +153,10 @@ export const Video = () => {
     setEditorCards3(newCards);
   };
 
+  const handleEditorBackground = (data) => {
+    setEditorBackground(data.fileUrl.fileUrl);
+  };
+
   const handleCardChange3 = (
     index: number,
     field: string,
@@ -169,6 +187,7 @@ export const Video = () => {
             card: editorCards3,
           },
         ],
+        background: editorBackground,
       },
     };
 
@@ -205,6 +224,44 @@ export const Video = () => {
       )}
       <div className="text-32M mb-6">影片專區​​</div>
       <div className="flex flex-col gap-[16px]">
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between">
+            <div>背景圖片</div>
+            <Image
+              src="/icons/24icon/arrow_right.svg"
+              className={`cursor-pointer transition-transform duration-300 ${
+                isOpen3 ? "rotate-90" : ""
+              }`}
+              width={24}
+              height={24}
+              alt="arrow"
+              onClick={() => setIsOpen3(!isOpen3)}
+            />
+          </div>
+          <div
+            ref={contentRef3}
+            className="overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height3}px` }}
+          >
+            <div className="w-full">
+              {editorBackground && (
+                <Image
+                  src={editorBackground}
+                  alt="會議背景"
+                  width={100}
+                  height={100}
+                />
+              )}
+            </div>
+            <div className="w-full">
+              <ImageUploader
+                onImageUpload={(filename) =>
+                  handleEditorBackground({ fileUrl: filename })
+                }
+              />
+            </div>
+          </div>
+        </div>
         {/* 區塊一 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between">

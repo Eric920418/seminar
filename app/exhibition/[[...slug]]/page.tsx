@@ -23,7 +23,30 @@ function FadeIn({ children }: { children: ReactNode }) {
   );
 }
 
+const query = `
+  query exhibitionPage {
+    exhibitionPage {
+      section1
+    }
+  }
+`;
+
 export default function Page() {
+  const [editorBackground, setEditorBackground] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+      const { data } = await res.json();
+      setEditorBackground(data.exhibitionPage[0].section1.background);
+    };
+    fetchData();
+  }, []);
+
   const params = useParams();
   const { slug } = params;
   const nav = [{ title: "作品展示​​", component: <Project /> }];
@@ -43,7 +66,9 @@ export default function Page() {
       <div
         className="h-[640px] flex justify-center items-center"
         style={{
-          backgroundImage: "url('/banner/Group.png')",
+          backgroundImage: editorBackground
+            ? `url(${editorBackground})`
+            : "url('/banner/Group.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

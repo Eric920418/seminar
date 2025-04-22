@@ -79,6 +79,10 @@ export const Meeting = () => {
   const [height10, setHeight10] = useState(0);
   const contentRef10 = useRef<HTMLDivElement>(null);
 
+  const [isOpen11, setIsOpen11] = useState(false);
+  const [height11, setHeight11] = useState(0);
+  const contentRef11 = useRef<HTMLDivElement>(null);
+
   const [editorCards, setEditorCards] = useState([]);
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
@@ -120,6 +124,8 @@ export const Meeting = () => {
   const [editorPurpose, setEditorPurpose] = useState("");
 
   const [editorActivity, setEditorActivity] = useState("");
+
+  const [editorBackground, setEditorBackground] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -168,6 +174,7 @@ export const Meeting = () => {
       setEditorOrigin(data.meetingPage[0].section7?.content);
       setEditorPurpose(data.meetingPage[0].section7?.content2);
       setEditorActivity(data.meetingPage[0].section7?.content3);
+      setEditorBackground(data.meetingPage[0].section7?.content4);
     };
 
     fetchData();
@@ -259,6 +266,12 @@ export const Meeting = () => {
     }
   }, [isOpen10, editorActivity]);
 
+  useEffect(() => {
+    if (contentRef11.current) {
+      setHeight11(isOpen11 ? contentRef11.current.scrollHeight : 0);
+    }
+  }, [isOpen11, editorBackground]);
+
   const handleCardChange = (index: number, field: string, value: string) => {
     const newCards = [...editorCards];
     newCards[index] = { ...newCards[index], [field]: value };
@@ -348,6 +361,10 @@ export const Meeting = () => {
     setEditorActivity(content);
   };
 
+  const handleEditorBackground = (data) => {
+    setEditorBackground(data.fileUrl.fileUrl);
+  };
+
   const handleUpdate = async () => {
     setIsLoading(true);
     const input = {
@@ -393,6 +410,7 @@ export const Meeting = () => {
         content: editorOrigin,
         content2: editorPurpose,
         content3: editorActivity,
+        content4: editorBackground,
       },
     };
 
@@ -430,6 +448,47 @@ export const Meeting = () => {
 
       <div className="text-32M mb-6">ICTE會議資訊</div>
       <div className="flex flex-col gap-[16px]">
+        {/* 區塊十一 */}
+        <div className="relative bg-gray-200 w-full p-3">
+          <div className="flex justify-between items-center">
+            <div>背景圖片</div>
+            <div className="flex items-center gap-2">
+              <Image
+                src="/icons/24icon/arrow_right.svg"
+                className={`cursor-pointer transition-transform duration-300 ${
+                  isOpen11 ? "rotate-90" : ""
+                }`}
+                width={24}
+                height={24}
+                alt="arrow"
+                onClick={() => setIsOpen11(!isOpen11)}
+              />
+            </div>
+          </div>
+          <div
+            ref={contentRef11}
+            className=" overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ maxHeight: `${height11}px` }}
+          >
+            <div className="w-full">
+              {editorBackground && (
+                <Image
+                  src={editorBackground}
+                  alt="會議背景"
+                  width={100}
+                  height={100}
+                />
+              )}
+            </div>
+            <div className="w-full">
+              <ImageUploader
+                onImageUpload={(filename) =>
+                  handleEditorBackground({ fileUrl: filename })
+                }
+              />
+            </div>
+          </div>
+        </div>
         {/* 區塊八 */}
         <div className="relative bg-gray-200 w-full p-3">
           <div className="flex justify-between items-center">

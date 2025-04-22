@@ -65,6 +65,7 @@ const query = `
 `;
 
 export default function Page() {
+  const [editorBackground, setEditorBackground] = useState("");
   // 定義影片型別與卡片資料型別
   type VideoType = {
     src: string;
@@ -98,6 +99,7 @@ export default function Page() {
       setCard3(data.videoPage[0].section1.tab[2].card); // 新增第三個Tab的資料獲取
       setData(data.videoPage[0].section1.tab[0].video);
       setData2(data.videoPage[0].section1.tab[1].video);
+      setEditorBackground(data.videoPage[0].section1.background);
     }
     fetchData();
   }, []);
@@ -178,7 +180,9 @@ export default function Page() {
         <div
           className="h-[640px] flex justify-center items-center"
           style={{
-            backgroundImage: "url('/banner/Group.png')",
+            backgroundImage: editorBackground
+              ? `url(${editorBackground})`
+              : "url('/banner/Group.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

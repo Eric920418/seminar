@@ -31,6 +31,7 @@ export default function Page() {
   const [event, setEvent] = useState([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [fadeIn, setFadeIn] = useState(true);
+  const [editorBackground, setEditorBackground] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -40,7 +41,7 @@ export default function Page() {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-
+      setEditorBackground(data.forumPage[0].section1.background);
       // setEditor(data.forumPage[0].section1);
       setUseData(data.forumPage[0].section2.card);
     }
@@ -88,7 +89,9 @@ export default function Page() {
       <div
         className="h-[640px] flex justify-center items-center"
         style={{
-          backgroundImage: "url('/banner/Group.png')",
+          backgroundImage: editorBackground
+            ? `url(${editorBackground})`
+            : "url('/banner/Group.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
