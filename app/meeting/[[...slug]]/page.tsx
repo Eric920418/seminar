@@ -87,18 +87,21 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <Image
-        src={editorBackground}
-        alt="會議背景"
-        width={1920}
-        height={1080}
-        className="h-[640px] flex justify-center items-center"
-      >
-        <div className="text-center">
+      <div className="h-[640px] flex justify-center items-center relative">
+        {editorBackground && (
+          <Image
+            className="w-full h-full object-cover"
+            src={editorBackground}
+            alt="會議背景"
+            width={1920}
+            height={1080}
+          />
+        )}
+        <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <div className="text-third text-16M ">ICTE​ info</div>
           <div className="text-black text-48M ">ICTE會議資訊</div>
         </div>
-      </Image>
+      </div>
       <div className="pb-[64px] desktop:pb-[160px] pt-[64px] desktop:pt-[128px] mx-auto w-full desktop:w-fit">
         <div className="w-full desktop:max-w-[1312px]   mx-auto flex space-x-[32px]">
           <div className="hidden desktop:w-[304px] w-fit text-nowrap desktop:flex flex-col gap-[24px]">
