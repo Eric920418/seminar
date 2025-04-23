@@ -52,6 +52,7 @@ export default function Page() {
       });
       const { data } = await res.json();
       console.log(data);
+      console.log(data.meetingPage[0]);
       setEditorBackground(data.meetingPage[0].section7?.content4);
     };
     fetchData();
