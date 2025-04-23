@@ -95,7 +95,7 @@ export default function Page() {
         {editorBackground && (
           <Image
             className="w-full h-full object-cover"
-            src={editorBackground}
+            src={editorBackground || "/banner/Group.png"}
             alt="會議背景"
             width={1920}
             height={1080}
