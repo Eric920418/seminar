@@ -51,6 +51,7 @@ export default function Page() {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
+      console.log(data);
       setEditorBackground(data.meetingPage[0].section7?.content4);
     };
     fetchData();
@@ -80,6 +81,8 @@ export default function Page() {
       toggle(Number(slug[0])); // 將字串轉為數字
     }
   }, [slug]);
+
+  console.log(editorBackground);
 
   return (
     <div className="bg-[#FAFBFD]">
