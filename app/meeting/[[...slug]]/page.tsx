@@ -10,7 +10,7 @@ import { Map } from "@/components/Meeting/Map";
 import { Origin } from "@/components/Meeting/Origin";
 import { Purpose } from "@/components/Meeting/Purpose";
 import { Activity } from "@/components/Meeting/Activity";
-
+import Image from "next/image";
 import { useParams } from "next/navigation";
 
 function FadeIn({ children }: { children: React.ReactNode }) {
@@ -87,22 +87,18 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <div
+      <Image
+        src={editorBackground}
+        alt="會議背景"
+        width={1920}
+        height={1080}
         className="h-[640px] flex justify-center items-center"
-        style={{
-          backgroundImage: editorBackground
-            ? `url(${editorBackground})`
-            : "url('/banner/Group.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
       >
         <div className="text-center">
           <div className="text-third text-16M ">ICTE​ info</div>
           <div className="text-black text-48M ">ICTE會議資訊</div>
         </div>
-      </div>
+      </Image>
       <div className="pb-[64px] desktop:pb-[160px] pt-[64px] desktop:pt-[128px] mx-auto w-full desktop:w-fit">
         <div className="w-full desktop:max-w-[1312px]   mx-auto flex space-x-[32px]">
           <div className="hidden desktop:w-[304px] w-fit text-nowrap desktop:flex flex-col gap-[24px]">
