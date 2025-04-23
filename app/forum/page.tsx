@@ -88,13 +88,19 @@ export default function Page() {
   return (
     <div className="bg-[#FAFBFD]">
       <div className="h-[640px] flex justify-center items-center relative">
-        {editorBackground && (
+        {editorBackground ? (
           <Image
             className="w-full h-full object-cover"
-            src={editorBackground || "/banner/Group.png"}
+            src={editorBackground}
             alt="會議背景"
             width={1920}
             height={1080}
+          />
+        ) : (
+          <Image
+            className="w-full h-full object-cover"
+            src="/banner/Group.png"
+            alt="會議背景"
           />
         )}
         <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
