@@ -5,6 +5,7 @@ import { Tab } from "@/components/Tab"; // 已修改好的 Tab
 import { Button } from "@/components/Button";
 import { VideoPlayer } from "@/components/Video/VideoPlayer";
 import { useModalContext } from "@/components/ModalContext";
+import Image from "next/image";
 
 // Set app element for accessibility
 if (typeof window !== "undefined") {
@@ -177,18 +178,17 @@ export default function Page() {
     <>
       <style dangerouslySetInnerHTML={{ __html: modalScrollbarStyles }} />
       <div className="bg-[#FAFBFD]">
-        <div
-          className="h-[640px] flex justify-center items-center"
-          style={{
-            backgroundImage: editorBackground
-              ? `url(${editorBackground})`
-              : "url('/banner/Group.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <div className="text-center">
+        <div className="h-[640px] flex justify-center items-center relative">
+          {editorBackground && (
+            <Image
+              className="w-full h-full object-cover"
+              src={editorBackground}
+              alt="會議背景"
+              width={1920}
+              height={1080}
+            />
+          )}
+          <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <div className="text-third text-16M">Workshop​​</div>
             <div className="text-black text-48M">影片專區​​​</div>
           </div>

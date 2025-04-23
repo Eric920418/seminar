@@ -6,6 +6,7 @@ import { Topics } from "@/components/Papers/Topics";
 import { Oral } from "@/components/Papers/Oral";
 import { Poster } from "@/components/Papers/Poster";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 function FadeIn({ children }: { children: React.ReactNode }) {
   const [visible, setVisible] = useState(false);
@@ -72,18 +73,17 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <div
-        className="h-[640px] flex justify-center items-center"
-        style={{
-          backgroundImage: editorBackground
-            ? `url(${editorBackground})`
-            : "url('/banner/Group.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="text-center">
+      <div className="h-[640px] flex justify-center items-center relative">
+        {editorBackground && (
+          <Image
+            className="w-full h-full object-cover"
+            src={editorBackground}
+            alt="會議背景"
+            width={1920}
+            height={1080}
+          />
+        )}
+        <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <div className="text-third text-16M ">ICTE​ Papers</div>
           <div className="text-black text-48M ">ICTE論文</div>
         </div>

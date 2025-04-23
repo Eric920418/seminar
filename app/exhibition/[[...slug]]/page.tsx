@@ -3,8 +3,9 @@
 import { useState, useEffect, type ReactNode } from "react";
 
 import { Project } from "@/components/Exhibition/Project";
-
+import Image from "next/image";
 import { useParams } from "next/navigation";
+
 function FadeIn({ children }: { children: ReactNode }) {
   const [visible, setVisible] = useState(false);
 
@@ -63,18 +64,17 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <div
-        className="h-[640px] flex justify-center items-center"
-        style={{
-          backgroundImage: editorBackground
-            ? `url(${editorBackground})`
-            : "url('/banner/Group.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="text-center">
+      <div className="h-[640px] flex justify-center items-center relative">
+        {editorBackground && (
+          <Image
+            className="w-full h-full object-cover"
+            src={editorBackground}
+            alt="會議背景"
+            width={1920}
+            height={1080}
+          />
+        )}
+        <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <div className="text-third text-16M ">Project Showcase</div>
           <div className="text-black text-48M ">
             創新教材教具展-預見未來的學習​​

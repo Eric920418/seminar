@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Tab } from "@/components/Tab";
 import { SpeechCard } from "@/components/Speech/SpeechCard";
+import Image from "next/image";
 
 const query = `
   query workShopPage {
@@ -91,18 +92,17 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <div
-        className="h-[640px] flex justify-center items-center"
-        style={{
-          backgroundImage: editorBackground
-            ? `url(${editorBackground})`
-            : "url('/banner/Group.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="text-center">
+      <div className="h-[640px] flex justify-center items-center relative">
+        {editorBackground && (
+          <Image
+            className="w-full h-full object-cover"
+            src={editorBackground}
+            alt="會議背景"
+            width={1920}
+            height={1080}
+          />
+        )}
+        <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <div className="text-third text-16M ">Workshop​​​</div>
           <div className="text-black text-48M ">微型工作坊​​</div>
         </div>
