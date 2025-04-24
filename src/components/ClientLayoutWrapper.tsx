@@ -12,6 +12,9 @@ const query = `
     color {
       section1
     }
+    logo {
+      section1
+    }
   }
 `;
 
@@ -51,8 +54,7 @@ export default function ClientLayoutWrapper({
         editor5: data.color[0].section1?.white,
         editor6: data.color[0].section1?.warning,
       });
-
-      setFavicon(data.color[0].section1?.favicon);
+      setFavicon(data.logo[0].section1?.favicon);
     };
 
     fetchData();
