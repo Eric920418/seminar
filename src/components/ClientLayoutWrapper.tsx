@@ -35,7 +35,7 @@ export default function ClientLayoutWrapper({
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith("/admin");
 
-  // 1. 取得顏色設定
+  // 1. 取得顏色設定 好
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/graphql", {
