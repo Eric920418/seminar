@@ -60,7 +60,7 @@ export default function ClientLayoutWrapper({
     fetchData();
   }, []);
 
-  // 2. 更新網頁的favicon
+  // 2. 更新網頁的favicon 測試看看
   useEffect(() => {
     if (favicon) {
       // 更新所有favicon相關的link標籤
