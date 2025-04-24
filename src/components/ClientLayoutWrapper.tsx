@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Head from "next/head";
 import { usePathname } from "next/navigation";
 import { useModalContext } from "@/components/ModalContext";
 import { Header } from "@/components/Header";
@@ -73,9 +72,6 @@ export default function ClientLayoutWrapper({
 
   return (
     <>
-      {/* 動態管理 head，Next.js 會自動替你移除舊的 <link> */}
-      <Head>{favicon && <link key="favicon" rel="icon" href={favicon} />}</Head>
-
       {!isAdminPage && !isModalOpen && <Header />}
       {children}
       {!isAdminPage && !isModalOpen && <Footer />}
