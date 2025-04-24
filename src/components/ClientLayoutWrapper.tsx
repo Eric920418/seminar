@@ -11,9 +11,6 @@ const query = `
     color {
       section1
     }
-    logo {
-      section1
-    }
   }
 `;
 
@@ -30,7 +27,6 @@ export default function ClientLayoutWrapper({
     editor5: "",
     editor6: "",
   });
-  const [favicon, setFavicon] = useState<string | null>(null);
   const { isModalOpen } = useModalContext();
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith("/admin");
@@ -53,7 +49,6 @@ export default function ClientLayoutWrapper({
         editor5: data.color[0].section1?.white,
         editor6: data.color[0].section1?.warning,
       });
-      setFavicon(data.logo[0].section1?.favicon);
     };
 
     fetchData();

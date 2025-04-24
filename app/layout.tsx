@@ -3,7 +3,6 @@ import "./globals.css";
 import { ModalProvider } from "@/components/ModalContext";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import { Noto_Sans_TC } from "next/font/google";
-import { headers } from "next/headers";
 
 // 設定字體
 const notoSansTC = Noto_Sans_TC({
