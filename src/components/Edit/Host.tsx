@@ -35,7 +35,10 @@ interface CardProps {
   index: number;
   onToggle: (index: number) => void;
   onCardChange: (index: number, field: keyof Card, value: any) => void;
-  handleImageUpload: (data: { fileUrl: any; index: number }) => void;
+  handleImageUpload: (data: {
+    fileUrl: { fileUrl: string };
+    index: number;
+  }) => void;
 }
 
 // 單一卡片元件
@@ -46,7 +49,7 @@ const Card = ({
   onCardChange,
   handleImageUpload,
 }: CardProps) => {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
 
   useEffect(() => {
@@ -102,9 +105,9 @@ const Card = ({
               : "rounded-full w-[200px] top-18 left-15 h-[200px] desktop:w-[316px] desktop:h-[316px]"
           } `}
             >
-              {card.image && (
+              {card.image && card.image !== "" && (
                 <Image
-                  src={card.image ?? null}
+                  src={card.image}
                   alt="some image"
                   width={316}
                   height={316}
@@ -293,14 +296,14 @@ export const Host = () => {
 
   // 圖片上傳處理
   const handleImageUpload = (data: {
-    fileUrl: { fileUrl: string };
+    fileUrl: { fileUrl: { fileUrl: string } };
     index: number;
   }) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
       newCards[data.index] = {
         ...newCards[data.index],
-        image: data.fileUrl.fileUrl,
+        image: data.fileUrl.fileUrl.fileUrl,
       };
       setEditorCards(newCards);
     }

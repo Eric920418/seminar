@@ -51,8 +51,6 @@ export default function Page() {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      console.log(data);
-      console.log(data.meetingPage[0]);
       setEditorBackground(data.meetingPage[0].section7?.content4);
     };
     fetchData();
@@ -83,24 +81,16 @@ export default function Page() {
     }
   }, [slug]);
 
-  console.log(editorBackground);
-
   return (
     <div className="bg-[#FAFBFD]">
       <div className="h-[640px] flex justify-center items-center relative">
-        {editorBackground ? (
+        {editorBackground && (
           <Image
             className="w-full h-full object-cover"
             src={editorBackground}
             alt="會議背景"
             width={1920}
             height={1080}
-          />
-        ) : (
-          <Image
-            className="w-full h-full object-cover"
-            src="/banner/Group.png"
-            alt="會議背景"
           />
         )}
         <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
