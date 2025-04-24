@@ -11,6 +11,9 @@ const query = `
     color {
       section1
     }
+    logo {
+      section1
+    }
   }
 `;
 
@@ -27,6 +30,7 @@ export default function ClientLayoutWrapper({
     editor5: "",
     editor6: "",
   });
+  const [favicon, setFavicon] = useState<string | null>(null);
   const { isModalOpen } = useModalContext();
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith("/admin");
@@ -49,10 +53,31 @@ export default function ClientLayoutWrapper({
         editor5: data.color[0].section1?.white,
         editor6: data.color[0].section1?.warning,
       });
+
+      setFavicon(data.logo[0].section1?.favicon);
     };
 
     fetchData();
   }, []);
+
+  // 2. 更新網頁的favicon
+  useEffect(() => {
+    if (favicon) {
+      // 更新所有favicon相關的link標籤
+      const links = document.querySelectorAll('link[rel*="icon"]');
+      links.forEach((link) => {
+        link.setAttribute("href", favicon);
+      });
+
+      // 若沒有找到現有標籤，則創建新的
+      if (links.length === 0) {
+        const link = document.createElement("link");
+        link.rel = "icon";
+        link.href = favicon;
+        document.head.appendChild(link);
+      }
+    }
+  }, [favicon]);
 
   // 3. 套用 CSS 變數
   useEffect(() => {

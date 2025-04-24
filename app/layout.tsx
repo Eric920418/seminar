@@ -12,42 +12,11 @@ const notoSansTC = Noto_Sans_TC({
   variable: "--font-noto-sans-tc",
 });
 
-// 直接從數據庫獲取favicon數據
-async function getFavicon() {
-  let favicon = "/favicon.ico"; // 默認值
+// 默認favicon路徑
+const defaultFavicon = "/favicon.ico";
 
-  try {
-    // 獲取當前主機名
-    const host =
-      process.env.NEXT_PUBLIC_API_URL ||
-      (process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000");
-
-    // 使用完整URL調用API
-    const response = await fetch(`${host}/api/get-favicon`, {
-      method: "GET",
-      next: { revalidate: 3600 }, // 重新驗證時間：1小時
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      if (data.favicon) {
-        favicon = data.favicon;
-      }
-    }
-  } catch (error) {
-    console.error("獲取favicon失敗:", error);
-  }
-
-  return favicon;
-}
-
-// 取得favicon的函數
+// 取得metadata的函數
 export async function generateMetadata(): Promise<Metadata> {
-  // 獲取favicon
-  const favicon = await getFavicon();
-
   return {
     title: "師資培育國際學術研討會",
     description: "探討全球師資培育發展趨勢與創新教學實踐",
@@ -65,9 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "探討全球師資培育發展趨勢與創新教學實踐",
     },
     icons: {
-      icon: favicon,
-      shortcut: favicon,
-      apple: favicon,
+      icon: defaultFavicon,
+      shortcut: defaultFavicon,
+      apple: defaultFavicon,
     },
     robots: {
       index: true,
