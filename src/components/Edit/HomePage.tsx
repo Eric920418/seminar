@@ -271,6 +271,10 @@ export const HomePage = () => {
     setUploadImage2(data.fileUrl.fileUrl);
   };
 
+  const deleteImage = (index: number) => {
+    setUploadImage2(null);
+  };
+
   // 使用 fetch 發送 GraphQL mutation 更新資料
   const handleUpdate = async () => {
     setIsLoading(true);
@@ -755,6 +759,12 @@ export const HomePage = () => {
                   handleImageUpload2({ fileUrl: filename })
                 }
               />
+              <button
+                className="bg-red-500 text-white px-3 py-1 rounded mt-2"
+                onClick={deleteImage}
+              >
+                刪除圖片
+              </button>
             </div>
           </div>
         </div>

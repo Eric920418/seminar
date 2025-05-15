@@ -22,7 +22,6 @@ const { handleRequest } = createYoga<NextContext>({
     typeDefs,
     resolvers,
   }),
-  graphqlEndpoint: "/api/graphql",
 });
 
 // 导出支持的 HTTP 方法

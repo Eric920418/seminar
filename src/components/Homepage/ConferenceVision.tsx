@@ -36,17 +36,15 @@ export const ConferenceVision = () => {
       const json = await res.json();
       setData(json.data);
 
-      // 從完整路徑中取得檔名
-      const fullPath = json.data.homePage[0].section4.images;
-      const fileName = fullPath.split("/").pop();
-      setImgUrl(`/api/images/${fileName}`);
+      if (json.data.homePage[0].section4.images) {
+        // 從完整路徑中取得檔名
+        const fullPath = json.data.homePage[0].section4.images;
+        const fileName = fullPath.split("/").pop();
+        setImgUrl(`/api/images/${fileName}`);
+      }
     }
     fetchData();
   }, []);
-
-  if (!data || !imgUrl) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="w-full pt-[64px] pb-[80px] desktop:pt-[128px] desktop:pb-[160px] px-3 desktop:px-0">
@@ -62,13 +60,19 @@ export const ConferenceVision = () => {
         </div>
         <div className="bg-[#F0F3F8] rounded-[40px] py-[64px]">
           <div className="desktop:w-[258px] h-[365px] desktop:mx-[191px] p-3 desktop:p-0">
-            <Image
-              src={imgUrl}
-              width={258}
-              height={365}
-              loading="lazy"
-              alt="Conference Vision"
-            />
+            {imgUrl ? (
+              <Image
+                src={imgUrl}
+                width={258}
+                height={365}
+                loading="lazy"
+                alt="Conference Vision"
+              />
+            ) : (
+              <div className="w-[258px] h-[365px] bg-gray-200 flex items-center justify-center">
+                即將公布，敬請期待！
+              </div>
+            )}
           </div>
           <div className="mt-[32px] mx-auto w-fit">
             <ConferenceVisionButton
