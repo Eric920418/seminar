@@ -36,16 +36,30 @@ export const ConferenceVision = () => {
       const json = await res.json();
       setData(json.data);
 
-      if (json.data.homePage[0].section4.images) {
-        // 從完整路徑中取得檔名
-        const fullPath = json.data.homePage[0].section4.images;
-        const fileName = fullPath.split("/").pop();
+      const images = json.data?.homePage?.[0]?.section4?.images;
+      if (images) {
+        const fileName = images.split("/").pop();
         setImgUrl(`/api/images/${fileName}`);
+      } else {
+        setImgUrl(null);
       }
     }
     fetchData();
   }, []);
 
+  // 取用手冊下載網址時也要防呆
+  const manualDownloadUrl = data?.homePage?.[0]?.section4?.manualDownloadUrl;
+
+  // 建議用 loading 狀態（依據 imgUrl 與 manualDownloadUrl 是否都存在判斷）
+  if (!imgUrl || !manualDownloadUrl) {
+    return (
+      <div className="w-full h-[500px] flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  // 主內容
   return (
     <div className="w-full pt-[64px] pb-[80px] desktop:pt-[128px] desktop:pb-[160px] px-3 desktop:px-0">
       <div className="w-full flex flex-col laptop:flex-row items-center justify-center space-x-[64px]">
@@ -60,24 +74,16 @@ export const ConferenceVision = () => {
         </div>
         <div className="bg-[#F0F3F8] rounded-[40px] py-[64px]">
           <div className="desktop:w-[258px] h-[365px] desktop:mx-[191px] p-3 desktop:p-0">
-            {imgUrl ? (
-              <Image
-                src={imgUrl}
-                width={258}
-                height={365}
-                loading="lazy"
-                alt="Conference Vision"
-              />
-            ) : (
-              <div className="w-[258px] h-[365px] bg-gray-200 flex items-center justify-center">
-                即將公布，敬請期待！
-              </div>
-            )}
+            <Image
+              src={imgUrl}
+              width={258}
+              height={365}
+              loading="lazy"
+              alt="Conference Vision"
+            />
           </div>
           <div className="mt-[32px] mx-auto w-fit">
-            <ConferenceVisionButton
-              url={data.homePage[0].section4.manualDownloadUrl}
-            />
+            <ConferenceVisionButton url={manualDownloadUrl} />
           </div>
         </div>
       </div>
