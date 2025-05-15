@@ -271,7 +271,7 @@ export const HomePage = () => {
     setUploadImage2(data.fileUrl.fileUrl);
   };
 
-  const deleteImage = (index: number) => {
+  const deleteImage = () => {
     setUploadImage2(null);
   };
 
