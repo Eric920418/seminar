@@ -53,8 +53,26 @@ export const ConferenceVision = () => {
   // 建議用 loading 狀態（依據 imgUrl 與 manualDownloadUrl 是否都存在判斷）
   if (!imgUrl || !manualDownloadUrl) {
     return (
-      <div className="w-full h-[500px] flex items-center justify-center">
-        Loading...
+      <div className="w-full pt-[64px] pb-[80px] desktop:pt-[128px] desktop:pb-[160px] px-3 desktop:px-0">
+        <div className="w-full flex flex-col laptop:flex-row items-center justify-center space-x-[64px]">
+          <div className="desktop:w-[608px] flex flex-col items-start">
+            <div className="text-16M text-primary">conference manual</div>
+            <div className="relative w-fit">
+              <div className="text-black text-48M relative z-10">
+                會議​​手冊下載
+              </div>
+              <div className="z-0 transform -translate-y-5 w-full h-[28px] bg-gradient-to-r from-[#FFC76C] to-[#FFC76C00] rounded-full" />
+            </div>
+          </div>
+          <div className="bg-[#F0F3F8] rounded-[40px] py-[64px]">
+            <div className="desktop:w-[258px] h-[365px] desktop:mx-[191px] p-3 desktop:p-0">
+              即將公布，敬請期待！
+            </div>
+            <div className="mt-[32px] mx-auto w-fit">
+              {/* <ConferenceVisionButton url={manualDownloadUrl} /> */}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
