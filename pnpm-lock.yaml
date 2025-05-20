@@ -104,6 +104,9 @@ importers:
       yogo:
         specifier: ^0.0.1
         version: 0.0.1
+      zod:
+        specifier: ^3.25.7
+        version: 3.25.7
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.0
@@ -5347,6 +5350,9 @@ packages:
 
   zen-observable@0.8.15:
     resolution: {integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==}
+
+  zod@3.25.7:
+    resolution: {integrity: sha512-YGdT1cVRmKkOg6Sq7vY7IkxdphySKnXhaUmFI4r4FcuFVNgpCb9tZfNwXbT6BPjD5oz0nubFsoo9pIqKrDcCvg==}
 
 snapshots:
 
@@ -12370,3 +12376,5 @@ snapshots:
       zen-observable: 0.8.15
 
   zen-observable@0.8.15: {}
+
+  zod@3.25.7: {}
