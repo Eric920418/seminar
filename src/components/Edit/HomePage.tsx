@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
 
 const CustomEditor = dynamic(() => import("@/components/CustomEditor"), {
   ssr: false,
@@ -35,7 +37,57 @@ const query = `
     }
   }
 `;
+
+interface UpdateHomePageResult {
+  updateHomePage: {
+    section1: {
+      title: {
+        left: string;
+        right: string;
+      };
+      content: string;
+
+      subTitle: string[];
+      location: string;
+      image: string;
+    };
+    section2: {
+      cards: {
+        year: string;
+        date: string;
+        content: string;
+      }[];
+    };
+    section3: {
+      times: {
+        time1: string;
+        time6: string;
+        time7: string;
+        time8: string;
+        meeting: string;
+        dinner: string;
+      };
+    };
+    section4: {
+      manualDownloadUrl: string;
+      images: string;
+    };
+    section5: {
+      videoUrl: string;
+    };
+    section6: {
+      organizers: {
+        name: string;
+      }[];
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
+
 export const HomePage = () => {
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   // 各區塊狀態定義
   const [isOpen1, setIsOpen1] = useState(false);
@@ -324,17 +376,13 @@ export const HomePage = () => {
     };
 
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
+      const response = await graphqlRequest<UpdateHomePageResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      if (response.errors) {
+        console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       }
     } catch (err) {
       console.error("更新失敗:", err);

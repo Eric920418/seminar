@@ -3,6 +3,8 @@ import "./globals.css";
 import { ModalProvider } from "@/components/ModalContext";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import { Noto_Sans_TC } from "next/font/google";
+import { Inter } from "next/font/google";
+import { Providers } from "./providers";
 
 // 設定字體
 const notoSansTC = Noto_Sans_TC({
@@ -11,6 +13,8 @@ const notoSansTC = Noto_Sans_TC({
   display: "swap",
   variable: "--font-noto-sans-tc",
 });
+
+const inter = Inter({ subsets: ["latin"] });
 
 // 默認favicon路徑
 const defaultFavicon = "/favicon.ico";
@@ -61,15 +65,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-TW" suppressHydrationWarning className={notoSansTC.variable}>
+    <html
+      lang="zh-TW"
+      suppressHydrationWarning
+      className={`${notoSansTC.variable} ${inter.className}`}
+    >
       <head>
         {/* 預加載關鍵圖片 */}
         <link rel="preload" as="image" href="/banner/Group.png" />
       </head>
       <body>
-        <ModalProvider>
-          <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
-        </ModalProvider>
+        <Providers>
+          <ModalProvider>
+            <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+          </ModalProvider>
+        </Providers>
       </body>
     </html>
   );

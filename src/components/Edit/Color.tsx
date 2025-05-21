@@ -1,18 +1,41 @@
 "use client";
 import { useState, useEffect } from "react";
 import { gql } from "graphql-tag";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
+
+// GraphQL 查詢類型定義
+interface ColorData {
+  color: Array<{
+    id: string;
+    section1: {
+      primary: string;
+      secondary: string;
+      third: string;
+      black: string;
+      white: string;
+    };
+  }>;
+}
+
+interface UpdateColorResult {
+  updateColor: {
+    id: string;
+  };
+}
 
 const UPDATE_PAGE = gql`
-  mutation UpdateColor($input: UpdateColorInput!) {
+  mutation updateColor($input: UpdateColorInput!) {
     updateColor(input: $input) {
-      section1
+      id
     }
   }
 `;
 
-const query = `
-  query color {
+const GET_PAGE = gql`
+  query getColor {
     color {
+      id
       section1
     }
   }
@@ -28,182 +51,175 @@ export const Color = () => {
     editor5: "",
   });
 
+  const { data: session } = useSession();
+
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const { data } = await res.json();
-
-      setEditorColor({
-        editor1: data.color[0].section1.primary,
-        editor2: data.color[0].section1.secondary,
-        editor3: data.color[0].section1.third,
-        editor4: data.color[0].section1?.black,
-        editor5: data.color[0].section1?.white,
-      });
-    };
-
     fetchData();
   }, []);
-  const handleEditorChange2 = (id: string, content: string) => {
-    setEditorColor((prev) => ({
-      ...prev,
-      [id]: content,
-    }));
+
+  // 使用通用 GraphQL 客戶端獲取數據
+  const fetchData = async () => {
+    try {
+      const data = await graphqlRequest<ColorData>(
+        GET_PAGE.loc?.source.body || ""
+      );
+      if (data?.color && data.color.length > 0) {
+        const colorData = data.color[0];
+        setEditorColor({
+          editor1: colorData.section1?.primary || "",
+          editor2: colorData.section1?.secondary || "",
+          editor3: colorData.section1?.third || "",
+          editor4: colorData.section1?.black || "",
+          editor5: colorData.section1?.white || "",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const handleUpdate = async () => {
-    setIsLoading(true);
-    const input = {
-      section1: {
-        primary: editorColor.editor1,
-        secondary: editorColor.editor2,
-        third: editorColor.editor3,
-        black: editorColor.editor4,
-        white: editorColor.editor5,
-      },
-    };
-
+  // 使用通用 GraphQL 客戶端更新數據
+  const updateData = async (input: any) => {
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
-      }
-    } catch (err) {
-      console.error("更新失敗:", err);
+      setIsLoading(true);
+      const result = await graphqlRequest<UpdateColorResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      return result;
+    } catch (error) {
+      console.error("Error updating data:", error);
+      throw error;
     } finally {
-      alert("更新成功");
       setIsLoading(false);
     }
   };
 
+  const handleEditorChange1 = (value: string) => {
+    setEditorColor((prev) => ({ ...prev, editor1: value }));
+  };
+
+  const handleEditorChange2 = (value: string) => {
+    setEditorColor((prev) => ({ ...prev, editor2: value }));
+  };
+
+  const handleEditorChange3 = (value: string) => {
+    setEditorColor((prev) => ({ ...prev, editor3: value }));
+  };
+
+  const handleEditorChange4 = (value: string) => {
+    setEditorColor((prev) => ({ ...prev, editor4: value }));
+  };
+
+  const handleEditorChange5 = (value: string) => {
+    setEditorColor((prev) => ({ ...prev, editor5: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateData({
+        section1: {
+          primary: editorColor.editor1,
+          secondary: editorColor.editor2,
+          third: editorColor.editor3,
+          black: editorColor.editor4,
+          white: editorColor.editor5,
+        },
+      });
+      alert("更新成功！");
+    } catch (error) {
+      alert(`更新失敗: ${error instanceof Error ? error.message : "未知錯誤"}`);
+    }
+  };
+
   return (
-    <div>
-      {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-5 rounded-lg flex flex-col items-center">
-            <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin mb-3"></div>
-            <p className="text-gray-700">資料處理中，請稍候...</p>
-          </div>
+    <div className="grid grid-cols-1 gap-6">
+      <div className="bg-white p-4 rounded shadow">
+        <div className="flex items-center">
+          <div
+            className={`w-[48px] h-[48px] m-2 rounded-full`}
+            style={{ backgroundColor: editorColor.editor1 }}
+          ></div>
+          <label className="block font-medium mb-2">主色：</label>
         </div>
-      )}
-      <div className="text-32M mb-6">顏色</div>
-      <div className="flex flex-col gap-[16px]">
-        <div className="relative bg-gray-200 w-full p-3">
-          <div className="  overflow-hidden transition-all duration-500 ease-in-out">
-            <div className="flex flex-col gap-3 mt-5">
-              <div className="flex flex-col gap-6">
-                <div>
-                  <div
-                    className={`w-[48px] h-[48px]`}
-                    style={{ backgroundColor: editorColor.editor1 }}
-                  ></div>
-                  <input
-                    type="text"
-                    value={editorColor.editor1}
-                    placeholder="主色 primary"
-                    onChange={(e) =>
-                      handleEditorChange2("editor1", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div>
-                <div>
-                  <div
-                    className={`w-[48px] h-[48px]`}
-                    style={{ backgroundColor: editorColor.editor2 }}
-                  ></div>
-                  <input
-                    type="text"
-                    value={editorColor.editor2}
-                    placeholder="次要色 secondary"
-                    onChange={(e) =>
-                      handleEditorChange2("editor2", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div>
-                <div>
-                  <div
-                    className={`w-[48px] h-[48px]`}
-                    style={{ backgroundColor: editorColor.editor3 }}
-                  ></div>
-                  <input
-                    type="text"
-                    value={editorColor.editor3}
-                    placeholder="細節色 tertiary"
-                    onChange={(e) =>
-                      handleEditorChange2("editor3", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div>
-                <div>
-                  <div
-                    className={`w-[48px] h-[48px]`}
-                    style={{ backgroundColor: editorColor.editor4 }}
-                  ></div>
-                  <input
-                    type="text"
-                    value={editorColor.editor4}
-                    placeholder="黑色"
-                    onChange={(e) =>
-                      handleEditorChange2("editor4", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div>
-                <div>
-                  <div
-                    className={`w-[48px] h-[48px]`}
-                    style={{ backgroundColor: editorColor.editor5 }}
-                  ></div>
-                  <input
-                    type="text"
-                    value={editorColor.editor5}
-                    placeholder="白色"
-                    onChange={(e) =>
-                      handleEditorChange2("editor5", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div>
-                {/* <div>
-                  <div
-                    className={`w-[48px] h-[48px]`}
-                    style={{ backgroundColor: editorColor.editor6 }}
-                  ></div>
-                  <input
-                    type="text"
-                    placeholder="警告"
-                    onChange={(e) =>
-                      handleEditorChange2("editor6", e.target.value)
-                    }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                  />
-                </div> */}
-              </div>
-            </div>
-          </div>
+        <input
+          type="text"
+          value={editorColor.editor1}
+          onChange={(e) => handleEditorChange1(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <div className="flex items-center">
+          <div
+            className={`w-[48px] h-[48px] m-2 rounded-full`}
+            style={{ backgroundColor: editorColor.editor2 }}
+          ></div>
+          <label className="block font-medium mb-2">次色：</label>
         </div>
+        <input
+          type="text"
+          value={editorColor.editor2}
+          onChange={(e) => handleEditorChange2(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <div className="flex items-center">
+          <div
+            className={`w-[48px] h-[48px] m-2 rounded-full`}
+            style={{ backgroundColor: editorColor.editor3 }}
+          ></div>
+          <label className="block font-medium mb-2">輔色：</label>
+        </div>
+        <input
+          type="text"
+          value={editorColor.editor3}
+          onChange={(e) => handleEditorChange3(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <div className="flex items-center">
+          <div
+            className={`w-[48px] h-[48px] m-2 rounded-full`}
+            style={{ backgroundColor: editorColor.editor4 }}
+          ></div>
+          <label className="block font-medium mb-2">黑色：</label>
+        </div>
+        <input
+          type="text"
+          value={editorColor.editor4}
+          onChange={(e) => handleEditorChange4(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <div className="flex items-center">
+          <div
+            className={`w-[48px] h-[48px] m-2 rounded-full`}
+            style={{ backgroundColor: editorColor.editor5 }}
+          ></div>
+          <label className="block font-medium mb-2">白色：</label>
+        </div>
+        <input
+          type="text"
+          value={editorColor.editor5}
+          onChange={(e) => handleEditorChange5(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
       </div>
       <div className="mt-6">
         <button
-          onClick={handleUpdate}
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          onClick={handleSubmit}
+          disabled={isLoading}
+          className={`bg-green-500 text-white px-4 py-2 rounded ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          更新資料
+          {isLoading ? "更新中..." : "更新"}
         </button>
       </div>
     </div>

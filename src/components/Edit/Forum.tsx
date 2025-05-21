@@ -3,6 +3,8 @@ import { gql } from "graphql-tag";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
 
 const UPDATE_PAGE = gql`
   mutation UpdateForumPage($input: UpdateForumPageInput!) {
@@ -30,7 +32,23 @@ const query2 = `
   }
 `;
 
+interface CardType {
+  title: string;
+  id: string;
+}
+
+interface UpdateForumResult {
+  updateForumPage: {
+    section1: {
+      editorCards: CardType[];
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
 export const Forum = () => {
+  const { data: session } = useSession();
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
   const contentRef1 = useRef<HTMLDivElement>(null);
@@ -149,17 +167,13 @@ export const Forum = () => {
     };
 
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
+      const response = await graphqlRequest<UpdateForumResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      if (response.errors) {
+        console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       }
     } catch (err) {
       console.error("更新失敗:", err);

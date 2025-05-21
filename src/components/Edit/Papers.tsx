@@ -5,6 +5,8 @@ import Image from "next/image";
 import { QRCodeCanvas } from "qrcode.react";
 import dynamic from "next/dynamic";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
 
 const CustomEditor = dynamic(() => import("@/components/CustomEditor"), {
   ssr: false,
@@ -40,7 +42,23 @@ const query2 = `
   }
 `;
 
+interface UpdatePapersResult {
+  updatePapers: {
+    section1: {
+      editorCards: CardType[];
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
+interface CardType {
+  title: string;
+  content: string;
+  EnContent: string;
+}
 export const Papers = () => {
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
@@ -395,17 +413,13 @@ export const Papers = () => {
     };
 
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
+      const response = await graphqlRequest<UpdatePapersResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      if (response.errors) {
+        console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       }
     } catch (err) {
       console.error("更新失敗:", err);

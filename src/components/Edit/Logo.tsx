@@ -3,10 +3,30 @@ import { gql } from "graphql-tag";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
 
 // 匯入或定義 UploadResponse 介面
 interface UploadResponse {
   fileUrl: string;
+}
+
+interface UpdateLogoResult {
+  updateLogo: {
+    section1: {
+      image: string;
+      favicon: string;
+      footer: {
+        editor1: string;
+        editor2: string;
+        editor3: string;
+        editor4: string;
+      };
+    };
+  };
+  errors: {
+    message: string;
+  }[];
 }
 
 const UPDATE_PAGE = gql`
@@ -36,6 +56,7 @@ export const Logo = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const { data: session } = useSession();
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/graphql", {
@@ -81,17 +102,13 @@ export const Logo = () => {
     };
 
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
+      const response = await graphqlRequest<UpdateLogoResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      if (response.errors) {
+        console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       } else {
         // 替換或新增 favicon
         if (editorFavicon) {

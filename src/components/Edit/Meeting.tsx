@@ -5,6 +5,8 @@ import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
 
 const CustomEditor = dynamic(() => import("@/components/CustomEditor"), {
   ssr: false,
@@ -37,7 +39,25 @@ const query = `
     }
   }
 `;
+
+interface CardType {
+  date: string;
+  content: string;
+}
+
+interface UpdateMeetingResult {
+  updateMeetingPage: {
+    section1: {
+      editorCards: CardType[];
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
+
 export const Meeting = () => {
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
@@ -415,17 +435,13 @@ export const Meeting = () => {
     };
 
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
+      const response = await graphqlRequest<UpdateMeetingResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      if (response.errors) {
+        console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       }
     } catch (err) {
       console.error("更新失敗:", err);

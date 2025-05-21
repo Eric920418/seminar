@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import { gql } from "graphql-tag";
 import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
+import { useSession } from "next-auth/react";
+import { graphqlRequest } from "@/utils/graphqlClient";
 
 const UPDATE_PAGE = gql`
   mutation updateHost($input: UpdateHostInput!) {
@@ -19,6 +21,16 @@ const query = `
   }
 `;
 
+interface UpdateHostResult {
+  updateHost: {
+    section1: {
+      editorCards: Card[];
+    };
+  };
+  errors: {
+    message: string;
+  }[];
+}
 interface Card {
   name: string;
   school: string;
@@ -236,6 +248,7 @@ const Card = ({
 
 // 主元件
 export const Host = () => {
+  const { data: session } = useSession();
   // 將每張卡片初始資料包含 isOpen 和 isHost 屬性
   const [editorCards, setEditorCards] = useState<Card[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -318,17 +331,13 @@ export const Host = () => {
     };
 
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: UPDATE_PAGE.loc?.source.body,
-          variables: { input },
-        }),
-      });
-      const result = await response.json();
-      if (result.errors) {
-        console.error("更新失敗:", JSON.stringify(result.errors, null, 2));
+      const response = await graphqlRequest<UpdateHostResult>(
+        UPDATE_PAGE.loc?.source.body || "",
+        { input },
+        session
+      );
+      if (response.errors) {
+        console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       }
     } catch (err) {
       console.error("更新失敗:", err);
