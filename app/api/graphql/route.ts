@@ -1,10 +1,8 @@
 import { createSchema, createYoga } from "graphql-yoga";
 import { readdirSync, readFileSync } from "fs";
 import path from "path";
-import { getToken } from "next-auth/jwt";
 import resolvers from "../../../graphql/resolvers";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
 // 嚴格的 token 驗證函數

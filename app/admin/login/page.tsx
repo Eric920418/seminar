@@ -30,8 +30,6 @@ export default function LoginPage() {
         router.push("/admin/meeting");
         router.refresh();
       }
-    } catch (error) {
-      setError("登入過程中發生錯誤");
     } finally {
       setIsLoading(false);
     }
