@@ -92,7 +92,7 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <div className="h-auto laptop:h-[640px] desktop:h-[640px] flex justify-center items-center relative mt-[75px] laptop:mt-[0px] desktop:mt-[0px]">
+      <div className="h-auto laptop:h-[640px] desktop:h-[640px] flex justify-center items-center relative mt-[50px] laptop:mt-[0px] desktop:mt-[0px]">
         {editorBackground && (
           <Image
             className="w-full h-full object-contain laptop:object-cover desktop:object-cover"
