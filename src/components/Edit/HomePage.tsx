@@ -452,7 +452,10 @@ export const HomePage = () => {
                     onChange={(e) =>
                       handleEditorChange("editor1", e.target.value)
                     }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                      toggle ? "opacity-100" : "opacity-50"
+                    }`}
+                    disabled={!toggle}
                   />
                 </div>
                 <div className="w-1/2">
@@ -463,7 +466,10 @@ export const HomePage = () => {
                     onChange={(e) =>
                       handleEditorChange("editor2", e.target.value)
                     }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                      toggle ? "opacity-100" : "opacity-50"
+                    }`}
+                    disabled={!toggle}
                   />
                 </div>
               </div>
@@ -477,7 +483,10 @@ export const HomePage = () => {
                 placeholder="內文"
                 value={editorContents.editor3}
                 onChange={(e) => handleEditorChange("editor3", e.target.value)}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                  toggle ? "opacity-100" : "opacity-50"
+                }`}
+                disabled={!toggle}
               />
               <div className="desktop:mt-[18px] mt-[12px] flex items-center">
                 <div
@@ -507,7 +516,10 @@ export const HomePage = () => {
                     onChange={(e) =>
                       handleEditorChange("editor4", e.target.value)
                     }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                      toggle ? "opacity-100" : "opacity-50"
+                    }`}
+                    disabled={!toggle}
                   />
                 </div>
                 <div className="w-1/4">
@@ -518,7 +530,10 @@ export const HomePage = () => {
                     onChange={(e) =>
                       handleEditorChange("editor5", e.target.value)
                     }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                      toggle ? "opacity-100" : "opacity-50"
+                    }`}
+                    disabled={!toggle}
                   />
                 </div>
                 <div className="w-1/4">
@@ -529,7 +544,10 @@ export const HomePage = () => {
                     onChange={(e) =>
                       handleEditorChange("editor6", e.target.value)
                     }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                      toggle ? "opacity-100" : "opacity-50"
+                    }`}
+                    disabled={!toggle}
                   />
                 </div>
                 <div className="w-1/4">
@@ -540,7 +558,10 @@ export const HomePage = () => {
                     onChange={(e) =>
                       handleEditorChange("editor7", e.target.value)
                     }
-                    className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                      toggle ? "opacity-100" : "opacity-50"
+                    }`}
+                    disabled={!toggle}
                   />
                 </div>
               </div>
@@ -556,7 +577,10 @@ export const HomePage = () => {
                   onChange={(e) =>
                     handleEditorChange("editor8", e.target.value)
                   }
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                    className={`block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 ${
+                    toggle ? "opacity-100" : "opacity-50"   
+                  }`}
+                  disabled={!toggle}
                 />
               </div>
               <div className="mt-[12px]">
@@ -576,16 +600,25 @@ export const HomePage = () => {
               </div>
               <div className="mt-[12px]">
                 <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={toggle}
-                    className="w-4 h-4"
-                    name="toggle"
-                    onChange={() => setToggle(!toggle)}
-                  />
-                  <div className="text-black text-16M">
-                    是否顯示主視覺
-                  </div>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={toggle === true}
+                      onChange={() => setToggle(true)}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-black text-16M">顯示主視覺資訊</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={toggle === false}
+                      onChange={() => setToggle(false)}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-black text-16M">隱藏主視覺資訊</span>
+                  </label>
                 </div>
               </div>
             </div>
