@@ -64,10 +64,10 @@ export default function Page() {
 
   return (
     <div className="bg-[#FAFBFD]">
-      <div className="h-[640px] flex justify-center items-center relative">
+      <div className="h-auto laptop:h-[640px] desktop:h-[640px] flex justify-center items-center relative mt-[75px] laptop:mt-[0px] desktop:mt-[0px]">
         {editorBackground && (
           <Image
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain laptop:object-cover desktop:object-cover"
             src={editorBackground}
             alt="會議背景"
             width={1920}
@@ -75,13 +75,13 @@ export default function Page() {
           />
         )}
         <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-          <div className="text-third text-16M ">Project Showcase</div>
-          <div className="text-black text-48M ">
+          <div className="text-third text-14R laptop:text-16M desktop:text-16M ">Project Showcase</div>
+          <div className="text-black text-36M laptop:text-48M desktop:text-48M ">
             創新教材教具展-預見未來的學習​​
           </div>
         </div>
       </div>
-      <div className="pb-[64px] desktop:pb-[160px] pt-[64px] desktop:pt-[128px] mx-auto w-fit">
+      <div className="pb-[64px] laptop:pb-[128px] desktop:pb-[160px] pt-[32px] laptop:pt-[128px] desktop:pt-[128px] mx-auto w-fit">
         <div className="max-w-[1664px] mx-auto flex space-x-[32px]">
           <div className="hidden  w-[304px] desktop:flex flex-col gap-[24px]">
             {nav.map((item, index) => (

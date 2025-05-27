@@ -178,10 +178,10 @@ export default function Page() {
     <>
       <style dangerouslySetInnerHTML={{ __html: modalScrollbarStyles }} />
       <div className="bg-[#FAFBFD]">
-        <div className="h-[640px] flex justify-center items-center relative">
+        <div className="h-auto laptop:h-[640px] desktop:h-[640px] flex justify-center items-center relative mt-[75px] laptop:mt-[0px] desktop:mt-[0px]">
           {editorBackground && (
             <Image
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain laptop:object-cover desktop:object-cover"
               src={editorBackground}
               alt="會議背景"
               width={1920}
@@ -189,13 +189,13 @@ export default function Page() {
             />
           )}
           <div className="text-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-            <div className="text-third text-16M">Workshop​​</div>
-            <div className="text-black text-48M">影片專區​​​</div>
+            <div className="text-third text-14R laptop:text-16M desktop:text-16M ">Workshop​​</div>
+            <div className="text-black text-36M laptop:text-48M desktop:text-48M ">影片專區​​​</div>
           </div>
         </div>
-        <div className="mx-auto  pt-[128px] pb-[160px] max-w-[1200px]  px-3 desktop:px-0">
+        <div className="mx-auto  pt-[32px] laptop:pt-[128px] desktop:pt-[128px] pb-[64px] laptop:pb-[128px] desktop:pb-[160px] max-w-[1200px]  px-3 desktop:px-0">
           <div>
-            <div className="text-16M text-primary text-center">
+            <div className="text-14R laptop:text-16M desktop:text-16M text-primary text-center">
               International Conference on Teacher Education
             </div>
             <div className="relative w-fit  mx-auto">
