@@ -85,7 +85,7 @@ export const MainVision = () => {
   }
 
   return (
-    <div className="relative h-[26.5vh] laptop:h-screen desktop:h-screen w-screen mt-[85px] laptop:mt-[0px] desktop:mt-[0px]">
+    <div className="relative h-[29vh] laptop:h-screen desktop:h-screen w-screen mt-[85px] laptop:mt-[0px] desktop:mt-[0px]">
       <div className="absolute inset-0 bg-white flex items-center justify-center">
         <Image
           src={`${data.homePage[0].section1.image}`}
