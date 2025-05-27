@@ -85,7 +85,7 @@ export const MainVision = () => {
   }
 
   return (
-    <div className="relative h-[300px] laptop:h-screen desktop:h-screen w-screen mt-[85px] laptop:mt-[0px] desktop:mt-[0px]">
+    <div className="relative h-[26.5vh] laptop:h-screen desktop:h-screen w-screen mt-[85px] laptop:mt-[0px] desktop:mt-[0px]">
       <div className="absolute inset-0 bg-white flex items-center justify-center">
         <Image
           src={`${data.homePage[0].section1.image}`}
@@ -97,7 +97,7 @@ export const MainVision = () => {
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
           onLoadingComplete={() => setIsImageLoading(false)}
-          className={`w-full h-auto max-h-screen object-contain transition-opacity duration-500 ${
+          className={`w-full h-auto max-h-screen object-cover transition-opacity duration-500 ${
             isImageLoading ? "opacity-0" : "opacity-100"
           }`}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 1920px"
@@ -105,15 +105,15 @@ export const MainVision = () => {
       </div>
       <div className="absolute inset-0 flex justify-center flex-col mx-[6%] z-10">
         <div className="flex">
-          <div className="text-[#009982] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8 opacity-0 animate-fadeIn">
+          <div className="text-[#009982] text-[60px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title me-8 opacity-0 animate-fadeIn">
             {data.homePage[0].section1.title.left}
           </div>
-          <div className="text-[#FFFFFF] text-[70px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title opacity-0 animate-fadeIn">
+          <div className="text-[#FFFFFF] text-[60px] laptop:text-[100px] desktop:text-[160px] font-[700] leading-[142%] tracking-[4%] font-title opacity-0 animate-fadeIn">
             {data.homePage[0].section1.title.right}
           </div>
         </div>
         <div
-          className="text-black text-[24px] laptop:text-[36px] desktop:text-[48px] leading-[144%] mt-[-14px] opacity-0 animate-fadeIn"
+          className="text-black text-[20px] laptop:text-[36px] desktop:text-[48px] leading-[144%] mt-[-14px] opacity-0 animate-fadeIn"
           dangerouslySetInnerHTML={{
             __html: data.homePage[0].section1.content.replace(/\n/g, "<br>"),
           }}
@@ -136,7 +136,7 @@ export const MainVision = () => {
         <div className="text-black text-[12px] laptop:text-[18px] desktop:text-[24px] font-[500] leading-none">
           {data.homePage[0].section1.location}
         </div>
-        <div className="mt-[72px]">
+        <div className="mt-[36px] laptop:mt-[72px] desktop:mt-[72px]">
           <MainVisionButton url="/meeting/3" />
         </div>
       </div>

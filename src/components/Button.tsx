@@ -22,11 +22,11 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <div
-      className={`w-fit ${bgColor} flex items-center gap-2 ${padding} rounded-[100px] cursor-pointer`}
+      className={`w-[150px] laptop:w-fit desktop:w-fit ${bgColor} flex items-center gap-2 ${padding} rounded-[100px] cursor-pointer`}
       onClick={onClick}
     >
       <span
-        className={`${textColor} ${textSize} w-[100px] desktop:w-[150px] text-nowrap`}
+        className={`${textColor} ${textSize} w-[100px] text-nowrap`}
       >
         {text}
       </span>
