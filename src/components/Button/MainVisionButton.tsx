@@ -17,10 +17,10 @@ export const MainVisionButton: React.FC<ConferenceVisionButtonProps> = ({
   return (
     <Button
       text="會議議程"
-      textSize="text-16M"
+      textSize="text-14R laptop:text-20M desktop:text-20M"
       textColor="text-white"
       bgColor="bg-black"
-      padding="p-[16px_24px_16px_24px]"
+      padding="p-[12px_20px_12px_20px] laptop:p-[20px_36px_20px_36px] desktop:p-[20px_36px_20px_36px]"
       src="/button/arrow_right_2.svg"
       onClick={handOnClick}
     ></Button>

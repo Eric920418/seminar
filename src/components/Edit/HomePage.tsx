@@ -50,6 +50,7 @@ interface UpdateHomePageResult {
       subTitle: string[];
       location: string;
       image: string;
+      toggle: boolean;
     };
     section2: {
       cards: {
@@ -89,6 +90,7 @@ interface UpdateHomePageResult {
 export const HomePage = () => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [toggle, setToggle] = useState(false);
   // 各區塊狀態定義
   const [isOpen1, setIsOpen1] = useState(false);
   const [height1, setHeight1] = useState(0);
@@ -125,6 +127,7 @@ export const HomePage = () => {
     editor7: "",
     editor8: "",
     editor9: "",
+    editor10: "",
   });
   const [editorCards, setEditorCards] = useState([]);
   // const [uploadImage, setUploadImage] = useState();
@@ -169,7 +172,10 @@ export const HomePage = () => {
           editor7: data.homePage[0].section1?.subTitle?.[3],
           editor8: data.homePage[0].section1.location || "",
           editor9: data.homePage[0].section1.image,
+          editor10: data.homePage[0].section1.toggle,
         });
+
+        setToggle(data.homePage[0].section1.toggle)
 
         setEditorCards(data.homePage[0].section2?.cards || []);
 
@@ -215,6 +221,7 @@ export const HomePage = () => {
     editorContents.editor7,
     editorContents.editor8,
     editorContents.editor9,
+    editorContents.editor10,
   ]);
 
   useEffect(() => {
@@ -345,6 +352,7 @@ export const HomePage = () => {
         ],
         location: editorContents.editor8,
         image: editorContents.editor9,
+        toggle: toggle,
       },
       section2: {
         cards: editorCards,
@@ -391,6 +399,8 @@ export const HomePage = () => {
       setIsLoading(false);
     }
   };
+  
+  console.log(toggle)
 
   return (
     <div>
@@ -563,6 +573,20 @@ export const HomePage = () => {
                     handleImageUploadBanner("editor9", { fileUrl: filename })
                   }
                 />
+              </div>
+              <div className="mt-[12px]">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={toggle}
+                    className="w-4 h-4"
+                    name="toggle"
+                    onChange={() => setToggle(!toggle)}
+                  />
+                  <div className="text-black text-16M">
+                    是否顯示主視覺
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <div
-      className={`w-[150px] laptop:w-fit desktop:w-fit ${bgColor} flex items-center gap-2 ${padding} rounded-[100px] cursor-pointer`}
+      className={`w-[125px] laptop:w-fit desktop:w-fit h-[40px] laptop:h-auto desktop:h-auto ${bgColor} flex items-center gap-1 laptop:gap-2 desktop:gap-2 ${padding} rounded-[100px] cursor-pointer`}
       onClick={onClick}
     >
       <span
