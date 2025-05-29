@@ -149,7 +149,7 @@ export const MainVision = () => {
         </div>
       ) : (
         <div className="relative laptop:h-screen desktop:h-screen w-screen mt-[75px] laptop:mt-[0px] desktop:mt-[0px]">
-          <div className="bg-white flex items-center justify-center ">
+          <div className="bg-white flex items-center justify-center max-h-[100vh]">
             <Image
               src={`${data.homePage[0].section1.image}`}
               alt="首頁背景"
