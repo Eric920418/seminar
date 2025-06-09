@@ -121,3 +121,15 @@ model Color{
   updatedAt   DateTime  @default(now())
   section1    Json  
 }
+
+// IP 封鎖追蹤模型
+model IpBlocklist {
+  id        Int      @id @default(autoincrement())
+  ipAddress String   @unique
+  attempts  Int      @default(0)
+  blockedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("ip_blocklist")
+}
