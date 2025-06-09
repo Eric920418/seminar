@@ -11,6 +11,7 @@ interface IpSecurityStatus {
   remainingAttempts?: number;
   remainingMinutes?: number;
   message?: string;
+  clientIP?: string; // 添加客戶端 IP
 }
 
 export default function LoginPage() {
@@ -27,6 +28,7 @@ export default function LoginPage() {
     try {
       const response = await fetch('/api/auth/ip-security');
       const data: IpSecurityStatus = await response.json();
+      console.log("data", data);
       setIpStatus(data);
       setIsBlocked(data.blocked);
       
@@ -200,6 +202,20 @@ export default function LoginPage() {
               為了保護系統安全，連續 5 次登入失敗的 IP 地址將被暫時封鎖 30 分鐘。
               請確認您的帳號密碼正確，或聯繫系統管理員。
             </p>
+          </div>
+        )}
+        
+        {/* 診斷信息（開發環境） */}
+        {process.env.NODE_ENV === 'development' && ipStatus?.clientIP && (
+          <div className="mt-4 p-2 bg-gray-50 rounded text-xs text-gray-500 border border-gray-200">
+            <p>🔍 診斷信息：</p>
+            <p>檢測到的 IP/ID: <code className="bg-gray-200 px-1 rounded">{ipStatus.clientIP}</code></p>
+            {ipStatus.clientIP.startsWith('dev-') && (
+              <p className="mt-1 text-orange-600">⚠️ 開發環境：使用會話標識符而非真實 IP</p>
+            )}
+            {ipStatus.clientIP.startsWith('unknown-') && (
+              <p className="mt-1 text-red-600">❌ 無法獲取真實 IP，使用臨時標識符</p>
+            )}
           </div>
         )}
       </div>
