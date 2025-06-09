@@ -25,7 +25,7 @@ function getClientIP(request: NextRequest): string {
 
   // 記錄所有 header 以便診斷
   console.log('📍 IP 來源診斷:', {
-    headers: Object.entries(ipSources).filter(([_, value]) => value),
+    headers: Object.entries(ipSources).filter(([value]) => value),
     url: request.url,
     method: request.method
   });
