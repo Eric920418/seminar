@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // 最大失敗嘗試次數
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 3;
 // 封鎖時間（分鐘）
 const BLOCK_DURATION_MINUTES = 30;
 
