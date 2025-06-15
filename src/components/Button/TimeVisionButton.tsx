@@ -17,7 +17,7 @@ export const TimeVisionButton = ({
   textColor = "text-white",
   textSize = "text-16M",
   bgColor = "bg-third",
-  padding = "p-[16px_24px_16px_24px]",
+  padding = "p-[16px_16px_16px_16px]",
   src = "/button/arrow_right_2.svg",
 }: TimeVisionButtonProps) => {
   const handOnClick = () => {

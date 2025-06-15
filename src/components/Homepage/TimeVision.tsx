@@ -56,7 +56,7 @@ export const TimeVision = () => {
                     textColor="text-white"
                     textSize="text-16M"
                     bgColor="bg-third"
-                    padding="p-[16px_24px_16px_24px]"
+                    padding="p-[16px_16px_16px_16px]"
                     src="/button/arrow_right_2.svg"
                     url="https://drive.google.com/file/d/11HRYM0QUj7sLgM8OXcz8t6n3Ll9vRcBv/view?usp=drive_link"
                   />

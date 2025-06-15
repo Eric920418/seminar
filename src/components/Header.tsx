@@ -58,20 +58,20 @@ export const Header = () => {
     {
       title: "創新教材教具展​",
       path: "/exhibition",
-      inSelect: [{ title: "作品展示", path: "/exhibition", index: 0 }],
+      inSelect: [{ title: "作品展示", path: "exhibition", index: 0 }],
     },
     {
       title: "ICTE論文",
       path: "/papers",
       inSelect: [
-        { title: "徵文主題與論文格式", path: "/papers", index: 0 },
+        { title: "徵文主題與論文格式", path: "papers", index: 0 },
         {
           title: "論文摘要審查結果公告",
-          path: "/papers",
+          path: "papers",
           index: 1,
         },
-        { title: "口頭發表場次", path: "/papers", index: 2 },
-        { title: "海報發表場次", path: "/papers", index: 3 },
+        { title: "口頭發表場次", path: "papers", index: 2 },
+        { title: "海報發表場次", path: "papers", index: 3 },
       ],
     },
     {
