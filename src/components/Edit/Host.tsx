@@ -38,7 +38,7 @@ interface Card {
   interests: string;
   experience: string;
   image: string;
-  isHost: boolean;
+  role: "host" | "panelist" | "speaker";
   isOpen: boolean;
 }
 
@@ -48,7 +48,7 @@ interface CardProps {
   onToggle: (index: number) => void;
   onCardChange: (index: number, field: keyof Card, value: any) => void;
   handleImageUpload: (data: {
-    fileUrl: { fileUrl: string };
+    imageUrl: string;
     index: number;
   }) => void;
 }
@@ -69,6 +69,25 @@ const Card = ({
       setContentHeight(contentRef.current.scrollHeight);
     }
   }, [card.isOpen]);
+
+  // 根據身份獲取顯示名稱
+  const getRoleDisplayName = (role: string) => {
+    switch (role) {
+      case "host":
+        return "主持人";
+      case "speaker":
+        return "主講人";
+      case "panelist":
+        return "與談人";
+      default:
+        return "主持人";
+    }
+  };
+
+  // 根據身份獲取背景圖片索引（主持人和主講人使用相同背景）
+  const getBackgroundImageIndex = (role: string) => {
+    return role === "host" || role === "speaker" ? "1" : "0";
+  };
 
   return (
     <div className="bg-gray-200 p-6 rounded-xl w-full">
@@ -92,11 +111,9 @@ const Card = ({
       >
         {/* 卡片內容範例，可依需求自行調整 */}
         <div
-          className="rounded-[40px] flex min-h-[538px]"
+          className="rounded-[40px] flex min-h-[580px]"
           style={{
-            backgroundImage: `url('/banner/card-img${
-              card.isHost ? "1" : "0"
-            }.png')`,
+            backgroundImage: `url('/banner/card-img${getBackgroundImageIndex(card.role)}.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -107,12 +124,12 @@ const Card = ({
               className="absolute top-0 left-0 p-[32px] text-white text-[32px] font-[700] font-NotoSansTC z-10"
               style={{ writingMode: "vertical-rl" }}
             >
-              {card.isHost ? "主 持 人" : "與 談 人"}
+              {getRoleDisplayName(card.role).split("").join(" ")}
             </div>
             <div
               className={`absolute desktop:top-[80px] desktop:left-[50px] bg-white 
           ${
-            !card.isHost
+            card.role === "panelist"
               ? "rounded-[40px] rotate-[-4deg] translate-y-5 translate-x-5 w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
               : "rounded-full w-[200px] top-18 left-15 h-[200px] desktop:w-[316px] desktop:h-[316px]"
           } `}
@@ -124,12 +141,12 @@ const Card = ({
                   width={316}
                   height={316}
                   className={`w-full h-full object-cover ${
-                    !card.isHost ? "rounded-[40px]" : "rounded-full"
+                    card.role === "panelist" ? "rounded-[40px]" : "rounded-full"
                   } `}
                 />
               )}
             </div>
-            <div className="absolute top-95 left-0 p-[32px]">
+            <div className="absolute top-85 left-0 p-[32px]">
               <div className="text-white text-[32px] font-[700] font-NotoSansTC">
                 {card.name}​​​​ ​
               </div>
@@ -143,7 +160,7 @@ const Card = ({
           </div>
           <div className="bg-amber-50 p-[32px] flex-1 rounded-r-[40px]">
             <div className="text-primary text-16M font-NotoSansTC">
-              關於主持人​
+              關於{getRoleDisplayName(card.role)}​
             </div>
             <div className="mt-[24px] bg-[#FFD8561A] p-[16px] rounded-[16px]">
               <div className="text-[#252F3880] text-14R font-NotoSansTC">
@@ -183,20 +200,19 @@ const Card = ({
 
         {/* 可在此處加入編輯欄位 */}
         <div>
-          <div className="flex py-2 space-x-3 items-center">
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={card.isHost}
-                onChange={(e) =>
-                  onCardChange(index, "isHost", e.target.checked)
-                }
-                className="w-4 h-4"
-              />
-              <label className="text-sm text-gray-700">
-                {card.isHost ? "主持人" : "與談人"}
-              </label>
-            </div>
+          <div className="flex items-center pt-3 space-x-2">
+            <label className="text-sm text-gray-700 font-medium">身份類型：</label>
+            <select
+              value={card.role}
+              onChange={(e) => onCardChange(index, "role", e.target.value as "host" | "panelist" | "speaker")}
+              className="rounded-md bg-white px-3 py-1 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-2"
+            >
+              <option value="host">主持人</option>
+              <option value="speaker">主講人</option>
+              <option value="panelist">與談人</option>
+            </select>
+          </div>
+          <div className="flex pb-2 space-x-3 items-center">
             <input
               type="text"
               placeholder="姓名"
@@ -235,8 +251,8 @@ const Card = ({
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             />
             <ImageUploader
-              onImageUpload={(filename) =>
-                handleImageUpload({ fileUrl: { fileUrl: filename }, index })
+              onImageUpload={(uploadResponse) =>
+                handleImageUpload({ imageUrl: uploadResponse.imageUrl, index })
               }
             />
           </div>
@@ -249,7 +265,7 @@ const Card = ({
 // 主元件
 export const Host = () => {
   const { data: session } = useSession();
-  // 將每張卡片初始資料包含 isOpen 和 isHost 屬性
+  // 將每張卡片初始資料包含 isOpen 和 role 屬性
   const [editorCards, setEditorCards] = useState<Card[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -260,11 +276,11 @@ export const Host = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      // 如果後端資料沒有 isHost 屬性，預設為 true
+      // 如果後端資料沒有 role 屬性，根據 isHost 轉換
       const cards: Card[] = data.host[0].section1.editorCards.map(
-        (card: Partial<Card>) => ({
+        (card: any) => ({
           ...card,
-          isHost: card.isHost !== undefined ? card.isHost : true,
+          role: card.role || (card.isHost ? "host" : "panelist"), // 向後兼容舊數據
         })
       );
       setEditorCards(cards);
@@ -296,7 +312,7 @@ export const Host = () => {
       interests: "",
       experience: "",
       image: "",
-      isHost: true, // 預設為主持人
+      role: "host", // 預設為主持人
       isOpen: false, // 初始狀態為收合
     };
     setEditorCards([...editorCards, newCard]);
@@ -309,14 +325,14 @@ export const Host = () => {
 
   // 圖片上傳處理
   const handleImageUpload = (data: {
-    fileUrl: { fileUrl: { fileUrl: string } };
+    imageUrl: string;
     index: number;
   }) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
       newCards[data.index] = {
         ...newCards[data.index],
-        image: data.fileUrl.fileUrl.fileUrl,
+        image: data.imageUrl,
       };
       setEditorCards(newCards);
     }

@@ -56,6 +56,7 @@ interface CardType {
   week: string;
   location: string;
   host: string;
+  speaker: string;
   person: string;
   abstract: string;
   keywords: string;
@@ -67,7 +68,7 @@ interface CardType {
 const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
-  const [selectHost, setSelectHost] = useState<{ name: string }[]>([]);
+  const [selectHost, setSelectHost] = useState<{ name: string; role: string }[]>([]);
   // 用來暫存下拉選單目前選取的與談人
   const [selectedPersonToAdd, setSelectedPersonToAdd] = useState("");
 
@@ -75,7 +76,21 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
-  }, [card.isOpen]);
+  }, [card.isOpen, card.people]);
+
+  // 將英文角色轉換為中文顯示
+  const getRoleDisplayName = (role: string) => {
+    switch (role) {
+      case "host":
+        return "主持人";
+      case "speaker":
+        return "主講人";
+      case "panelist":
+        return "與談人";
+      default:
+        return "主持人";
+    }
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -87,12 +102,15 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
         }),
       });
       const { data } = await res.json();
+      console.log(data.host[0].section1.editorCards);
       setSelectHost((prevHosts) => {
         const newHosts = data.host[0].section1.editorCards.map(
-          (hostCard: { name: string }) => ({
+          (hostCard: { name: string; role: string; school: string }) => ({
             name: hostCard.name,
+            role: hostCard.role || "host", // 添加預設值防止 undefined
           })
         );
+        console.log(newHosts);
         return [...prevHosts, ...newHosts];
       });
     } catch (error) {
@@ -118,7 +136,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
 
   // 刪除某一位與談人
   const removePerson = (idx: number) => {
-    const newPeople = card.people.filter((_, i) => i !== idx);
+    const newPeople = card.people.filter((_: any, i: number) => i !== idx);
     onCardChange(index, "people", newPeople);
   };
 
@@ -190,10 +208,20 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
                   <div
                     className="mt-[8px] text-black text-16M"
                     dangerouslySetInnerHTML={{
-                      __html: card.host.replace(/\n/g, "<br>"),
+                      __html: (card.host || "").replace(/\n/g, "<br>"),
                     }}
                   ></div>
                 </div>
+              </div>
+              <div className="border my-[32px] border-[#252F381A]"></div>
+              <div>
+                <div className="text-[#252F3880] text-14R">主講人</div>
+                <div
+                  className="mt-[8px] text-black text-16M"
+                  dangerouslySetInnerHTML={{
+                    __html: (card.speaker || "").replace(/\n/g, "<br>"),
+                  }}
+                ></div>
               </div>
               <div className="border my-[32px] border-[#252F381A]"></div>
               <div>
@@ -201,7 +229,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
                 <div
                   className="mt-[8px] text-black text-16M"
                   dangerouslySetInnerHTML={{
-                    __html: card.person.replace(/\n/g, "<br>"),
+                    __html: (card.person || "").replace(/\n/g, "<br>"),
                   }}
                 ></div>
               </div>
@@ -288,13 +316,19 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
           <div className="flex pt-2 space-x-3">
             <textarea
               placeholder="主持人"
-              value={card.host}
+              value={card.host || ""}
               onChange={(e) => onCardChange(index, "host", e.target.value)}
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             />
             <textarea
+              placeholder="主講人"
+              value={card.speaker || ""}
+              onChange={(e) => onCardChange(index, "speaker", e.target.value)}
+              className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+            />
+            <textarea
               placeholder="與談人"
-              value={card.person}
+              value={card.person || ""}
               onChange={(e) => onCardChange(index, "person", e.target.value)}
               className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             />
@@ -327,16 +361,18 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
               <option value="">請選擇一個與談人</option>
               {selectHost.map((host, idx) => (
                 <option key={idx} value={host.name}>
-                  {host.name}
+                  {host.name}({getRoleDisplayName(host.role)})
                 </option>
               ))}
             </select>
-            <button
-              onClick={addPerson}
-              className="bg-blue-500 text-white px-3 py-1 rounded"
-            >
-              新增
-            </button>
+            {!card.people.includes(selectedPersonToAdd) && (
+              <button
+                onClick={addPerson}
+                className="bg-blue-500 text-white px-3 py-1 rounded"
+              >
+                新增
+              </button>
+            )}
           </div>
           {card.people && card.people.length > 0 && (
             <ul className="mt-2">
@@ -388,7 +424,16 @@ export const Event = () => {
       });
       const { data } = await res.json();
 
-      setEditorCards(data.event[0].section1.editorCards);
+      // 確保所有字段都有預設值，特別是新添加的 speaker 字段
+      const cardsWithDefaults = data.event[0].section1.editorCards.map((card: any) => ({
+        ...card,
+        speaker: card.speaker || "", // 為舊資料添加預設值
+        host: card.host || "",
+        person: card.person || "",
+        people: card.people || [],
+      }));
+
+      setEditorCards(cardsWithDefaults);
     };
 
     fetchData();
@@ -422,11 +467,12 @@ export const Event = () => {
         week: "",
         location: "",
         host: "",
+        speaker: "",
         person: "",
         abstract: "",
         keywords: "",
         people: [],
-        isOpen: false, // 初始狀態為收合
+        isOpen: false,
       },
     ]);
   };

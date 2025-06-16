@@ -3,6 +3,37 @@ import { useState, useRef, useEffect } from "react";
 import { PeopleCard } from "@/components/Speech/PeopleCard";
 import Image from "next/image";
 
+// 定義類型介面
+interface SpeechData {
+  time: string;
+  time2: string;
+  week: string;
+  title: string;
+  title2: string;
+  content: string;
+  host: string;
+  location: string;
+  person: string;
+  people: string[];
+  abstract?: string;
+  keywords?: string;
+}
+
+interface EditorCard {
+  name: string;
+  school: string;
+  highest: string;
+  interests: string;
+  experience: string;
+  image: string;
+  role?: "host" | "panelist" | "speaker";
+  isHost?: boolean;
+}
+
+interface SpeechCardProps {
+  data: SpeechData;
+}
+
 const query2 = `
   query host {
     host {
@@ -11,11 +42,11 @@ const query2 = `
   }
 `;
 
-export const SpeechCard = ({ data }) => {
+export const SpeechCard = ({ data }: SpeechCardProps) => {
   const [showDetail, setShowDetail] = useState(false);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-  const [selectHost, setSelectHost] = useState([]);
+  const [selectHost, setSelectHost] = useState<EditorCard[]>([]);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -24,7 +55,7 @@ export const SpeechCard = ({ data }) => {
   }, [showDetail]);
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || !data.people) return;
     async function fetchData() {
       try {
         const res = await fetch("/api/graphql", {
@@ -36,11 +67,20 @@ export const SpeechCard = ({ data }) => {
         });
         const useData = await res.json();
 
-        const matchedCards = useData.data.host[0].section1.editorCards.filter(
-          (editor) => data.people.includes(editor.name)
-        );
+        // 按照 data.people 的順序來排列卡片
+        const sortedCards: EditorCard[] = [];
+        
+        // 遍歷 data.people 中的每個名字，找到對應的卡片
+        data.people.forEach((personName: string) => {
+          const matchedCard = useData.data.host[0].section1.editorCards.find(
+            (editor: EditorCard) => editor.name === personName
+          );
+          if (matchedCard) {
+            sortedCards.push(matchedCard);
+          }
+        });
 
-        setSelectHost(matchedCards);
+        setSelectHost(sortedCards);
       } catch (error) {
         console.error("Fetch error: ", error);
       }
@@ -181,7 +221,7 @@ export const SpeechCard = ({ data }) => {
           )}
           {selectHost &&
             selectHost.map((card, i) => (
-              <PeopleCard card={card} useIndex={i} key={i} />
+              <PeopleCard card={card} key={i} />
             ))}
         </div>
       </div>

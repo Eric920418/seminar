@@ -13,12 +13,12 @@ const ALLOWED_IP_RANGES = [
   { ip: "140.138.168.96" },
   { ip: "120.127.47.50" },  
   // 本地開發環境常見的 IP 地址
-  // { ip: "127.0.0.1" },      // IPv4 localhost
-  // { ip: "::1" },            // IPv6 localhost
-  // { ip: "localhost" },      // hostname localhost
-  // { ip: "::ffff:127.0.0.1" }, // IPv4-mapped IPv6 localhost
-  // { ip: "0.0.0.0" },        // 某些環境下的本地地址
-  // { ip: "unknown" },        // 當 IP 無法檢測時的備用
+  { ip: "127.0.0.1" },      // IPv4 localhost
+  { ip: "::1" },            // IPv6 localhost
+  { ip: "localhost" },      // hostname localhost
+  { ip: "::ffff:127.0.0.1" }, // IPv4-mapped IPv6 localhost
+  { ip: "0.0.0.0" },        // 某些環境下的本地地址
+  { ip: "unknown" },        // 當 IP 無法檢測時的備用
 ];
 
 // IP 地址轉換為數字的函數
