@@ -50,7 +50,7 @@ export const PeopleCard = ({ card }: PeopleCardProps) => {
       }}
     >
       {/* 左側：圖片與基本資訊 */}
-      <div className="relative w-full  desktop:w-[414px]">
+      <div className="relative w-full h-[300px] desktop:h-auto desktop:w-[414px]">
         <div
           className="absolute top-3 desktop:top-[-10px] desktop:left-[-10px] p-4 desktop:p-[32px] text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC z-10"
           style={{ writingMode: "vertical-rl" }}
@@ -80,7 +80,7 @@ export const PeopleCard = ({ card }: PeopleCardProps) => {
           )}
         </div>
         {/* 名字與學校資訊，手機版位置較低 */}
-        <div className="absolute top-50 desktop:top-80 left-0 p-4 desktop:p-[32px]">
+        <div className="absolute top-50 desktop:top-90 left-0 p-4 desktop:p-[32px]">
           <div className="text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC">
             {card.name} ​
           </div>
