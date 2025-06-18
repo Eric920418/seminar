@@ -146,7 +146,7 @@ const Card = ({
                 />
               )}
             </div>
-            <div className="absolute top-85 left-0 p-[32px]">
+            <div className="absolute top-90 left-0 p-[32px]">
               <div className="text-white text-[32px] font-[700] font-NotoSansTC">
                 {card.name}​​​​ ​
               </div>
