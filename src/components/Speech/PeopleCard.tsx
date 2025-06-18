@@ -80,7 +80,7 @@ export const PeopleCard = ({ card }: PeopleCardProps) => {
           )}
         </div>
         {/* 名字與學校資訊，手機版位置較低 */}
-        <div className="absolute top-50 desktop:top-75 left-0 p-4 desktop:p-[32px]">
+        <div className="absolute top-50 desktop:top-80 left-0 p-4 desktop:p-[32px]">
           <div className="text-white text-[24px] desktop:text-[32px] font-[700] font-NotoSansTC">
             {card.name} ​
           </div>
