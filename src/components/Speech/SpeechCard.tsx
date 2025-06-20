@@ -17,6 +17,7 @@ interface SpeechData {
   people: string[];
   abstract?: string;
   keywords?: string;
+  speaker?: string;
 }
 
 interface EditorCard {
@@ -160,6 +161,16 @@ export const SpeechCard = ({ data }: SpeechCardProps) => {
               ></div>
             </div>
           </div>
+          <div className="border my-[32px] border-[#252F381A]"></div>
+          <div>
+            <div className="text-[#252F3880] text-14R">主講人</div>
+            <div
+              className="mt-[8px] text-black text-16M"
+              dangerouslySetInnerHTML={{
+                __html: (data.speaker || "").replace(/\n/g, "<br>"),
+              }}
+            ></div>
+          </div>
           <div className="border my-8 desktop:my-[32px] border-[#252F381A]"></div>
           <div>
             <div className="text-[#252F3880] text-sm desktop:text-14R">
@@ -220,9 +231,7 @@ export const SpeechCard = ({ data }: SpeechCardProps) => {
             </>
           )}
           {selectHost &&
-            selectHost.map((card, i) => (
-              <PeopleCard card={card} key={i} />
-            ))}
+            selectHost.map((card, i) => <PeopleCard card={card} key={i} />)}
         </div>
       </div>
     </div>
