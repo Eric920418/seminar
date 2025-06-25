@@ -22,6 +22,11 @@ const query = `
   }
 `;
 
+// 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
+interface UploadResponse {
+  imageUrl: string;
+}
+
 interface CardType {
   title: string;
   content: string;
@@ -38,6 +43,7 @@ interface UpdateVideoResult {
     message: string;
   }[];
 }
+
 export const Video = () => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,9 +63,10 @@ export const Video = () => {
 
   const [editorVideoURL, setEditorVideoURL] = useState("");
   const [editorVideoURL2, setEditorVideoURL2] = useState("");
-  const [editorCards, setEditorCards] = useState([]);
-  const [editorCards2, setEditorCards2] = useState([]);
-  const [editorCards3, setEditorCards3] = useState([]);
+  // 為狀態數組添加正確的類型定義
+  const [editorCards, setEditorCards] = useState<CardType[]>([]);
+  const [editorCards2, setEditorCards2] = useState<CardType[]>([]);
+  const [editorCards3, setEditorCards3] = useState<CardType[]>([]);
 
   useEffect(() => {
     if (contentRef3.current) {
@@ -172,8 +179,9 @@ export const Video = () => {
     setEditorCards3(newCards);
   };
 
-  const handleEditorBackground = (data) => {
-    setEditorBackground(data.fileUrl.fileUrl);
+  // 修復 ImageUploader 回調函數，使用正確的 UploadResponse 類型
+  const handleEditorBackground = (data: UploadResponse) => {
+    setEditorBackground(data.imageUrl);
   };
 
   const handleCardChange3 = (
@@ -259,20 +267,18 @@ export const Video = () => {
             style={{ maxHeight: `${height3}px` }}
           >
             <div className="w-full">
-              {editorBackground && (
-                <Image
-                  src={editorBackground}
-                  alt="會議背景"
-                  width={100}
-                  height={100}
-                />
-              )}
+                          {editorBackground && typeof editorBackground === 'string' && editorBackground.trim() !== "" && (
+              <Image
+                src={editorBackground}
+                alt="會議背景"
+                width={100}
+                height={100}
+              />
+            )}
             </div>
             <div className="w-full">
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleEditorBackground({ fileUrl: filename })
-                }
+                onImageUpload={handleEditorBackground}
               />
             </div>
           </div>

@@ -368,7 +368,6 @@ export const Host = () => {
       },
     };
 
-    console.log("準備發送的資料:", JSON.stringify(input, null, 2));
 
     try {
       const response = await graphqlRequest<UpdateHostResult>(

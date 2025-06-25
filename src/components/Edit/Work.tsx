@@ -32,9 +32,26 @@ const query2 = `
   }
 `;
 
+// 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
+interface UploadResponse {
+  imageUrl: string;
+}
+
 interface CardType {
   title: string;
   id: string;
+}
+
+// 新增事件選擇類型定義
+interface SelectEventType {
+  title: string;
+  id: string;
+}
+
+// 新增工作坊卡片類型定義
+interface WorkshopCardType {
+  date: string;
+  id: string | string[];
 }
 
 interface UpdateWorkResult {
@@ -62,9 +79,10 @@ export const Work = () => {
     editor1: "",
     editor2: "",
   });
-  const [editorCards2, setEditorCards2] = useState([]);
+  // 為狀態數組添加正確的類型定義
+  const [editorCards2, setEditorCards2] = useState<WorkshopCardType[]>([]);
   const [editorBackground, setEditorBackground] = useState("");
-  const [selectEvent, setSelectEvent] = useState([]);
+  const [selectEvent, setSelectEvent] = useState<SelectEventType[]>([]);
   useEffect(() => {
     if (contentRef1.current) {
       setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
@@ -110,7 +128,7 @@ export const Work = () => {
       setSelectEvent((prevEvents) => {
         // 取得前一次的狀態，然後新增新的資料
         const events = [...prevEvents];
-        data.event[0].section1.editorCards.forEach((card) => {
+        data.event[0].section1.editorCards.forEach((card: any) => {
           events.push({
             title: card.title2,
             id: card.id,
@@ -156,8 +174,9 @@ export const Work = () => {
     setEditorCards2(newCards);
   };
 
-  const handleEditorBackground = (data) => {
-    setEditorBackground(data.fileUrl.fileUrl);
+  // 修復 ImageUploader 回調函數，使用正確的 UploadResponse 類型
+  const handleEditorBackground = (data: UploadResponse) => {
+    setEditorBackground(data.imageUrl);
   };
 
   const handleUpdate = async () => {
@@ -224,20 +243,18 @@ export const Work = () => {
             style={{ maxHeight: `${height1}px` }}
           >
             <div className="w-full">
-              {editorBackground && (
-                <Image
-                  src={editorBackground}
-                  alt="會議背景"
-                  width={100}
-                  height={100}
-                />
-              )}
+                          {editorBackground && typeof editorBackground === 'string' && editorBackground.trim() !== "" && (
+              <Image
+                src={editorBackground}
+                alt="會議背景"
+                width={100}
+                height={100}
+              />
+            )}
             </div>
             <div className="w-full">
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleEditorBackground({ fileUrl: filename })
-                }
+                onImageUpload={handleEditorBackground}
               />
             </div>
           </div>

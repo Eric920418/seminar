@@ -105,7 +105,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
       console.log(data.host[0].section1.editorCards);
       setSelectHost((prevHosts) => {
         const newHosts = data.host[0].section1.editorCards.map(
-          (hostCard: { name: string; role: string; school: string }) => ({
+          (hostCard: any) => ({
             name: hostCard.name,
             role: hostCard.role || "host", // 添加預設值防止 undefined
           })

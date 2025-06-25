@@ -42,6 +42,11 @@ const query2 = `
   }
 `;
 
+// 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
+interface UploadResponse {
+  imageUrl: string;
+}
+
 interface UpdatePapersResult {
   updatePapers: {
     section1: {
@@ -52,11 +57,34 @@ interface UpdatePapersResult {
     message: string;
   }[];
 }
+
 interface CardType {
   title: string;
   content: string;
   EnContent: string;
 }
+
+// 新增會議卡片類型定義
+interface Card3Type {
+  title: string;
+  content: string;
+  id: string;
+  pdf: string;
+}
+
+// 新增會議卡片類型定義
+interface Card4Type {
+  title: string;
+  content: string;
+  id: string;
+}
+
+// 新增主持人選擇類型定義
+interface SelectHostType {
+  name: string;
+  id?: string;
+}
+
 export const Papers = () => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -82,8 +110,9 @@ export const Papers = () => {
 
   const [editorBackground, setEditorBackground] = useState("");
 
-  const [editorCards, setEditorCards] = useState([]);
-  const [editorCards2, setEditorCards2] = useState([]);
+  // 為狀態數組添加正確的類型定義
+  const [editorCards, setEditorCards] = useState<CardType[]>([]);
+  const [editorCards2, setEditorCards2] = useState<CardType[]>([]);
 
   const [editorContents, setEditorContents] = useState({
     editor1: "",
@@ -100,10 +129,10 @@ export const Papers = () => {
     editor19: "",
     editor20: "",
   });
-  const [editorCards3, setEditorCards3] = useState([]);
-  const [editorCards4, setEditorCards4] = useState([]);
+  const [editorCards3, setEditorCards3] = useState<Card3Type[]>([]);
+  const [editorCards4, setEditorCards4] = useState<Card4Type[]>([]);
 
-  const [selectHost, setSelectHost] = useState([]);
+  const [selectHost, setSelectHost] = useState<SelectHostType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,7 +178,7 @@ export const Papers = () => {
       });
       const { data } = await res.json();
       setSelectHost((prevHosts) => {
-        const newHosts = data.host[0].section1.editorCards.map((card) => ({
+        const newHosts = data.host[0].section1.editorCards.map((card: any) => ({
           name: card.name,
         }));
         return [...prevHosts, ...newHosts];
@@ -169,8 +198,9 @@ export const Papers = () => {
     }
   }, [isOpen5, editorBackground]);
 
-  const handleEditorBackground = (data) => {
-    setEditorBackground(data.fileUrl.fileUrl);
+  // 修復 ImageUploader 回調函數，使用正確的 UploadResponse 類型  
+  const handleEditorBackground = (data: UploadResponse) => {
+    setEditorBackground(data.imageUrl);
   };
 
   useEffect(() => {
@@ -290,7 +320,7 @@ export const Papers = () => {
     setEditorCards3(newCards);
   };
 
-  const handleFileChange = async (e, index) => {
+  const handleFileChange = async (e: any, index: number) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -321,7 +351,7 @@ export const Papers = () => {
       console.log("上傳過程發生錯誤！");
     }
   };
-  const handleFileChange2 = async (e, index) => {
+  const handleFileChange2 = async (e: any, index: number) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -398,7 +428,7 @@ export const Papers = () => {
         dataCKEdit: editorContents.editor8,
         dataA: editorContents.editor10,
         dataArea: editorContents.editor11,
-        content1: editorContents.editor12,
+        // content1: editorContents.editor12,
 
         content8: editorContents.editor19,
         text1: editorContents.editor20,
@@ -462,20 +492,18 @@ export const Papers = () => {
             style={{ maxHeight: `${height5}px` }}
           >
             <div className="w-full">
-              {editorBackground && (
-                <Image
-                  src={editorBackground}
-                  alt="會議背景"
-                  width={100}
-                  height={100}
-                />
-              )}
+                          {editorBackground && typeof editorBackground === 'string' && editorBackground.trim() !== "" && (
+              <Image
+                src={editorBackground}
+                alt="會議背景"
+                width={100}
+                height={100}
+              />
+            )}
             </div>
             <div className="w-full">
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleEditorBackground({ fileUrl: filename })
-                }
+                onImageUpload={handleEditorBackground}
               />
             </div>
           </div>

@@ -32,6 +32,20 @@ const query2 = `
   }
 `;
 
+interface UploadResponse {
+  imageUrl: string;
+}
+
+interface EventCardType {
+  date: string;
+  id: string | string[];
+}
+
+interface SelectEventType {
+  title: string;
+  id: string;
+}
+
 interface CardType {
   title: string;
   id: string;
@@ -63,9 +77,9 @@ export const Speech = () => {
     editor1: "",
     editor2: "",
   });
-  const [editorCards2, setEditorCards2] = useState([]);
+  const [editorCards2, setEditorCards2] = useState<EventCardType[]>([]);
   const [editorBackground, setEditorBackground] = useState("");
-  const [selectEvent, setSelectEvent] = useState([]);
+  const [selectEvent, setSelectEvent] = useState<SelectEventType[]>([]);
   useEffect(() => {
     if (contentRef1.current) {
       setHeight1(isOpen1 ? contentRef1.current.scrollHeight : 0);
@@ -109,9 +123,8 @@ export const Speech = () => {
       });
       const { data } = await res.json();
       setSelectEvent((prevEvents) => {
-        // 取得前一次的狀態，然後新增新的資料
         const events = [...prevEvents];
-        data.event[0].section1.editorCards.forEach((card) => {
+        data.event[0].section1.editorCards.forEach((card: any) => {
           events.push({
             title: card.title2,
             id: card.id,
@@ -128,8 +141,9 @@ export const Speech = () => {
     fetchData();
   }, [fetchData]);
 
-  const handleEditorBackground = (data) => {
-    setEditorBackground(data.fileUrl.fileUrl);
+  const handleEditorBackground = (data: UploadResponse) => {
+    console.log(data.imageUrl);
+    setEditorBackground(data.imageUrl);
   };
 
   const handleCardChange2 = (
@@ -218,7 +232,7 @@ export const Speech = () => {
             style={{ maxHeight: `${height1}px` }}
           >
             <div className="w-full">
-              {editorBackground && (
+              {editorBackground && typeof editorBackground === 'string' && editorBackground.trim() !== "" && (
                 <Image
                   src={editorBackground}
                   alt="會議背景"
@@ -228,11 +242,7 @@ export const Speech = () => {
               )}
             </div>
             <div className="w-full">
-              <ImageUploader
-                onImageUpload={(filename) =>
-                  handleEditorBackground({ fileUrl: filename })
-                }
-              />
+              <ImageUploader onImageUpload={handleEditorBackground} />
             </div>
           </div>
         </div>

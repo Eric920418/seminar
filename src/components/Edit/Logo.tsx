@@ -6,9 +6,9 @@ import { ImageUploader } from "@/components/Admin/ImageUploader";
 import { useSession } from "next-auth/react";
 import { graphqlRequest } from "@/utils/graphqlClient";
 
-// 匯入或定義 UploadResponse 介面
+// 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
 interface UploadResponse {
-  fileUrl: string;
+  imageUrl: string;
 }
 
 interface UpdateLogoResult {
@@ -84,11 +84,11 @@ export const Logo = () => {
   };
 
   const handleImageUpload3 = (data: UploadResponse) => {
-    setEditorMapImage(data.fileUrl);
+    setEditorMapImage(data.imageUrl);
   };
 
   const handleFaviconUpload = (data: UploadResponse) => {
-    setEditorFavicon(data.fileUrl);
+    setEditorFavicon(data.imageUrl);
   };
 
   const handleUpdate = async () => {
@@ -150,7 +150,7 @@ export const Logo = () => {
           <div className="text-16M font-bold mb-2">網站Logo</div>
           <div className="overflow-hidden transition-all duration-500 ease-in-out">
             <div className="flex flex-col gap-3 mt-5">
-              {editorMapImage && (
+              {editorMapImage && typeof editorMapImage === 'string' && editorMapImage.trim() !== "" && (
                 <Image
                   src={editorMapImage}
                   width={200}
@@ -169,7 +169,7 @@ export const Logo = () => {
           </div>
           <div className="overflow-hidden transition-all duration-500 ease-in-out">
             <div className="flex flex-col gap-3 mt-5">
-              {editorFavicon && (
+              {editorFavicon && typeof editorFavicon === 'string' && editorFavicon.trim() !== "" && (
                 <div className="flex items-center gap-4">
                   <Image
                     src={editorFavicon}

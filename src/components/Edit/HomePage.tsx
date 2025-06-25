@@ -38,6 +38,18 @@ const query = `
   }
 `;
 
+// 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
+interface UploadResponse {
+  imageUrl: string;
+}
+
+// 新增卡片類型定義
+interface HomePageCardType {
+  year: string;
+  date: string;
+  content: string;
+}
+
 interface UpdateHomePageResult {
   updateHomePage: {
     section1: {
@@ -129,9 +141,10 @@ export const HomePage = () => {
     editor9: "",
     editor10: "",
   });
-  const [editorCards, setEditorCards] = useState([]);
+  // 為狀態數組添加正確的類型定義
+  const [editorCards, setEditorCards] = useState<HomePageCardType[]>([]);
   // const [uploadImage, setUploadImage] = useState();
-  const [uploadImage2, setUploadImage2] = useState();
+  const [uploadImage2, setUploadImage2] = useState<string | null>(null);
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
 
@@ -141,7 +154,7 @@ export const HomePage = () => {
     editor9: "",
     editor10: "",
   });
-  const [editorURL, serEditorURL] = useState<string | null>("");
+  const [editorURL, serEditorURL] = useState<string>("");
   const [editorVideoURL, serEditorVideoURL] = useState({
     video1: "",
     year: "",
@@ -191,7 +204,7 @@ export const HomePage = () => {
 
         // setUploadImage(data.homePage[0].section3.times.image || null);
         setUploadImage2(data.homePage[0].section4?.images || null);
-        serEditorURL(data.homePage[0].section4?.manualDownloadUrl || null);
+        serEditorURL(data.homePage[0].section4?.manualDownloadUrl || "");
 
         serEditorVideoURL(data.homePage[0].section5?.videoUrl || null);
 
@@ -274,10 +287,10 @@ export const HomePage = () => {
       [id]: content,
     }));
   };
-  const handleImageUploadBanner = (id, data) => {
+  const handleImageUploadBanner = (id: string, data: UploadResponse) => {
     setEditorContents((prev) => ({
       ...prev,
-      [id]: data.fileUrl.fileUrl,
+      [id]: data.imageUrl,
     }));
   };
   const handleCardChange = (index: number, field: string, value: string) => {
@@ -326,8 +339,8 @@ export const HomePage = () => {
   // const handleImageUpload = (data) => {
   //   setUploadImage(data.fileUrl.fileUrl);
   // };
-  const handleImageUpload2 = (data) => {
-    setUploadImage2(data.fileUrl.fileUrl);
+  const handleImageUpload2 = (data: UploadResponse) => {
+    setUploadImage2(data.imageUrl);
   };
 
   const deleteImage = () => {
@@ -593,8 +606,8 @@ export const HomePage = () => {
                   ></Image>
                 )}
                 <ImageUploader
-                  onImageUpload={(filename) =>
-                    handleImageUploadBanner("editor9", { fileUrl: filename })
+                  onImageUpload={(data) =>
+                    handleImageUploadBanner("editor9", data)
                   }
                 />
               </div>
@@ -860,9 +873,7 @@ export const HomePage = () => {
             </div>
             <div className="my-3">
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleImageUpload2({ fileUrl: filename })
-                }
+                onImageUpload={handleImageUpload2}
               />
               <button
                 className="bg-red-500 text-white px-3 py-1 rounded mt-2"

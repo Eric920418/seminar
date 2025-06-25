@@ -22,6 +22,11 @@ const query = `
   }
 `;
 
+// 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
+interface UploadResponse {
+  imageUrl: string;
+}
+
 interface ExhibitionCard {
   id: string;
   date: string;
@@ -104,6 +109,8 @@ export const Exhibition = () => {
     setEditorCards([
       ...editorCards,
       {
+        id: Math.floor(100000 + Math.random() * 900000).toString(),
+        date: "",
         title: "",
         content: "",
         imageSrc: "",
@@ -119,20 +126,20 @@ export const Exhibition = () => {
     setEditorCards(newCards);
   };
 
-  const handleImageUpload = (data) => {
+  const handleImageUpload = (data: { imageUrl: string; index: number }) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
-      newCards[data.index].imageSrc = data.fileUrl.fileUrl;
+      newCards[data.index].imageSrc = data.imageUrl;
       setEditorCards(newCards);
     }
   };
 
-  const handleImageUpload2 = (data) => {
+  const handleImageUpload2 = (data: { imageUrl: string; index: number }) => {
     const newCards = [...editorCards];
     if (data.index !== undefined && newCards[data.index]) {
       newCards[data.index] = {
         ...newCards[data.index],
-        images: [...newCards[data.index].images, data.fileUrl.fileUrl], // 將新的圖片資料加入 images 陣列中
+        images: [...newCards[data.index].images, data.imageUrl], // 將新的圖片資料加入 images 陣列中
       };
       setEditorCards(newCards);
     }
@@ -149,8 +156,8 @@ export const Exhibition = () => {
     }
   };
 
-  const handleEditorBackground = (data) => {
-    setEditorBackground(data.fileUrl.fileUrl);
+  const handleEditorBackground = (data: UploadResponse) => {
+    setEditorBackground(data.imageUrl);
   };
 
   const handleUpdate = async () => {
@@ -212,20 +219,18 @@ export const Exhibition = () => {
             style={{ maxHeight: `${height2}px` }}
           >
             <div className="w-full">
-              {editorBackground && (
-                <Image
-                  src={editorBackground}
-                  alt="會議背景"
-                  width={100}
-                  height={100}
-                />
-              )}
+                          {editorBackground && typeof editorBackground === 'string' && editorBackground.trim() !== "" && (
+              <Image
+                src={editorBackground}
+                alt="會議背景"
+                width={100}
+                height={100}
+              />
+            )}
             </div>
             <div className="w-full">
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleEditorBackground({ fileUrl: filename })
-                }
+                onImageUpload={handleEditorBackground}
               />
             </div>
           </div>
@@ -275,7 +280,6 @@ export const Exhibition = () => {
                           className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                         />
                         <textarea
-                          type="text"
                           placeholder="詳細內文"
                           value={card.introduce}
                           onChange={(e) =>
@@ -307,16 +311,16 @@ export const Exhibition = () => {
                       <div>
                         <div>封面圖片 目前上傳圖片:{card.imageSrc}</div>
                         <ImageUploader
-                          onImageUpload={(filename) =>
-                            handleImageUpload({ fileUrl: filename, index })
+                          onImageUpload={(data) =>
+                            handleImageUpload({ imageUrl: data.imageUrl, index })
                           }
                         />
                       </div>
                       <div>
                         <div>內文圖片(複數) 目前上傳圖片:{card.images}</div>
                         <ImageUploader
-                          onImageUpload={(filename) =>
-                            handleImageUpload2({ fileUrl: filename, index })
+                          onImageUpload={(data) =>
+                            handleImageUpload2({ imageUrl: data.imageUrl, index })
                           }
                         />
                         {/* 顯示目前上傳圖片的列表，每筆僅顯示文字與刪除按鈕 */}

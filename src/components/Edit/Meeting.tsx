@@ -45,6 +45,21 @@ interface CardType {
   content: string;
 }
 
+interface AccommodationType {
+  image: string;
+  title: string;
+  url: string;
+  location: string;
+  phone: string;
+  map: string;
+  form: string;
+  content: string;
+}
+
+interface UploadResponse {
+  imageUrl: string;
+}
+
 interface UpdateMeetingResult {
   updateMeetingPage: {
     section1: {
@@ -103,10 +118,9 @@ export const Meeting = () => {
   const [height11, setHeight11] = useState(0);
   const contentRef11 = useRef<HTMLDivElement>(null);
 
-  const [editorCards, setEditorCards] = useState([]);
+  const [editorCards, setEditorCards] = useState<CardType[]>([]);
   const [editorTimes, setEditorTimes] = useState({
     editor1: "",
-
     editor6: "",
     editor7: "",
     editor8: "",
@@ -135,7 +149,7 @@ export const Meeting = () => {
 
   const [editorTransportation, setEditorTransportation] = useState("");
 
-  const [accommodations, setAccommodations] = useState([]);
+  const [accommodations, setAccommodations] = useState<AccommodationType[]>([]);
 
   const [editorMapImage, setEditorMapImage] = useState("");
 
@@ -159,7 +173,6 @@ export const Meeting = () => {
 
       setEditorTimes({
         editor1: data.meetingPage[0].section2?.times?.time1 || "",
-
         editor6: data.meetingPage[0].section2?.times?.time6 || "",
         editor7: data.meetingPage[0].section2?.times?.time7 || "",
         editor8: data.meetingPage[0].section2?.times?.time8 || "",
@@ -213,7 +226,6 @@ export const Meeting = () => {
   }, [
     isOpen2,
     editorTimes.editor1,
-
     editorTimes.editor6,
     editorTimes.editor7,
     editorTimes.editor8,
@@ -330,8 +342,8 @@ export const Meeting = () => {
     }));
   };
 
-  const handleImageUpload = (index, data) => {
-    handleInputChange(index, "image", data.fileUrl.fileUrl);
+  const handleImageUpload = (index: number, data: UploadResponse) => {
+    handleInputChange(index, "image", data.imageUrl);
   };
 
   const addAccommodation = () => {
@@ -350,23 +362,23 @@ export const Meeting = () => {
     ]);
   };
 
-  // 更新某一筆住宿資料的欄位值
-  const handleInputChange = (index, key, value) => {
+  const handleInputChange = (index: number, key: string, value: string) => {
     const newAccommodations = accommodations.map((item, idx) =>
       idx === index ? { ...item, [key]: value } : item
     );
     setAccommodations(newAccommodations);
   };
 
-  const handleDeleteAccommodation = (index) => {
+  const handleDeleteAccommodation = (index: number) => {
     const updatedAccommodations = accommodations.filter(
       (_, idx) => idx !== index
     );
     setAccommodations(updatedAccommodations);
   };
 
-  const handleImageUpload3 = (data) => {
-    setEditorMapImage(data.fileUrl.fileUrl);
+  const handleImageUpload3 = (data: UploadResponse) => {
+    console.log(data.imageUrl);
+    setEditorMapImage(data.imageUrl);
   };
 
   const handleEditorOrigin = (content: string) => {
@@ -381,8 +393,8 @@ export const Meeting = () => {
     setEditorActivity(content);
   };
 
-  const handleEditorBackground = (data) => {
-    setEditorBackground(data.fileUrl.fileUrl);
+  const handleEditorBackground = (data: UploadResponse) => {
+    setEditorBackground(data.imageUrl);
   };
 
   const handleUpdate = async () => {
@@ -394,7 +406,6 @@ export const Meeting = () => {
       section2: {
         times: {
           time1: editorTimes.editor1,
-
           time6: editorTimes.editor6,
           time7: editorTimes.editor7,
           time8: editorTimes.editor8,
@@ -411,8 +422,6 @@ export const Meeting = () => {
         time3: editorRule.editor6,
         content4: editorRule.editor7,
         time4: editorRule.editor8,
-        content5: editorRule.editor9,
-        time5: editorRule.editor10,
       },
       section4: {
         content: editorOnline.editor1,
@@ -487,7 +496,7 @@ export const Meeting = () => {
             style={{ maxHeight: `${height11}px` }}
           >
             <div className="w-full">
-              {editorBackground && (
+              {editorBackground && editorBackground.trim() !== "" && (
                 <Image
                   src={editorBackground}
                   alt="會議背景"
@@ -498,9 +507,7 @@ export const Meeting = () => {
             </div>
             <div className="w-full">
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleEditorBackground({ fileUrl: filename })
-                }
+                onImageUpload={handleEditorBackground}
               />
             </div>
           </div>
@@ -900,7 +907,6 @@ export const Meeting = () => {
               </div>
               <div className="flex space-x-[32px] ">
                 <textarea
-                  type="text"
                   placeholder=""
                   value={editorRule.editor2}
                   onChange={(e) =>
@@ -909,7 +915,6 @@ export const Meeting = () => {
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 min-h-[200px]"
                 />
                 <textarea
-                  type="text"
                   placeholder=""
                   value={editorRule.editor4}
                   onChange={(e) =>
@@ -926,7 +931,6 @@ export const Meeting = () => {
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />
               <textarea
-                type="text"
                 placeholder=""
                 value={editorRule.editor6}
                 onChange={(e) => handleEditorChange3("editor6", e.target.value)}
@@ -945,7 +949,6 @@ export const Meeting = () => {
               </div>
               <div className="flex space-x-[32px] ">
                 <textarea
-                  type="text"
                   placeholder=""
                   value={editorRule.editor8}
                   onChange={(e) =>
@@ -1126,7 +1129,7 @@ export const Meeting = () => {
             <div className="mt-[16px] grid grid-cols-3 gap-[16px]">
               {accommodations.map((item, index) => (
                 <div key={index} className="bg-white rounded-[24px]">
-                  {item.image && (
+                  {item.image && item.image.trim() !== "" && (
                     <div>
                       <Image
                         src={item.image}
@@ -1210,8 +1213,8 @@ export const Meeting = () => {
               {accommodations.map((item, index) => (
                 <div key={index} className="flex flex-col gap-3">
                   <ImageUploader
-                    onImageUpload={(filename) =>
-                      handleImageUpload(index, { fileUrl: filename })
+                    onImageUpload={(data) =>
+                      handleImageUpload(index, data)
                     }
                   />
                   <input
@@ -1316,7 +1319,7 @@ export const Meeting = () => {
           >
             <div className="flex flex-col gap-3 mt-5">
               <div className="w-[300px] h-[300px]">
-                {editorMapImage && (
+                {editorMapImage && typeof editorMapImage === 'string' && editorMapImage.trim() !== "" && (
                   <Image
                     src={editorMapImage}
                     alt="logo"
@@ -1331,9 +1334,7 @@ export const Meeting = () => {
                 )}
               </div>
               <ImageUploader
-                onImageUpload={(filename) =>
-                  handleImageUpload3({ fileUrl: filename })
-                }
+                onImageUpload={handleImageUpload3}
               />
             </div>
           </div>
