@@ -335,16 +335,25 @@ export const Host = () => {
         image: data.imageUrl,
       };
       setEditorCards(newCards);
+      console.log("圖片上傳成功:", data);
+    } else {
+      console.error("無效的索引或卡片不存在:", data);
     }
   };
 
   const handleUpdate = async () => {
     setIsLoading(true);
+    
+    // 清理資料，移除 isOpen 屬性因為它不應該保存到後端
+    const cleanedCards = editorCards.map(({ isOpen, ...card }) => card);
+    
     const input = {
       section1: {
-        editorCards,
+        editorCards: cleanedCards,
       },
     };
+
+    console.log("準備發送的資料:", JSON.stringify(input, null, 2));
 
     try {
       const response = await graphqlRequest<UpdateHostResult>(
@@ -352,13 +361,18 @@ export const Host = () => {
         { input },
         session
       );
+      
       if (response.errors) {
         console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
+        alert("更新失敗：" + response.errors[0]?.message);
+        return;
       }
+      
+      alert("更新成功");
     } catch (err) {
       console.error("更新失敗:", err);
+      alert("更新失敗：" + (err instanceof Error ? err.message : "未知錯誤"));
     } finally {
-      alert("更新成功");
       setIsLoading(false);
     }
   };

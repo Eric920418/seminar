@@ -36,8 +36,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         return;
       }
 
-      const data: UploadResponse = await res.json();
-      onImageUpload(data);
+      const data = await res.json();
+      // 將 fileUrl 轉換為 imageUrl 以符合期待的格式
+      onImageUpload({ imageUrl: data.fileUrl });
     } catch (error) {
       console.error("上傳錯誤:", error);
     } finally {
