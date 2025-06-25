@@ -344,12 +344,9 @@ export const Host = () => {
   const handleUpdate = async () => {
     setIsLoading(true);
     
-    // 清理資料，移除 isOpen 屬性因為它不應該保存到後端
-    const cleanedCards = editorCards.map(({ isOpen, ...card }) => card);
-    
     const input = {
       section1: {
-        editorCards: cleanedCards,
+        editorCards,
       },
     };
 
