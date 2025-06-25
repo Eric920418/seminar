@@ -276,11 +276,17 @@ export const Host = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      // 如果後端資料沒有 role 屬性，根據 isHost 轉換
+      // 如果後端資料沒有 role 屬性，根據 isHost 轉換，並確保所有欄位存在
       const cards: Card[] = data.host[0].section1.editorCards.map(
         (card: any) => ({
-          ...card,
+          name: card.name || "",
+          school: card.school || "",
+          highest: card.highest || "",
+          interests: card.interests || "",
+          experience: card.experience || "",
+          image: card.image || "", // 確保 image 欄位存在
           role: card.role || (card.isHost ? "host" : "panelist"), // 向後兼容舊數據
+          isOpen: card.isOpen || false,
         })
       );
       setEditorCards(cards);
@@ -344,9 +350,21 @@ export const Host = () => {
   const handleUpdate = async () => {
     setIsLoading(true);
     
+    // 確保每張卡片都包含所有必要欄位，特別是 image 欄位
+    const completeCards = editorCards.map(card => ({
+      name: card.name || "",
+      school: card.school || "",
+      highest: card.highest || "",
+      interests: card.interests || "",
+      experience: card.experience || "",
+      image: card.image || "", // 確保 image 欄位存在
+      role: card.role || "host",
+      isOpen: card.isOpen || false,
+    }));
+    
     const input = {
       section1: {
-        editorCards,
+        editorCards: completeCards,
       },
     };
 
