@@ -13,7 +13,7 @@ export const updateFavicon = (faviconUrl: string): void => {
   const faviconWithTimestamp = `${faviconUrl}?v=${timestamp}`;
   
   // 查找現有的主要favicon
-  let existingFavicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
+  const existingFavicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
   
   if (existingFavicon) {
     // 如果存在，更新href
@@ -31,7 +31,7 @@ export const updateFavicon = (faviconUrl: string): void => {
   }
   
   // 也處理shortcut icon
-  let existingShortcut = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+  const existingShortcut = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
   
   if (existingShortcut) {
     existingShortcut.href = faviconWithTimestamp;

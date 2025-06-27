@@ -16,8 +16,8 @@ const notoSansTC = Noto_Sans_TC({
 
 const inter = Inter({ subsets: ["latin"] });
 
-// 默認favicon路徑
-const defaultFavicon = "/favicon.ico";
+// 移除未使用的默認favicon路徑
+// const defaultFavicon = "/favicon.ico";
 
 // 取得metadata的函數
 export async function generateMetadata(): Promise<Metadata> {
