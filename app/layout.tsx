@@ -37,11 +37,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "師資培育國際學術研討會",
       description: "探討全球師資培育發展趨勢與創新教學實踐",
     },
-    icons: {
-      icon: defaultFavicon,
-      shortcut: defaultFavicon,
-      apple: defaultFavicon,
-    },
+    // 移除靜態favicon設置，改由ClientLayoutWrapper動態處理
+    // icons: {
+    //   icon: defaultFavicon,
+    //   shortcut: defaultFavicon,
+    //   apple: defaultFavicon,
+    // },
     robots: {
       index: true,
       follow: true,

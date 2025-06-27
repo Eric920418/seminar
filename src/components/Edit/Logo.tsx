@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ImageUploader } from "@/components/Admin/ImageUploader";
 import { useSession } from "next-auth/react";
 import { graphqlRequest } from "@/utils/graphqlClient";
+import { updateFavicon } from "@/utils/faviconUpdater";
 
 // 統一 UploadResponse 接口定義，與 ImageUploader 組件一致
 interface UploadResponse {
@@ -57,6 +58,12 @@ export const Logo = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
+
+  // 使用統一的favicon更新函數
+  const setFaviconToHead = (faviconUrl: string) => {
+    updateFavicon(faviconUrl);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/graphql", {
@@ -73,7 +80,14 @@ export const Logo = () => {
         editor4: data.logo[0].section1.footer?.editor4,
       });
       setEditorMapImage(data.logo[0].section1.image);
-      setEditorFavicon(data.logo[0].section1.favicon);
+      
+      const faviconUrl = data.logo[0].section1.favicon;
+      setEditorFavicon(faviconUrl);
+      
+      // 頁面載入時立即設置favicon
+      if (faviconUrl && faviconUrl.trim() !== "") {
+        setFaviconToHead(faviconUrl);
+      }
     };
 
     fetchData();
@@ -110,19 +124,9 @@ export const Logo = () => {
       if (response.errors) {
         console.error("更新失敗:", JSON.stringify(response.errors, null, 2));
       } else {
-        // 替換或新增 favicon
-        if (editorFavicon) {
-          const existing = document.querySelector(
-            'link[rel="icon"]'
-          ) as HTMLLinkElement;
-          if (existing) {
-            existing.href = editorFavicon;
-          } else {
-            const link = document.createElement("link");
-            link.rel = "icon";
-            link.href = editorFavicon;
-            document.head.appendChild(link);
-          }
+        // 更新成功後立即設置新的favicon
+        if (editorFavicon && editorFavicon.trim() !== "") {
+          setFaviconToHead(editorFavicon);
         }
       }
     } catch (err) {

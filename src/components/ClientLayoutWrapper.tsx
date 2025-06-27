@@ -5,6 +5,7 @@ import { useModalContext } from "@/components/ModalContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MoveToTop } from "@/components/MoveToTop";
+import { updateFavicon } from "@/utils/faviconUpdater";
 
 const query = `
   query color {
@@ -60,22 +61,10 @@ export default function ClientLayoutWrapper({
     fetchData();
   }, []);
 
-  // 2. 更新網頁的favicon 測試看看
+  // 2. 使用統一的favicon更新函數
   useEffect(() => {
     if (favicon) {
-      // 更新所有favicon相關的link標籤
-      const links = document.querySelectorAll('link[rel*="icon"]');
-      links.forEach((link) => {
-        link.setAttribute("href", favicon);
-      });
-
-      // 若沒有找到現有標籤，則創建新的
-      if (links.length === 0) {
-        const link = document.createElement("link");
-        link.rel = "icon";
-        link.href = favicon;
-        document.head.appendChild(link);
-      }
+      updateFavicon(favicon);
     }
   }, [favicon]);
 
