@@ -21,6 +21,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "找不到圖片檔案" }, { status: 400 });
     }
 
+    // 檢查檔案類型（只接受圖片檔案）
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(fileField.type)) {
+      return NextResponse.json({ 
+        error: "不支援的檔案類型。請上傳 JPG、PNG、GIF 或 WebP 格式的圖片" 
+      }, { status: 400 });
+    }
+
+    // 檢查檔案大小（限制 15MB，可根據需求調整）
+    const maxSize = 15 * 1024 * 1024; // 15MB
+    if (fileField.size > maxSize) {
+      return NextResponse.json({
+        error: `檔案大小不能超過 ${Math.round(maxSize / (1024 * 1024))}MB，目前檔案大小為 ${Math.round(fileField.size / (1024 * 1024) * 100) / 100}MB`
+      }, { status: 400 });
+    }
+
     // 將上傳的檔案轉成 Buffer
     const fileBuffer = Buffer.from(await fileField.arrayBuffer());
 
@@ -38,6 +54,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       message: "上傳成功",
       fileUrl: `/api/images/${fileName}`,
+      fileSize: fileField.size, // 回傳檔案大小資訊
     });
   } catch (error) {
     console.error("上傳錯誤：", error);
