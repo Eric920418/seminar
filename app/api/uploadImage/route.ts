@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
+// Next.js App Router 設定
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // 從環境變數取得上傳目錄，如果沒有設定則使用預設值
 const UPLOAD_DIR =
   process.env.UPLOAD_DIR || path.join(process.cwd(), "..", "uploads");
@@ -29,8 +33,8 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    // 檢查檔案大小（限制 15MB，可根據需求調整）
-    const maxSize = 15 * 1024 * 1024; // 15MB
+    // 檢查檔案大小（限制 5MB，與前端提示保持一致）
+    const maxSize = 5 * 1024 * 1024; // 5MB
     if (fileField.size > maxSize) {
       return NextResponse.json({
         error: `檔案大小不能超過 ${Math.round(maxSize / (1024 * 1024))}MB，目前檔案大小為 ${Math.round(fileField.size / (1024 * 1024) * 100) / 100}MB`

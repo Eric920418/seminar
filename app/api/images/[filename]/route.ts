@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
+// Next.js App Router 設定
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // 從環境變數取得上傳目錄
 const UPLOAD_DIR =
   process.env.UPLOAD_DIR || path.join(process.cwd(), "..", "uploads");

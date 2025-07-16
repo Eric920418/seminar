@@ -5,12 +5,6 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false, // 關閉 React Strict Mode
-  // 添加 API 設定來提高檔案上傳大小限制
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb', // 設定上傳檔案大小限制為 20MB
-    },
-  },
   // 添加 images 配置
   images: {
     remotePatterns: [
