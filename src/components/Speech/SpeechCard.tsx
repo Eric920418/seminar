@@ -163,7 +163,7 @@ export const SpeechCard = ({ data }: SpeechCardProps) => {
           </div>
           <div className="border my-[32px] border-[#252F381A]"></div>
           <div>
-            <div className="text-[#252F3880] text-14R">主講人</div>
+            <div className="text-[#252F3880] text-14R">主講人/發表人</div>
             <div
               className="mt-[8px] text-black text-16M"
               dangerouslySetInnerHTML={{

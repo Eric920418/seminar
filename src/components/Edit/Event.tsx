@@ -87,6 +87,8 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
         return "主講人";
       case "panelist":
         return "與談人";
+      case "presenter":
+        return "發表人";
       default:
         return "主持人";
     }

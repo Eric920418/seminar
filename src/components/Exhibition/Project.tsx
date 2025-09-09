@@ -133,11 +133,13 @@ export const Project = () => {
               )}
               <div className="absolute inset-0 bg-[#0DC7AB] opacity-20 rounded-[40px]"></div>
               <div className="absolute inset-0 bg-[#252F38] opacity-50 rounded-[40px]"></div>
-              <div className="absolute transform top-55 translate-y-[50%] text-center text-16M text-white">
-                {item.title}
-              </div>
-              <div className="absolute transform top-65 translate-y-[50%] text-center text-[12px] text-white">
-                {item.content}
+              <div className="absolute bottom-[60px] left-[24px] right-[24px] text-center">
+                <div className="text-16M text-white leading-relaxed mb-2 line-clamp-2">
+                  {item.title}
+                </div>
+                <div className="text-[12px] text-white leading-relaxed opacity-90 line-clamp-2">
+                  {item.content}
+                </div>
               </div>
             </div>
           ))}

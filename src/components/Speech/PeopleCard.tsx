@@ -7,7 +7,7 @@ interface Card {
   interests: string;
   experience: string;
   image: string;
-  role?: "host" | "panelist" | "speaker";
+  role?: "host" | "panelist" | "speaker" | "presenter";
   isHost?: boolean;
 }
 
@@ -30,13 +30,15 @@ export const PeopleCard = ({ card }: PeopleCardProps) => {
         return "主講人";
       case "panelist":
         return "與談人";
+      case "presenter":
+        return "發表人";
       default:
         return "主持人";
     }
   };
 
   const getBackgroundImageIndex = (role: string) => {
-    return role === "host" || role === "speaker" ? "1" : "0";
+    return role === "host" || role === "speaker" || role === "presenter" ? "1" : "0";
   };
 
   return (

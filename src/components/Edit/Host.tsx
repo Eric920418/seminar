@@ -38,7 +38,7 @@ interface Card {
   interests: string;
   experience: string;
   image: string;
-  role: "host" | "panelist" | "speaker";
+  role: "host" | "panelist" | "speaker" | "presenter";
   isOpen: boolean;
 }
 
@@ -79,6 +79,8 @@ const Card = ({
         return "主講人";
       case "panelist":
         return "與談人";
+      case "presenter":
+        return "發表人";
       default:
         return "主持人";
     }
@@ -86,7 +88,7 @@ const Card = ({
 
   // 根據身份獲取背景圖片索引（主持人和主講人使用相同背景）
   const getBackgroundImageIndex = (role: string) => {
-    return role === "host" || role === "speaker" ? "1" : "0";
+    return role === "host" || role === "speaker" || role === "presenter" ? "1" : "0";
   };
 
   return (
@@ -204,12 +206,13 @@ const Card = ({
             <label className="text-sm text-gray-700 font-medium">身份類型：</label>
             <select
               value={card.role}
-              onChange={(e) => onCardChange(index, "role", e.target.value as "host" | "panelist" | "speaker")}
+              onChange={(e) => onCardChange(index, "role", e.target.value as "host" | "panelist" | "speaker" | "presenter")}
               className="rounded-md bg-white px-3 py-1 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-2"
             >
               <option value="host">主持人</option>
               <option value="speaker">主講人</option>
               <option value="panelist">與談人</option>
+              <option value="presenter">發表人</option>
             </select>
           </div>
           <div className="flex pb-2 space-x-3 items-center">
