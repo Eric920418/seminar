@@ -4,6 +4,11 @@ import { PeopleCard } from "@/components/Speech/PeopleCard";
 import Image from "next/image";
 
 // 定義類型介面
+interface PersonWithRole {
+  name: string;
+  role: string;
+}
+
 interface SpeechData {
   time: string;
   time2: string;
@@ -14,7 +19,7 @@ interface SpeechData {
   host: string;
   location: string;
   person: string;
-  people: string[];
+  people: PersonWithRole[];
   abstract?: string;
   keywords?: string;
   speaker?: string;
@@ -27,8 +32,13 @@ interface EditorCard {
   interests: string;
   experience: string;
   image: string;
-  role?: "host" | "panelist" | "speaker";
+  roles?: ("host" | "panelist" | "speaker" | "presenter")[];
+  role?: "host" | "panelist" | "speaker" | "presenter";
   isHost?: boolean;
+}
+
+interface CardWithRole extends EditorCard {
+  displayRole: string;
 }
 
 interface SpeechCardProps {
@@ -47,7 +57,7 @@ export const SpeechCard = ({ data }: SpeechCardProps) => {
   const [showDetail, setShowDetail] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-  const [selectHost, setSelectHost] = useState<EditorCard[]>([]);
+  const [selectHost, setSelectHost] = useState<CardWithRole[]>([]);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -69,15 +79,19 @@ export const SpeechCard = ({ data }: SpeechCardProps) => {
         const useData = await res.json();
 
         // 按照 data.people 的順序來排列卡片
-        const sortedCards: EditorCard[] = [];
-        
-        // 遍歷 data.people 中的每個名字，找到對應的卡片
-        data.people.forEach((personName: string) => {
+        const sortedCards: CardWithRole[] = [];
+
+        // 遍歷 data.people 中的每個人（包含名字和身份）
+        data.people.forEach((person: PersonWithRole) => {
           const matchedCard = useData.data.host[0].section1.editorCards.find(
-            (editor: EditorCard) => editor.name === personName
+            (editor: EditorCard) => editor.name === person.name
           );
           if (matchedCard) {
-            sortedCards.push(matchedCard);
+            // 將匹配的卡片和指定的身份組合
+            sortedCards.push({
+              ...matchedCard,
+              displayRole: person.role
+            });
           }
         });
 

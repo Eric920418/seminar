@@ -38,7 +38,7 @@ interface Card {
   interests: string;
   experience: string;
   image: string;
-  role: "host" | "panelist" | "speaker" | "presenter";
+  roles: ("host" | "panelist" | "speaker" | "presenter")[];
   isOpen: boolean;
 }
 
@@ -87,8 +87,9 @@ const Card = ({
   };
 
   // 根據身份獲取背景圖片索引（主持人和主講人使用相同背景）
-  const getBackgroundImageIndex = (role: string) => {
-    return role === "host" || role === "speaker" || role === "presenter" ? "1" : "0";
+  const getBackgroundImageIndex = (roles: string[]) => {
+    const primaryRole = roles[0] || "host";
+    return primaryRole === "host" || primaryRole === "speaker" || primaryRole === "presenter" ? "1" : "0";
   };
 
   return (
@@ -115,7 +116,7 @@ const Card = ({
         <div
           className="rounded-[40px] flex min-h-[580px]"
           style={{
-            backgroundImage: `url('/banner/card-img${getBackgroundImageIndex(card.role)}.png')`,
+            backgroundImage: `url('/banner/card-img${getBackgroundImageIndex(card.roles)}.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -126,12 +127,12 @@ const Card = ({
               className="absolute top-0 left-0 p-[32px] text-white text-[32px] font-[700] font-NotoSansTC z-10"
               style={{ writingMode: "vertical-rl" }}
             >
-              {getRoleDisplayName(card.role).split("").join(" ")}
+              {getRoleDisplayName(card.roles[0] || "host").split("").join(" ")}
             </div>
             <div
-              className={`absolute desktop:top-[80px] desktop:left-[50px] bg-white 
+              className={`absolute desktop:top-[80px] desktop:left-[50px] bg-white
           ${
-            card.role === "panelist"
+            card.roles[0] === "panelist"
               ? "rounded-[40px] rotate-[-4deg] translate-y-5 translate-x-5 w-[180px] h-[180px] desktop:w-[280px] desktop:h-[280px]"
               : "rounded-full w-[200px] top-18 left-15 h-[200px] desktop:w-[316px] desktop:h-[316px]"
           } `}
@@ -143,7 +144,7 @@ const Card = ({
                   width={316}
                   height={316}
                   className={`w-full h-full object-cover ${
-                    card.role === "panelist" ? "rounded-[40px]" : "rounded-full"
+                    card.roles[0] === "panelist" ? "rounded-[40px]" : "rounded-full"
                   } `}
                 />
               )}
@@ -162,7 +163,7 @@ const Card = ({
           </div>
           <div className="bg-amber-50 p-[32px] flex-1 rounded-r-[40px]">
             <div className="text-primary text-16M font-NotoSansTC">
-              關於{getRoleDisplayName(card.role)}​
+              關於{getRoleDisplayName(card.roles[0] || "host")}​
             </div>
             <div className="mt-[24px] bg-[#FFD8561A] p-[16px] rounded-[16px]">
               <div className="text-[#252F3880] text-14R font-NotoSansTC">
@@ -202,18 +203,28 @@ const Card = ({
 
         {/* 可在此處加入編輯欄位 */}
         <div>
-          <div className="flex items-center pt-3 space-x-2">
-            <label className="text-sm text-gray-700 font-medium">身份類型：</label>
-            <select
-              value={card.role}
-              onChange={(e) => onCardChange(index, "role", e.target.value as "host" | "panelist" | "speaker" | "presenter")}
-              className="rounded-md bg-white px-3 py-1 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-2"
-            >
-              <option value="host">主持人</option>
-              <option value="speaker">主講人</option>
-              <option value="panelist">與談人</option>
-              <option value="presenter">發表人</option>
-            </select>
+          <div className="pt-3">
+            <label className="text-sm text-gray-700 font-medium">身份類型（可複選）：</label>
+            <div className="flex items-center space-x-4 mt-2">
+              {["host", "speaker", "panelist", "presenter"].map((roleOption) => (
+                <label key={roleOption} className="flex items-center space-x-1">
+                  <input
+                    type="checkbox"
+                    checked={card.roles.includes(roleOption as any)}
+                    onChange={(e) => {
+                      const newRoles = e.target.checked
+                        ? [...card.roles, roleOption as any]
+                        : card.roles.filter(r => r !== roleOption);
+                      onCardChange(index, "roles", newRoles);
+                    }}
+                    className="rounded"
+                  />
+                  <span className="text-sm">
+                    {getRoleDisplayName(roleOption)}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
           <div className="flex pb-2 space-x-3 items-center">
             <input
@@ -279,7 +290,7 @@ export const Host = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      // 如果後端資料沒有 role 屬性，根據 isHost 轉換，並確保所有欄位存在
+      // 如果後端資料沒有 roles 屬性，根據 role 或 isHost 轉換，並確保所有欄位存在
       const cards: Card[] = data.host[0].section1.editorCards.map(
         (card: any) => ({
           name: card.name || "",
@@ -288,7 +299,7 @@ export const Host = () => {
           interests: card.interests || "",
           experience: card.experience || "",
           image: card.image || "", // 確保 image 欄位存在
-          role: card.role || (card.isHost ? "host" : "panelist"), // 向後兼容舊數據
+          roles: card.roles || (card.role ? [card.role] : [card.isHost ? "host" : "panelist"]), // 向後兼容舊數據
           isOpen: card.isOpen || false,
         })
       );
@@ -321,7 +332,7 @@ export const Host = () => {
       interests: "",
       experience: "",
       image: "",
-      role: "host", // 預設為主持人
+      roles: ["host"], // 預設為主持人
       isOpen: false, // 初始狀態為收合
     };
     setEditorCards([...editorCards, newCard]);
@@ -361,7 +372,7 @@ export const Host = () => {
       interests: card.interests || "",
       experience: card.experience || "",
       image: card.image || "", // 確保 image 欄位存在
-      role: card.role || "host",
+      roles: card.roles || ["host"],
       isOpen: card.isOpen || false,
     }));
     

@@ -308,7 +308,7 @@ export const Video = () => {
               <input
                 type="text"
                 value={editorVideoURL}
-                placeholder="ytube影片網址 ?v={這段}"
+                placeholder="輸入完整 YouTube 直播網址（例：https://www.youtube.com/watch?v=...）"
                 onChange={handleEditorVideoURL}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
               />

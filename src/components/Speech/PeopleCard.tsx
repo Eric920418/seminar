@@ -7,7 +7,9 @@ interface Card {
   interests: string;
   experience: string;
   image: string;
+  roles?: ("host" | "panelist" | "speaker" | "presenter")[];
   role?: "host" | "panelist" | "speaker" | "presenter";
+  displayRole?: string;
   isHost?: boolean;
 }
 
@@ -20,7 +22,8 @@ export const PeopleCard = ({ card }: PeopleCardProps) => {
     return null;
   }
 
-  const cardRole = card.role || (card.isHost ? "host" : "panelist");
+  // 優先使用 displayRole，其次是 role，再來是從 roles 陣列取第一個，最後根據 isHost 判斷
+  const cardRole = card.displayRole || card.role || (card.roles && card.roles[0]) || (card.isHost ? "host" : "panelist");
 
   const getRoleDisplayName = (role: string) => {
     switch (role) {

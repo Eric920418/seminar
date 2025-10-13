@@ -22,8 +22,9 @@ const query2 = `
 export const Oral = () => {
   const [card, setCard] = useState([]);
   const [focus, setFocus] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCards, setSelectedCards] = useState([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [hostData, setHostData] = useState([]);
 
   useEffect(() => {
     setFocus(Array(card.length).fill(false));
@@ -37,38 +38,48 @@ export const Oral = () => {
         body: JSON.stringify({ query }),
       });
       const { data } = await res.json();
-      setCard(data.paperPage[0].section3.card);
+      const cards = data.paperPage[0].section3.card.map((card: any) => ({
+        ...card,
+        people: card.people || [],
+        files: card.files || [],
+      }));
+      setCard(cards);
     }
     fetchData();
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
-      const index = focus.findIndex((f) => f === true);
-      setSelectedCardIndex(index);
-      if (index !== -1 && card.length > index) {
-        const selectedCardId = card[index].id;
-        try {
-          const res = await fetch("/api/graphql", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              query: query2,
-            }),
-          });
-          const { data } = await res.json();
-          data.host[0].section1.editorCards.forEach((card) => {
-            if (card.name === selectedCardId) {
-              setSelectedCard(card);
-            }
-          });
-        } catch (error) {
-          console.error("Fetch error: ", error);
-        }
+    async function fetchHostData() {
+      try {
+        const res = await fetch("/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: query2 }),
+        });
+        const { data } = await res.json();
+        setHostData(data.host[0].section1.editorCards);
+      } catch (error) {
+        console.error("Fetch error: ", error);
       }
     }
-    fetchData();
-  }, [focus, card]);
+    fetchHostData();
+  }, []);
+
+  useEffect(() => {
+    const index = focus.findIndex((f) => f === true);
+    setSelectedCardIndex(index);
+    if (index !== -1 && card.length > index && card[index].people) {
+      const selectedPeople = card[index].people;
+      const matchedCards = selectedPeople
+        .map((person: any) => {
+          return hostData.find((host: any) => host.name === person.name);
+        })
+        .filter(Boolean);
+      setSelectedCards(matchedCards);
+    } else {
+      setSelectedCards([]);
+    }
+  }, [focus, card, hostData]);
 
   return (
     <div className="flex flex-1 flex-col justify-start max-w-[976px]  px-3 desktop:px-0">
@@ -105,14 +116,28 @@ export const Oral = () => {
           </div>
         ))}
       </div>
-      <PeopleCard card={selectedCard} />
-      <div className="mt-[64px] rounded-[40px] bg-[#F4F7FD]">
-        {selectedCardIndex !== null &&
-          card[selectedCardIndex] &&
-          card[selectedCardIndex].id && (
-            <PDFViewer src={card[selectedCardIndex].pdf} />
-          )}
-      </div>
+      {selectedCards.length > 0 && (
+        <div className="mt-[64px]">
+          {selectedCards.map((personCard, index) => (
+            <div key={index} className="mb-[32px]">
+              <PeopleCard card={personCard} />
+            </div>
+          ))}
+        </div>
+      )}
+      {selectedCardIndex !== null &&
+        card[selectedCardIndex] &&
+        card[selectedCardIndex].files &&
+        card[selectedCardIndex].files.length > 0 && (
+          <div className="mt-[64px]">
+            {card[selectedCardIndex].files.map((file: any, index: number) => (
+              <div key={index} className="mb-[32px] rounded-[40px] bg-[#F4F7FD]">
+                <div className="text-20M p-4">{file.name}</div>
+                <PDFViewer src={file.url} />
+              </div>
+            ))}
+          </div>
+        )}
     </div>
   );
 };

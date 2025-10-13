@@ -45,6 +45,11 @@ interface UpdateEventResult {
     message: string;
   }[];
 }
+interface PersonWithRole {
+  name: string;
+  role: string;
+}
+
 interface CardType {
   id: string;
   date: string;
@@ -60,7 +65,7 @@ interface CardType {
   person: string;
   abstract: string;
   keywords: string;
-  people: string[];
+  people: PersonWithRole[];
   isOpen: boolean;
 }
 
@@ -68,9 +73,10 @@ interface CardType {
 const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
-  const [selectHost, setSelectHost] = useState<{ name: string; role: string }[]>([]);
+  const [selectHost, setSelectHost] = useState<{ name: string; roles: string[] }[]>([]);
   // 用來暫存下拉選單目前選取的與談人
   const [selectedPersonToAdd, setSelectedPersonToAdd] = useState("");
+  const [selectedRoleToAdd, setSelectedRoleToAdd] = useState("");
 
   useEffect(() => {
     if (contentRef.current) {
@@ -109,7 +115,7 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
         const newHosts = data.host[0].section1.editorCards.map(
           (hostCard: any) => ({
             name: hostCard.name,
-            role: hostCard.role || "host", // 添加預設值防止 undefined
+            roles: hostCard.roles || (hostCard.role ? [hostCard.role] : ["host"]), // 向後兼容舊數據
           })
         );
         console.log(newHosts);
@@ -144,9 +150,13 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
 
   // 新增與談人 (避免重複新增)
   const addPerson = () => {
-    if (selectedPersonToAdd && !card.people.includes(selectedPersonToAdd)) {
-      onCardChange(index, "people", [...card.people, selectedPersonToAdd]);
-      setSelectedPersonToAdd("");
+    if (selectedPersonToAdd && selectedRoleToAdd) {
+      const alreadyExists = card.people.some((p: PersonWithRole) => p.name === selectedPersonToAdd && p.role === selectedRoleToAdd);
+      if (!alreadyExists) {
+        onCardChange(index, "people", [...card.people, { name: selectedPersonToAdd, role: selectedRoleToAdd }]);
+        setSelectedPersonToAdd("");
+        setSelectedRoleToAdd("");
+      }
     }
   };
 
@@ -357,17 +367,36 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
           <div className="flex items-center space-x-2">
             <select
               value={selectedPersonToAdd}
-              onChange={(e) => setSelectedPersonToAdd(e.target.value)}
+              onChange={(e) => {
+                setSelectedPersonToAdd(e.target.value);
+                setSelectedRoleToAdd(""); // 重置身份選擇
+              }}
               className="block rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
             >
-              <option value="">請選擇一個與談人</option>
+              <option value="">請選擇講師</option>
               {selectHost.map((host, idx) => (
                 <option key={idx} value={host.name}>
-                  {host.name}({getRoleDisplayName(host.role)})
+                  {host.name}
                 </option>
               ))}
             </select>
-            {!card.people.includes(selectedPersonToAdd) && (
+            {selectedPersonToAdd && (
+              <select
+                value={selectedRoleToAdd}
+                onChange={(e) => setSelectedRoleToAdd(e.target.value)}
+                className="block rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+              >
+                <option value="">選擇身份</option>
+                {selectHost
+                  .find(h => h.name === selectedPersonToAdd)
+                  ?.roles.map((role, idx) => (
+                    <option key={idx} value={role}>
+                      {getRoleDisplayName(role)}
+                    </option>
+                  ))}
+              </select>
+            )}
+            {selectedPersonToAdd && selectedRoleToAdd && (
               <button
                 onClick={addPerson}
                 className="bg-blue-500 text-white px-3 py-1 rounded"
@@ -378,9 +407,9 @@ const Card = ({ card, index, onToggle, onCardChange }: CardProps) => {
           </div>
           {card.people && card.people.length > 0 && (
             <ul className="mt-2">
-              {card.people.map((person: string, idx: number) => (
+              {card.people.map((person: PersonWithRole, idx: number) => (
                 <li key={idx} className="flex items-center space-x-2 space-y-2">
-                  <span>{person}</span>
+                  <span>{person.name} ({getRoleDisplayName(person.role)})</span>
                   <button
                     onClick={() => movePerson(idx, -1)}
                     disabled={idx === 0}
@@ -432,7 +461,13 @@ export const Event = () => {
         speaker: card.speaker || "", // 為舊資料添加預設值
         host: card.host || "",
         person: card.person || "",
-        people: card.people || [],
+        people: card.people
+          ? card.people.map((p: any) =>
+              typeof p === "string"
+                ? { name: p, role: "panelist" } // 向後兼容：將舊的字串轉換為物件
+                : p
+            )
+          : [],
       }));
 
       setEditorCards(cardsWithDefaults);

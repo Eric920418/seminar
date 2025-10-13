@@ -68,8 +68,8 @@ interface CardType {
 interface Card3Type {
   title: string;
   content: string;
-  id: string;
-  pdf: string;
+  people: Array<{ id: string; name: string }>;
+  files: Array<{ url: string; name: string }>;
 }
 
 // 新增會議卡片類型定義
@@ -159,7 +159,13 @@ export const Papers = () => {
         editor19: data.paperPage[0].section2.content8,
         editor20: data.paperPage[0].section2.text1,
       });
-      setEditorCards3(data.paperPage[0].section3.card);
+      // 確保每個 card 都有 people 和 files 陣列
+      const cards3 = data.paperPage[0].section3.card.map((card: any) => ({
+        ...card,
+        people: card.people || [],
+        files: card.files || [],
+      }));
+      setEditorCards3(cards3);
       setEditorCards4(data.paperPage[0].section4.card);
       setEditorBackground(data.paperPage[0].section4.background);
     };
@@ -311,7 +317,7 @@ export const Papers = () => {
   const addCard3 = () => {
     setEditorCards3([
       ...editorCards3,
-      { title: "", content: "", id: "", pdf: "" },
+      { title: "", content: "", people: [], files: [] },
     ]);
   };
 
@@ -351,7 +357,7 @@ export const Papers = () => {
       console.log("上傳過程發生錯誤！");
     }
   };
-  const handleFileChange2 = async (e: any, index: number) => {
+  const handleFileChange2 = async (e: any, cardIndex: number) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -367,7 +373,15 @@ export const Papers = () => {
       let data;
       try {
         data = text ? JSON.parse(text) : {};
-        handleCardChange3(index, "pdf", data.fileUrl);
+        const newCards = [...editorCards3];
+        if (!newCards[cardIndex].files) {
+          newCards[cardIndex].files = [];
+        }
+        newCards[cardIndex].files.push({
+          url: data.fileUrl,
+          name: file.name,
+        });
+        setEditorCards3(newCards);
       } catch (jsonErr) {
         console.error("解析 JSON 時出錯：", jsonErr);
         data = {};
@@ -381,6 +395,35 @@ export const Papers = () => {
       console.error("上傳錯誤：", error);
       console.log("上傳過程發生錯誤！");
     }
+  };
+
+  const addPersonToCard3 = (cardIndex: number, personId: string) => {
+    const selectedPerson = selectHost.find((host) => host.name === personId);
+    if (!selectedPerson) return;
+
+    const newCards = [...editorCards3];
+    if (!newCards[cardIndex].people) {
+      newCards[cardIndex].people = [];
+    }
+    if (!newCards[cardIndex].people.find((p) => p.id === personId)) {
+      newCards[cardIndex].people.push({
+        id: personId,
+        name: selectedPerson.name,
+      });
+      setEditorCards3(newCards);
+    }
+  };
+
+  const removePersonFromCard3 = (cardIndex: number, personIndex: number) => {
+    const newCards = [...editorCards3];
+    newCards[cardIndex].people.splice(personIndex, 1);
+    setEditorCards3(newCards);
+  };
+
+  const removeFileFromCard3 = (cardIndex: number, fileIndex: number) => {
+    const newCards = [...editorCards3];
+    newCards[cardIndex].files.splice(fileIndex, 1);
+    setEditorCards3(newCards);
   };
 
   const handleCardChange4 = (
@@ -864,54 +907,109 @@ export const Papers = () => {
               </button>
             </div>
             <div>
-              {editorCards3.map((card, index) => (
-                <div key={index} className="my-3">
-                  <div className="flex gap-3">
+              {editorCards3.map((card, cardIndex) => (
+                <div key={cardIndex} className="my-3 p-4 bg-white rounded-lg">
+                  <div className="flex gap-3 mb-3">
                     <input
                       type="text"
                       placeholder="標題"
                       value={card.title}
                       onChange={(e) =>
-                        handleCardChange3(index, "title", e.target.value)
+                        handleCardChange3(cardIndex, "title", e.target.value)
                       }
                       className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
                     />
                     <input
                       type="text"
-                      placeholder="標題"
+                      placeholder="內容"
                       value={card.content}
                       onChange={(e) =>
-                        handleCardChange3(index, "content", e.target.value)
+                        handleCardChange3(cardIndex, "content", e.target.value)
                       }
                       className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    />
-
-                    <select
-                      value={card.id}
-                      onChange={(e) =>
-                        handleCardChange3(index, "id", e.target.value)
-                      }
-                      className="block w-full rounded-md bg-white px-6 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                    >
-                      <option value="">請選擇講師</option>
-                      {selectHost.map((host, index) => (
-                        <option key={index} value={host.id}>
-                          {host.name}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="file"
-                      accept="application/pdf"
-                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
-                      onChange={(e) => handleFileChange2(e, index)}
                     />
                     <button
                       className="bg-red-500 text-white px-3 py-1 rounded"
-                      onClick={() => DeleteCard3(index)}
+                      onClick={() => DeleteCard3(cardIndex)}
                     >
-                      刪除
+                      刪除卡片
                     </button>
+                  </div>
+
+                  {/* 人員區塊 */}
+                  <div className="mb-3">
+                    <div className="font-medium mb-2">人員列表</div>
+                    <div className="flex gap-2 mb-2">
+                      <select
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            addPersonToCard3(cardIndex, e.target.value);
+                            e.target.value = "";
+                          }
+                        }}
+                        className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2"
+                      >
+                        <option value="">選擇並新增講師</option>
+                        {selectHost.map((host, index) => (
+                          <option key={index} value={host.name}>
+                            {host.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {(card.people || []).map((person, personIndex) => (
+                      <div
+                        key={personIndex}
+                        className="flex gap-2 items-center mb-2 p-2 bg-gray-100 rounded"
+                      >
+                        <span className="flex-1">{person.name}</span>
+                        <button
+                          className="bg-red-400 text-white px-2 py-1 rounded text-sm"
+                          onClick={() =>
+                            removePersonFromCard3(cardIndex, personIndex)
+                          }
+                        >
+                          移除
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* 檔案區塊 */}
+                  <div>
+                    <div className="font-medium mb-2">檔案列表</div>
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 mb-2"
+                      onChange={(e) => {
+                        handleFileChange2(e, cardIndex);
+                        e.target.value = "";
+                      }}
+                    />
+                    {(card.files || []).map((file, fileIndex) => (
+                      <div
+                        key={fileIndex}
+                        className="flex gap-2 items-center mb-2 p-2 bg-gray-100 rounded"
+                      >
+                        <a
+                          href={file.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 text-blue-600 hover:underline"
+                        >
+                          {file.name}
+                        </a>
+                        <button
+                          className="bg-red-400 text-white px-2 py-1 rounded text-sm"
+                          onClick={() =>
+                            removeFileFromCard3(cardIndex, fileIndex)
+                          }
+                        >
+                          移除
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
