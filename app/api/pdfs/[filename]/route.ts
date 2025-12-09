@@ -12,10 +12,10 @@ const UPLOAD_DIR =
 
 export async function GET(
   request: Request,
-  { params }: { params: { filename: string } }
+  { params }: { params: Promise<{ filename: string }> }
 ) {
   try {
-    const { filename } = params;
+    const { filename } = await params;
     console.log("請求的檔案名稱：", filename);
 
     // 檢查檔名是否合法（安全性檢查）

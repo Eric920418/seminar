@@ -1,9 +1,9 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-// 中間件配置
+// Proxy 配置 (Next.js 16 renamed middleware to proxy)
 export default withAuth(
-  function middleware(req) {
+  function proxy(req) {
     // 檢查是否訪問登入頁面
     if (req.nextUrl.pathname === "/admin/login") {
       return NextResponse.next();
